@@ -9,22 +9,69 @@ import android.opengl.GLSurfaceView.Renderer;
 public class OpenGLRenderer implements Renderer {
 	private FlatColoredSquare flatSquare;
 	private SmoothColoredSquare smoothSquare;
+	private int zoom;
+	private int xposcam;
+	private int yposcam;
 
+	/**
+	 * Constructor
+	 */
 	public OpenGLRenderer() {
 		// Initialize our squares.
 		flatSquare = new FlatColoredSquare();
 		smoothSquare = new SmoothColoredSquare();
 	}
-
+	
+	/**
+	 * Resetea los valores de posición de la cámara.
+	 */
+	public void camReset() {
+		this.zoom=8;
+		this.xposcam=0;
+		this.yposcam=0;
+	}
+	
+	/**
+	 * Acerca la cámara
+	*/
+	public void zoomIn() { this.zoom++; }
+	
+	/**
+	 * Aleja la cámara
+	*/
+	public void zoomOut() { this.zoom--; }
+	
 	/*
-	 * (non-Javadoc)
+	 * Mueve la cámara a la izquierda
+	 */
+	public void camRight() { this.xposcam--; }
+	
+	/*
+	 * Mueve la cámara a la derecha
+	 */
+	public void camLeft() { this.xposcam++; }
+	
+	/*
+	 * Mueve la cámara hacia abajo
+	 */
+	public void camUp() { this.yposcam--; }
+	
+	/*
+	 * Mueve la cámara hacia arriba
+	 */
+	public void camDown() { this.yposcam++; }
+	
+	/*
+	 * Se ejecuta al crear la surface
 	 * 
 	 * @see
 	 * android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(javax.microedition
 	 * .khronos.opengles.GL10, javax.microedition.khronos.egl.EGLConfig)
 	 */
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-		// Set the background color to black ( rgba ).
+		gl.glDisable(GL10.GL_DITHER);
+		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
+		// Pone el fondo de amarillo ( rgba ).
 		gl.glClearColor(1.0f, 1.0f, 0.6f, 0.5f);
 		// Enable Smooth Shading, default not really needed.
 		gl.glShadeModel(GL10.GL_SMOOTH);
@@ -36,10 +83,11 @@ public class OpenGLRenderer implements Renderer {
 		gl.glDepthFunc(GL10.GL_LEQUAL);
 		// Really nice perspective calculations.
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
+		this.camReset();
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * Se ejecuta cada vez que se redibuja la pantalla.
 	 * 
 	 * @see
 	 * android.opengl.GLSurfaceView.Renderer#onDrawFrame(javax.microedition.
@@ -50,6 +98,9 @@ public class OpenGLRenderer implements Renderer {
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		// Replace the current matrix with the identity matrix
 		gl.glLoadIdentity();
+		
+		//Ajusta la cámara
+		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, 0, 0, 0, 0, 1, 0);
 		// Translates 7 units into the screen and 1.5 units up.
 		gl.glTranslatef(0, 1.5f, -7);
 		// Draw our flat square.
@@ -61,7 +112,7 @@ public class OpenGLRenderer implements Renderer {
 	}
 
 	/*
-	 * (non-Javadoc)
+	 * Se ejecuta cada vez que cambia la surface
 	 * 
 	 * @see
 	 * android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(javax.microedition
