@@ -1,4 +1,4 @@
-package se.jayway.opengl.tutorial;
+package com.grub.svg4mobile;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;

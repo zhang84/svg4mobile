@@ -1,4 +1,4 @@
-package se.jayway.opengl.tutorial;
+package com.grub.svg4mobile;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
