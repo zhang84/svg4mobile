@@ -1,4 +1,4 @@
-package se.jayway.opengl.tutorial;
+package com.grub.svg4mobile;
 
 import android.app.Activity;
 import android.opengl.GLSurfaceView;
