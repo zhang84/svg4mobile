@@ -9,10 +9,12 @@ import android.opengl.GLSurfaceView.Renderer;
 public class OpenGLRenderer implements Renderer {
 	private FlatColoredSquare flatSquare;
 	private SmoothColoredSquare smoothSquare;
-	private int zoom;
-	private int xposcam;
-	private int yposcam;
-
+	private float zoom;
+	private float xposcam;
+	private float yposcam;
+	private float x2poscam;
+	private float y2poscam;
+	private static double SMOOTHNESS = .0001;
 	/**
 	 * Constructor
 	 */
@@ -22,6 +24,16 @@ public class OpenGLRenderer implements Renderer {
 		smoothSquare = new SmoothColoredSquare();
 	}
 	
+	public void incX(double d) {
+		this.xposcam+=d;
+		this.x2poscam=this.xposcam;
+	}
+	
+	public void incY(double d) {
+		this.yposcam+=d;
+		this.y2poscam=this.yposcam;
+	}
+	
 	/**
 	 * Resetea los valores de posición de la cámara.
 	 */
@@ -29,6 +41,8 @@ public class OpenGLRenderer implements Renderer {
 		this.zoom=8;
 		this.xposcam=0;
 		this.yposcam=0;
+		this.x2poscam=0;
+		this.y2poscam=0;	
 	}
 	
 	/**
@@ -42,24 +56,28 @@ public class OpenGLRenderer implements Renderer {
 	public void zoomOut() { this.zoom--; }
 	
 	/*
-	 * Mueve la cámara a la izquierda
+	 * Mueve la cámara a la izquierda suavemente
 	 */
-	public void camRight() { this.xposcam--; }
+	public void camRight() {
+		double i;
+		for (i=0; i<=1; i+=SMOOTHNESS) {
+			this.xposcam+=SMOOTHNESS; this.x2poscam=this.xposcam; } 
+		}
 	
 	/*
 	 * Mueve la cámara a la derecha
 	 */
-	public void camLeft() { this.xposcam++; }
+	public void camLeft() { this.xposcam--; this.x2poscam=this.xposcam; }
 	
 	/*
 	 * Mueve la cámara hacia abajo
 	 */
-	public void camUp() { this.yposcam--; }
+	public void camUp() { this.yposcam++; this.y2poscam=this.yposcam; }
 	
 	/*
 	 * Mueve la cámara hacia arriba
 	 */
-	public void camDown() { this.yposcam++; }
+	public void camDown() { this.yposcam--; this.y2poscam=this.yposcam; }
 	
 	/*
 	 * Se ejecuta al crear la surface
@@ -100,7 +118,7 @@ public class OpenGLRenderer implements Renderer {
 		gl.glLoadIdentity();
 		
 		//Ajusta la cámara
-		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, 0, 0, 0, 0, 1, 0);
+		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
 		// Translates 7 units into the screen and 1.5 units up.
 		gl.glTranslatef(0, 1.5f, -7);
 		// Draw our flat square.
