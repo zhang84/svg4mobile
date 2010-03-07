@@ -23,6 +23,7 @@ import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -40,17 +41,7 @@ public class Svg4mobile extends Activity {
      * Called when the activity is first created.
      */
 	private OpenGLRenderer renderer;
-    private static final float ANGLE_DIFF = .1f;
-	Menu myMenu = null;
-	
-	
-    public static final int archivo = Menu.FIRST;
-    public static final int objetos = Menu.FIRST+1;
-    public static final int caracteristicas = Menu.FIRST+2;
-    public static final int opciones = Menu.FIRST+3;
-    public static final int ayuda = Menu.FIRST+4;
-    public static final int salir = Menu.FIRST+5;
-	
+	private Menu menu;
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -63,7 +54,25 @@ public class Svg4mobile extends Activity {
    		view.setRenderer(this.renderer);
    		setContentView(view);
     }
-    
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+       //call the base class to include system menus
+       super.onCreateOptionsMenu(menu);
+       this.menu = menu;
+       MenuItem itemChPersp = this.menu.add(0,1,0,"Perspectiva"); //Cambiar Perspectiva
+       itemChPersp.setIcon(android.R.drawable.ic_menu_mapmode);
+       
+       MenuItem itemZoomOut = this.menu.add(1,2,0,"Zoom -"); //Zoom -
+       MenuItem itemZoomIn = this.menu.add(1,3,1,"Zoom +"); //Zoom +
+       itemZoomOut.setIcon(android.R.drawable.btn_minus);
+       itemZoomIn.setIcon(android.R.drawable.btn_plus);
+       
+       //It is important to return true to see the menu
+       return true;
+    }
+   
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
       //CharSequence dialogString;
@@ -99,9 +108,29 @@ public class Svg4mobile extends Activity {
         	// Sale del programa
         	finish();
         }
+        default: {
+        	return super.onKeyUp(keyCode, event);
+        }
       }
       return true;
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+       if (item.getItemId() == 1) {
+    	   
+       }
+       else if (item.getItemId() == 2) {
+    	   this.renderer.zoomIn();
+       }
+       else if (item.getItemId() == 3) {
+    	   this.renderer.zoomOut();
+       }
+       //should return true if the menu item
+       //is handled
+       return true;
+    }
+
     
     public boolean onTouchEvent(MotionEvent event)
     {
