@@ -64,6 +64,8 @@ public class SmoothColoredSquare {
 	 * @param gl
 	 */
 	public void draw(GL10 gl) {
+		// Translate to end up under the flat square.
+		gl.glTranslatef(-2, -1.5f, 0);
 		// Counter-clockwise winding.
 		gl.glFrontFace(GL10.GL_CCW);
 		// Enable face culling.

@@ -12,12 +12,17 @@ public class FlatColoredSquare {
 	private float[] vertices = {
 		      -1.0f,  1.0f, 0.0f,  // 0, Top Left
 		      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
-		       1.0f, -1.0f, 0.0f,  // 2, Bottom Right
-		       1.0f,  1.0f, 0.0f,  // 3, Top Right
+		       0.0f, -2.0f, 0.0f,  // 2, Bottom Left
+		       1.0f, -1.0f, 0.0f,  // 3, Bottom Right
+		       1.0f,  1.0f, 0.0f,  // 4, Top Right
 		};
 	
 	// The order we like to connect them.
-	private short[] indices = { 0, 1, 2, 0, 2, 3 };
+	private short[] indices = { 
+			0, 1, 2, 
+			1, 2, 3, 
+			2 ,3, 4,
+			0, 2, 4};
 	
 	// Our vertex buffer.
 	private FloatBuffer vertexBuffer;
@@ -48,6 +53,9 @@ public class FlatColoredSquare {
 	 * @param gl
 	 */
 	public void draw(GL10 gl) {
+		// Posicionamos la figura.
+		gl.glTranslatef(2, 1.5f, 0);
+		
 		gl.glColor4f(0.5f, 0.5f, 1.0f, 1.0f); // 0x8080ffff
 		// Counter-clockwise winding.
 		gl.glFrontFace(GL10.GL_CCW);
@@ -70,6 +78,9 @@ public class FlatColoredSquare {
 		gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		// Disable face culling.
 		gl.glDisable(GL10.GL_CULL_FACE);
+		
+		//Volvemos a la posicion inicial
+		gl.glTranslatef(-2, -1.5f, 0);
 	}
 	
 }
