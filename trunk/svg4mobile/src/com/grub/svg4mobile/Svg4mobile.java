@@ -50,6 +50,7 @@ public class Svg4mobile extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
  		GLSurfaceView view = new GLSurfaceView(this);
+		
  		this.renderer = new OpenGLRenderer();
    		view.setRenderer(this.renderer);
    		setContentView(view);
@@ -75,7 +76,6 @@ public class Svg4mobile extends Activity {
    
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-      //CharSequence dialogString;
       switch (keyCode) {
         case KeyEvent.KEYCODE_DPAD_CENTER: {
           // Resetea la posición de la cámara
@@ -104,6 +104,17 @@ public class Svg4mobile extends Activity {
         	this.renderer.camDown();
         	break;
         }
+        case KeyEvent.KEYCODE_Z: {
+        	// Aleja la cámara
+            this.renderer.zoomOut();
+          	
+            break;
+          }
+          case KeyEvent.KEYCODE_X: {
+          	// Acerca la cámara
+          	this.renderer.zoomIn();
+          	break;
+          }
         case KeyEvent.KEYCODE_BACK: {
         	// Sale del programa
         	finish();
@@ -121,10 +132,10 @@ public class Svg4mobile extends Activity {
     	   
        }
        else if (item.getItemId() == 2) {
-    	   this.renderer.zoomIn();
+    	   this.renderer.zoomOut();
        }
        else if (item.getItemId() == 3) {
-    	   this.renderer.zoomOut();
+    	   this.renderer.zoomIn();
        }
        //should return true if the menu item
        //is handled

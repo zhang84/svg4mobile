@@ -2,26 +2,41 @@ package com.grub.svg4mobile;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
+import java.util.Vector;
 
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
+//import android.util.Log;
+
+
+//import android.view.SurfaceView;
 
 public class OpenGLRenderer implements Renderer {
-	private FlatColoredSquare flatSquare;
-	private SmoothColoredSquare smoothSquare;
+	//private FlatColoredSquare flatSquare;
+	//private SmoothColoredSquare smoothSquare;
 	private float zoom;
 	private float xposcam;
 	private float yposcam;
 	private float x2poscam;
 	private float y2poscam;
-	private static double SMOOTHNESS = .0001;
+	//private static double SMOOTHNESS = .0001;
+	private Vector<Object> v = new Vector<Object>();
+	private Parser parser = new Parser();
+	private double width, height;
+	
 	/**
 	 * Constructor
 	 */
 	public OpenGLRenderer() {
 		// Initialize our squares.
-		flatSquare = new FlatColoredSquare();
-		smoothSquare = new SmoothColoredSquare();
+		
+		while (parser.hasNext()) {  
+			v.add(parser.next());
+		}
+		this.width = parser.getWidth();
+		this.height = parser.getHeight();
+		//flatSquare = new FlatColoredSquare();
+		//smoothSquare = new SmoothColoredSquare();
 	}
 	
 	public void incX(double d) {
@@ -48,36 +63,46 @@ public class OpenGLRenderer implements Renderer {
 	/**
 	 * Acerca la cámara
 	*/
-	public void zoomIn() { this.zoom++; }
+	public void zoomIn() {
+		if (this.zoom > 1) this.zoom--;
+	}
 	
 	/**
 	 * Aleja la cámara
 	*/
-	public void zoomOut() { this.zoom--; }
+	public void zoomOut() { this.zoom++; }
 	
 	/*
 	 * Mueve la cámara a la izquierda suavemente
 	 */
 	public void camRight() {
-		double i;
+		/*double i;
 		for (i=0; i<=1; i+=SMOOTHNESS) {
-			this.xposcam+=SMOOTHNESS; this.x2poscam=this.xposcam; } 
-		}
+			this.xposcam+=SMOOTHNESS; this.x2poscam=this.xposcam; }
+		*/
+		if (this.xposcam < this.width) { this.xposcam++; this.x2poscam=this.xposcam; }
+	}
 	
 	/*
 	 * Mueve la cámara a la derecha
 	 */
-	public void camLeft() { this.xposcam--; this.x2poscam=this.xposcam; }
+	public void camLeft() { 
+		if (this.xposcam > 0) { this.xposcam--; this.x2poscam=this.xposcam; }	 
+	}
 	
 	/*
 	 * Mueve la cámara hacia abajo
 	 */
-	public void camUp() { this.yposcam++; this.y2poscam=this.yposcam; }
+	public void camUp() { 
+		if (this.yposcam < this.height) { this.yposcam++; this.y2poscam=this.yposcam; } 
+	}
 	
 	/*
 	 * Mueve la cámara hacia arriba
 	 */
-	public void camDown() { this.yposcam--; this.y2poscam=this.yposcam; }
+	public void camDown() {
+		if (this.yposcam > 0) { this.yposcam--; this.y2poscam=this.yposcam; }
+		}
 	
 	/*
 	 * Se ejecuta al crear la surface
@@ -119,14 +144,34 @@ public class OpenGLRenderer implements Renderer {
 		
 		//Ajusta la cámara
 		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
-		// Translates 7 units into the screen and 1.5 units up.
-		gl.glTranslatef(0, 1.5f, -7);
-		// Draw our flat square.
+		//Log.v("svg4mobile", "///");
+
+		//Rect doc = new Rect(0f, 0f, 35.03961f, 20.34869f, "#000000"); 
+		//doc.draw(gl);
+		FlatColoredSquare flatSquare = new FlatColoredSquare();
 		flatSquare.draw(gl);
-		// Translate to end up under the flat square.
-		gl.glTranslatef(0, -3f, 0);
-		// Draw our smooth square.
+		SmoothColoredSquare smoothSquare = new SmoothColoredSquare();
 		smoothSquare.draw(gl);
+		
+		/*for(int i=0; i<v.size(); i++) {
+			Object shape = v.elementAt(i);
+			//Log.v("svg4mobile", "-"+shape.getClass().getName()+"-");
+
+			if (shape.getClass().getName()=="com.grub.svg4mobile.FlatColoredSquare") {
+				FlatColoredSquare fcs = (FlatColoredSquare) shape;
+				fcs.draw(gl);	
+			}
+			if (shape.getClass().getName()=="com.grub.svg4mobile.SmoothColoredSquare") {
+				SmoothColoredSquare scs = (SmoothColoredSquare) shape;
+				scs.draw(gl);	
+			}
+			
+        }*/
+		// Draw our flat square.
+		//flatSquare.draw(gl);
+		
+		// Draw our smooth square.
+		//smoothSquare.draw(gl);
 	}
 
 	/*
