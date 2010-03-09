@@ -31,14 +31,14 @@ public class Parser {
 	}
 
 	/**
-	 * Constructor de la clase genÈrico
+	 * Constructor de la clase gen√©rico
 	 */
 	public Parser() {
 		elementos = new Vector<Figure>();
 	}
 	
 	/**
-	 * MÈtodo privado encargado de ir parseando el archivo SVG e insertando
+	 * M√©todo privado encargado de ir parseando el archivo SVG e insertando
 	 * los elementos en la correspondiente lista.
 	 */
 	private void parseXML (String path){
@@ -79,14 +79,14 @@ public class Parser {
 				elementos.add(rectangulo);
 			}
 			//else ...
-			//AquÌ han de utilizarse el resto de tipos para parsear.
+			//Aqu√≠ han de utilizarse el resto de tipos para parsear.
 		}
 	}
 	
 	/**
-	 * MÈtodo que indica al usuario si hay m·s elementos en la lista.
-	 * ImplementaciÛn del patrÛn Iterator.
-	 * @return Devuelve true si quedan m·s elementos en el iterador.
+	 * M√©todo que indica al usuario si hay m√°s elementos en la lista.
+	 * Implementaci√≥n del patr√≥n Iterator.
+	 * @return Devuelve true si quedan m√°s elementos en el iterador.
 	 */
 	public Boolean hasNext() {
 		if (contador>elementos.size())
@@ -95,7 +95,7 @@ public class Parser {
 	}
 	
 	/**
-	 * MÈtodo que usar· el usuario para obtener el siguiente elemento
+	 * M√©todo que usar√° el usuario para obtener el siguiente elemento
 	 * de la lista e incrementar el contador.
 	 * @return Devuelve el siguiente elemento.
 	 */
