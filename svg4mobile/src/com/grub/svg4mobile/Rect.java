@@ -10,7 +10,7 @@ import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Rect {
+public class Rect extends Figure{
 	private float[] vertices;
 	
 	// Orden de conexión entre vértices

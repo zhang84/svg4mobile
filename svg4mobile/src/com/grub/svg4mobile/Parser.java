@@ -9,32 +9,44 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.*;
 
 public class Parser {
+	
+	public static Parser instance = null;
+	
 	private int contador=0;
 	private double width = 0;
 	private double height = 0;
 	private Document dom;
-	private Vector<Rect> rects;
+	private Vector<Figure> elementos;
 	
+	private synchronized static void createInstance() {
+		if (instance == null) {
+			instance = new Parser();
+	    }
+	}
+	
+	public static Parser getInstance() {
+		if (instance == null) 
+			createInstance();
+	    return instance;
+	}
+
 	/**
 	 * Constructor de la clase genérico
 	 */
 	public Parser() {
-		rects = new Vector<Rect>();
+		elementos = new Vector<Figure>();
 	}
 	
 	/**
-	 * Constructor con el que se inicializa directamente la
-	 * ruta del archivo svg a parsear.
-	 * @param path
+	 * Método privado encargado de ir parseando el archivo SVG e insertando
+	 * los elementos en la correspondiente lista.
 	 */
-	public Parser (String path){
-		rects = new Vector<Rect>();
+	private void parseXML (String path){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Inicializamos el documento.
 			dom = db.parse(path);
-			this.parseXML();
 		}catch(ParserConfigurationException pce) {
 			pce.printStackTrace();
 		}catch(SAXException se) {
@@ -42,34 +54,32 @@ public class Parser {
 		}catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
-	}
-	
-	/**
-	 * Método privado encargado de ir parseando el archivo SVG e insertando
-	 * los elementos en la correspondiente lista.
-	 */
-	private void parseXML (){
+		
 		Element root = dom.getDocumentElement();
 		if (root.getAttribute("width") != null && root.getAttribute("height") != null){
 			width = Double.parseDouble(root.getAttribute("width"));
 			height = Double.parseDouble(root.getAttribute("height"));
 			System.out.println(width);
 		}
-		NodeList lista = root.getElementsByTagName("rect");
+		NodeList lista = root.getChildNodes();
 		int i = 0;
 		while (i++ < lista.getLength()){
-			Element nodoRectangular = (Element) lista.item(i);
-			String x = nodoRectangular.getAttribute("x");
-			String y = nodoRectangular.getAttribute("y");
-			String w = nodoRectangular.getAttribute("width");
-			String h = nodoRectangular.getAttribute("height");
-			String style = nodoRectangular.getAttribute("style");
-			//La cadena que contiene el atributo style tiene la forma:
-			// fill:#rrggbb;fill-opacity:1;...
-			String rgb = style.substring(style.indexOf(":")+1);
-			rgb = rgb.substring(0,rgb.indexOf(";"));
-			Rect rectangulo = new Rect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb);
-			rects.add(rectangulo);
+			Element nodo = (Element) lista.item(i);
+			if (nodo.getTagName().compareToIgnoreCase("rect")==0){
+				String x = nodo.getAttribute("x");
+				String y = nodo.getAttribute("y");
+				String w = nodo.getAttribute("width");
+				String h = nodo.getAttribute("height");
+				String style = nodo.getAttribute("style");
+				//La cadena que contiene el atributo style tiene la forma:
+				// fill:#rrggbb;fill-opacity:1;...
+				String rgb = style.substring(style.indexOf(":")+1);
+				rgb = rgb.substring(0,rgb.indexOf(";"));
+				Rect rectangulo = new Rect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb);
+				elementos.add(rectangulo);
+			}
+			//else ...
+			//Aquí han de utilizarse el resto de tipos para parsear.
 		}
 	}
 	
@@ -79,7 +89,7 @@ public class Parser {
 	 * @return Devuelve true si quedan más elementos en el iterador.
 	 */
 	public Boolean hasNext() {
-		if (contador>rects.size())
+		if (contador>elementos.size())
 			return false;
 		else return true;
 	}
@@ -113,6 +123,4 @@ public class Parser {
 			h = height;
 		return h;
 	}
-	
-		
 }
