@@ -1,6 +1,6 @@
 /* 
  * svg4mobile - A project to use SVG files in mobile devices
- * Copyright (C) 2010  Daniel Lahoz, Daniel Rivera, √Ålvaro Tanarro and Luis Torrrico
+ * Copyright (C) 2010  Daniel Lahoz, Daniel Rivera, ¡lvaro Tanarro and Luis Torrrico
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ import android.util.Log;
 /**
 * @author Daniel Lahoz
 * @author Daniel Rivera
-* @author √Ålvaro Tanarro
+* @author ¡lvaro Tanarro
 * @author Luis Torrrico
 * @version 0.1
 */
@@ -50,7 +50,6 @@ public class Svg4mobile extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
  		GLSurfaceView view = new GLSurfaceView(this);
-		
  		this.renderer = new OpenGLRenderer();
    		view.setRenderer(this.renderer);
    		setContentView(view);
