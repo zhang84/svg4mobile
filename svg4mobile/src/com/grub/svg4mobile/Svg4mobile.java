@@ -1,6 +1,6 @@
 /* 
  * svg4mobile - A project to use SVG files in mobile devices
- * Copyright (C) 2010  Daniel Lahoz, Daniel Rivera, ¡lvaro Tanarro and Luis Torrrico
+ * Copyright (C) 2010  Daniel Lahoz, Daniel Rivera, ÔøΩlvaro Tanarro and Luis Torrrico
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ import android.util.Log;
 /**
 * @author Daniel Lahoz
 * @author Daniel Rivera
-* @author ¡lvaro Tanarro
+* @author √Ålvaro Tanarro
 * @author Luis Torrrico
 * @version 0.1
 */
@@ -68,6 +68,11 @@ public class Svg4mobile extends Activity {
        MenuItem itemZoomIn = this.menu.add(1,3,1,"Zoom +"); //Zoom +
        itemZoomOut.setIcon(android.R.drawable.btn_minus);
        itemZoomIn.setIcon(android.R.drawable.btn_plus);
+       
+       MenuItem compassSync = this.menu.add(2,4,0,"Nortear"); //Nortear
+       MenuItem autoCompassSync = this.menu.add(2,5,1,"Autonortear"); //Autonortear
+       compassSync.setIcon(android.R.drawable.ic_menu_rotate);
+       autoCompassSync.setIcon(android.R.drawable.ic_menu_compass);
        
        //It is important to return true to see the menu
        return true;

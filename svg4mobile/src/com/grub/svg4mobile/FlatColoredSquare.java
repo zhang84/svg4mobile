@@ -10,11 +10,11 @@ import javax.microedition.khronos.opengles.GL10;
 public class FlatColoredSquare {
 	// Our vertices.
 	private float[] vertices = {
-		      -1.0f,  1.0f, 0.0f,  // 0, Top Left
-		      -1.0f, -1.0f, 0.0f,  // 1, Bottom Left
-		       0.0f, -2.0f, 0.0f,  // 2, Bottom Left
-		       1.0f, -1.0f, 0.0f,  // 3, Bottom Right
-		       1.0f,  1.0f, 0.0f,  // 4, Top Right
+		      -1.0f,  1.0f,  // 0, Top Left
+		      -1.0f, -1.0f,  // 1, Bottom Left
+		       0.0f, -2.0f,  // 2, Bottom Left
+		       1.0f, -1.0f,  // 3, Bottom Right
+		       1.0f,  1.0f,  // 4, Top Right
 		};
 	
 	// The order we like to connect them.
@@ -69,7 +69,7 @@ public class FlatColoredSquare {
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		// Specifies the location and data format of an array of vertex
 		// coordinates to use when rendering.
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertexBuffer);
 		
 		gl.glDrawElements(GL10.GL_TRIANGLES, indices.length, 
 				GL10.GL_UNSIGNED_SHORT, indexBuffer);
