@@ -22,7 +22,7 @@ public class OpenGLRenderer implements Renderer {
 	//private static double SMOOTHNESS = .0001;
 	private Vector<Object> v = new Vector<Object>();
 	private Parser parser = new Parser();
-	private double width, height;
+	private float width, height;
 	
 	/**
 	 * Constructor
@@ -114,8 +114,8 @@ public class OpenGLRenderer implements Renderer {
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		gl.glDisable(GL10.GL_DITHER);
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_FASTEST);
-		// Pone el fondo de amarillo ( rgba ).
-		gl.glClearColor(1.0f, 1.0f, 0.6f, 0.5f);
+		// Pone el fondo de negro ( rgba ).
+		gl.glClearColor(.0f, .0f, 0f, 0f);
 		// Enable Smooth Shading, default not really needed.
 		gl.glShadeModel(GL10.GL_SMOOTH);
 		// Depth buffer setup.
@@ -146,12 +146,16 @@ public class OpenGLRenderer implements Renderer {
 		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
 		//Log.v("svg4mobile", "///");
 
-		//Rect doc = new Rect(0f, 0f, 35.03961f, 20.34869f, "#000000"); 
-		//doc.draw(gl);
+		Rect doc = new Rect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
+		doc.draw(gl);
+		
 		FlatColoredSquare flatSquare = new FlatColoredSquare();
 		flatSquare.draw(gl);
 		SmoothColoredSquare smoothSquare = new SmoothColoredSquare();
 		smoothSquare.draw(gl);
+		
+		Line polyline= new Line();
+		polyline.draw(gl);
 		
 		/*for(int i=0; i<v.size(); i++) {
 			Object shape = v.elementAt(i);
