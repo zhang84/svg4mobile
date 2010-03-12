@@ -16,7 +16,6 @@ public class Rect extends Figure{
 	// Orden de conexión entre vértices
 	private short[] indices = { 
 			0, 1, 2, 0, 2, 3};
-	private float x,y;
 	// Buffer de vértices.
 	private FloatBuffer vertexBuffer;
 
@@ -25,7 +24,7 @@ public class Rect extends Figure{
 
 	private String colorString;
 	
-	public Rect(float x, float y, float w, float h, String rgb, String brgb, float bwidth) {
+	public Rect(float x, float y, float w, float h, String rgb) {
 		
 		// 0, Arriba izqda
 		this.vertices[0] = x; 	//x
@@ -40,8 +39,6 @@ public class Rect extends Figure{
 		this.vertices[6] = x+w; //x
 		this.vertices[7] = y+h; //y
 		
-		this.x = x;
-		this.y = y;
 		this.colorString = rgb;
 		// un float son 4 bytes, por tanto se multiplica el número de 
 		// vertices por 4.
@@ -61,7 +58,7 @@ public class Rect extends Figure{
 	}
 
 	/**
-	 * This function draws our square on screen.
+	 * Función que pinta la figura
 	 * @param gl
 	 */
 	public void draw(GL10 gl) {

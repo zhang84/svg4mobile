@@ -6,16 +6,27 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
-public class Line {
+import android.graphics.Color;
+
+public class Line extends Figure{
 	
 	private float line[] = {
-			-0.5f, -0.5f, //point A
-			0.5f, -0.5f //point B
+			0, 0,  // punto 1
+			1f, 1f // punto 2
 	};
-
+	private String colorString; 
 	private FloatBuffer vertexBuffer;
-	
-	public Line(){
+	private float w = 0;
+	public Line(float x1, float y1, float x2, float y2, String brgb, float bwidth){
+		this.line[0] = x1;
+		this.line[1] = y1;
+
+		this.line[2] = x2;
+		this.line[3] = y2;
+		
+		this.w = bwidth;
+		this.colorString = brgb;
+		
 		ByteBuffer byteBuf = ByteBuffer.allocateDirect(line.length * 4);
 		byteBuf.order(ByteOrder.nativeOrder());
 		vertexBuffer = byteBuf.asFloatBuffer();
@@ -24,11 +35,12 @@ public class Line {
 	}
 	
 	public void draw(GL10 gl) {
-		
-		gl.glColor4f(0.0f,1.0f,0.0f,1.0f); //line color
+		int c = Color.parseColor(this.colorString);
+		gl.glColor4f(Color.red(c)/255, Color.green(c)/255, Color.blue(c)/255, 1.0f);
+
 		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, vertexBuffer);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glLineWidth(10f);
+		gl.glLineWidth(this.w);
 		//gl.glPointSize(100f);
 
 		gl.glDrawArrays(GL10.GL_LINES, 0, 2);
