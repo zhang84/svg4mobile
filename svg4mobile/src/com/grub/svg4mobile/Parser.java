@@ -75,7 +75,7 @@ public class Parser {
 				// fill:#rrggbb;fill-opacity:1;...
 				String rgb = style.substring(style.indexOf(":")+1);
 				rgb = rgb.substring(0,rgb.indexOf(";"));
-				Rect rectangulo = new Rect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0);
+				BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0);
 				elementos.add(rectangulo);
 			}
 			//else ...
@@ -100,9 +100,10 @@ public class Parser {
 	 * @return Devuelve el siguiente elemento.
 	 */
 	public Object next() {
-		if (contador++ == 0)
+		return new Object();
+		/*if (contador++ == 0)
 			return new FlatColoredSquare();
-		else return new SmoothColoredSquare();
+		else return new SmoothColoredSquare();*/
 	}
 	/**
 	 * Anchura del documento obtenida de parsear el SVG

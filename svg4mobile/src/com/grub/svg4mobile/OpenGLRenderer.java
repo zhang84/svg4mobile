@@ -146,16 +146,14 @@ public class OpenGLRenderer implements Renderer {
 		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
 		//Log.v("svg4mobile", "///");
 
-		Rect doc = new Rect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
+		BRect doc = new BRect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
 		doc.draw(gl);
 		
-		FlatColoredSquare flatSquare = new FlatColoredSquare();
-		flatSquare.draw(gl);
-		SmoothColoredSquare smoothSquare = new SmoothColoredSquare();
-		smoothSquare.draw(gl);
+		BRect prueba = new BRect(-1f, -1f, 3, 3, "#0000FF", "#FF0000", 2f); 
+		prueba.draw(gl);
 		
-		Line polyline= new Line();
-		polyline.draw(gl);
+		Line pruebaline= new Line(4.5f, -4.5f, 0.5f, 0.5f, "#00FF00", 10f);
+		pruebaline.draw(gl);
 		
 		/*for(int i=0; i<v.size(); i++) {
 			Object shape = v.elementAt(i);
