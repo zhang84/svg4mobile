@@ -14,9 +14,9 @@ public abstract class Figure {
 	}
 	
 	/**
-	 * Método que obtiene la cadena con que se identifica
+	 * MÃ©todo que obtiene la cadena con que se identifica
 	 * a la figura dentro del svg.
-	 * @return
+	 * @return Devuelve el identificador de la figura. 
 	 */
 	public String getId(){
 		return id;
@@ -31,8 +31,8 @@ public abstract class Figure {
 	}
 	
 	/**
-	 * Método que accede al valor de la transformada.
-	 * @return Devuelve cadena vacía si no hay que aplicar ninguna.
+	 * MÃ©todo que accede al valor de la transformada.
+	 * @return Devuelve cadena vacÃ­a si no hay que aplicar ninguna.
 	 */
 	public String getTransform(){
 		return this.transform;
