@@ -16,6 +16,8 @@ public class Rect extends Figure{
 	// Orden de conexión entre vértices
 	private short[] indices = { 
 			0, 1, 2, 0, 2, 3};
+
+	
 	// Buffer de vértices.
 	private FloatBuffer vertexBuffer;
 
@@ -24,6 +26,14 @@ public class Rect extends Figure{
 
 	private String colorString;
 	
+	/**
+	 * Crea un rectángulo
+	 * @param x Coordenada x
+	 * @param y Coordenada y
+	 * @param w Ancho
+	 * @param h Alto
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 */
 	public Rect(float x, float y, float w, float h, String rgb) {
 		
 		// 0, Arriba izqda
@@ -58,10 +68,11 @@ public class Rect extends Figure{
 	}
 
 	/**
-	 * Función que pinta la figura
+	 * Pinta la figura
 	 * @param gl
 	 */
 	public void draw(GL10 gl) {
+		
 		//Asignamos color
 		int c = Color.parseColor(this.colorString);
 		gl.glColor4f(Color.red(c)/255, Color.green(c)/255, Color.blue(c)/255, 1.0f);

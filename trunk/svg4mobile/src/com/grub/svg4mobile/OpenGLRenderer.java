@@ -8,12 +8,7 @@ import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 //import android.util.Log;
 
-
-//import android.view.SurfaceView;
-
 public class OpenGLRenderer implements Renderer {
-	//private FlatColoredSquare flatSquare;
-	//private SmoothColoredSquare smoothSquare;
 	private float zoom;
 	private float xposcam;
 	private float yposcam;
@@ -30,20 +25,25 @@ public class OpenGLRenderer implements Renderer {
 	public OpenGLRenderer() {
 		// Initialize our squares.
 		
-		while (parser.hasNext()) {  
+		/*while (parser.hasNext()) {  
 			v.add(parser.next());
-		}
+		}*/
 		this.width = parser.getWidth();
 		this.height = parser.getHeight();
-		//flatSquare = new FlatColoredSquare();
-		//smoothSquare = new SmoothColoredSquare();
 	}
 	
+	/**
+	 * Incrementa la posición de la cámara en el eje Y 
+	 * @param d
+	 */
 	public void incX(double d) {
 		this.xposcam+=d;
 		this.x2poscam=this.xposcam;
 	}
-	
+	/**
+	 * Incrementa la posición de la cámara en el eje Y 
+	 * @param d
+	 */
 	public void incY(double d) {
 		this.yposcam+=d;
 		this.y2poscam=this.yposcam;
@@ -72,8 +72,8 @@ public class OpenGLRenderer implements Renderer {
 	*/
 	public void zoomOut() { this.zoom++; }
 	
-	/*
-	 * Mueve la cámara a la izquierda suavemente
+	/**
+	 * Mueve la cámara a la izquierda
 	 */
 	public void camRight() {
 		/*double i;
@@ -83,30 +83,31 @@ public class OpenGLRenderer implements Renderer {
 		if (this.xposcam < this.width) { this.xposcam++; this.x2poscam=this.xposcam; }
 	}
 	
-	/*
+	/**
 	 * Mueve la cámara a la derecha
 	 */
 	public void camLeft() { 
 		if (this.xposcam > 0) { this.xposcam--; this.x2poscam=this.xposcam; }	 
 	}
 	
-	/*
+	/**
 	 * Mueve la cámara hacia abajo
 	 */
 	public void camUp() { 
 		if (this.yposcam < this.height) { this.yposcam++; this.y2poscam=this.yposcam; } 
 	}
 	
-	/*
+	/**
 	 * Mueve la cámara hacia arriba
 	 */
 	public void camDown() {
 		if (this.yposcam > 0) { this.yposcam--; this.y2poscam=this.yposcam; }
 		}
 	
-	/*
+	/**
 	 * Se ejecuta al crear la surface
-	 * 
+	 * @param gl
+	 * @param config
 	 * @see
 	 * android.opengl.GLSurfaceView.Renderer#onSurfaceCreated(javax.microedition
 	 * .khronos.opengles.GL10, javax.microedition.khronos.egl.EGLConfig)
@@ -129,25 +130,25 @@ public class OpenGLRenderer implements Renderer {
 		this.camReset();
 	}
 
-	/*
+	/**
 	 * Se ejecuta cada vez que se redibuja la pantalla.
-	 * 
+	 * @param gl
 	 * @see
 	 * android.opengl.GLSurfaceView.Renderer#onDrawFrame(javax.microedition.
 	 * khronos.opengles.GL10)
 	 */
 	public void onDrawFrame(GL10 gl) {
-		// Clears the screen and depth buffer.
+		// Limpia la pantalla y el buffer de profundidad.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-		// Replace the current matrix with the identity matrix
+		// Reemplaza la matriz actual con la matriz Identidad
 		gl.glLoadIdentity();
 		
 		//Ajusta la cámara
 		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
 		//Log.v("svg4mobile", "///");
 
-		BRect doc = new BRect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
-		doc.draw(gl);
+		//BRect doc = new BRect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
+		//doc.draw(gl);
 		
 		BRect prueba = new BRect(-1f, -1f, 3, 3, "#0000FF", "#FF0000", 2f); 
 		prueba.draw(gl);
@@ -169,33 +170,29 @@ public class OpenGLRenderer implements Renderer {
 			}
 			
         }*/
-		// Draw our flat square.
-		//flatSquare.draw(gl);
-		
-		// Draw our smooth square.
-		//smoothSquare.draw(gl);
 	}
 
-	/*
-	 * Se ejecuta cada vez que cambia la surface
-	 * 
+	/**
+	 * Se ejecuta cada vez que cambia la surface.
+ 	 * @param gl
+ 	 * @param width Ancho del Viewport
+ 	 * @param height Alto del Viewport
 	 * @see
 	 * android.opengl.GLSurfaceView.Renderer#onSurfaceChanged(javax.microedition
 	 * .khronos.opengles.GL10, int, int)
 	 */
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
-		// Sets the current view port to the new size.
+		// Establece el tamaño del viewport
 		gl.glViewport(0, 0, width, height);
-		// Select the projection matrix
+		// Selecciona la matriz de proyección
 		gl.glMatrixMode(GL10.GL_PROJECTION);
-		// Reset the projection matrix
+		// Reinicia la matriz de proyección
 		gl.glLoadIdentity();
-		// Calculate the aspect ratio of the window
-		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f,
-				100.0f);
-		// Select the modelview matrix
+		// Calcula la relación de aspecto de la ventanta
+		GLU.gluPerspective(gl, 45.0f, (float) width / (float) height, 0.1f, 100.0f);
+		// Selecciona la matriz del modelview
 		gl.glMatrixMode(GL10.GL_MODELVIEW);
-		// Reset the modelview matrix
+		// Reinicia la matriz del modelview
 		gl.glLoadIdentity();
 	}
 }

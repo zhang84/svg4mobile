@@ -1,6 +1,6 @@
 /* 
  * svg4mobile - A project to use SVG files in mobile devices
- * Copyright (C) 2010  Daniel Lahoz, Daniel Rivera, �lvaro Tanarro and Luis Torrrico
+ * Copyright (C) 2010  Daniel Lahoz, Daniel Rivera, Álvaro Tanarro and Luis Torrrico
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,18 +30,23 @@ import android.view.WindowManager;
 import android.util.Log;
 
 /**
-* @author Daniel Lahoz
-* @author Daniel Rivera
-* @author Álvaro Tanarro
-* @author Luis Torrrico
-* @version 0.1
-*/
+ * 
+ * @author Daniel Lahoz
+ * @author Daniel Rivera
+ * @author Álvaro Tanarro
+ * @author Luis Torrrico
+ * @version 0.1
+ */
 public class Svg4mobile extends Activity {
     /**
-     * Called when the activity is first created.
+     * Se ejecuta al iniciar la aplicación.
      */
 	private OpenGLRenderer renderer;
 	private Menu menu;
+	private float xtemp;
+	private float prevx;
+	private float x_mouse = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -55,6 +60,11 @@ public class Svg4mobile extends Activity {
    		setContentView(view);
     }
 
+    /**
+     * Se ejecuta cuando se crea el menu
+     * @param menu
+     * @return Devuelve true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -73,11 +83,14 @@ public class Svg4mobile extends Activity {
        MenuItem autoCompassSync = this.menu.add(2,5,1,"Autonortear"); //Autonortear
        compassSync.setIcon(android.R.drawable.ic_menu_rotate);
        autoCompassSync.setIcon(android.R.drawable.ic_menu_compass);
-       
-       //It is important to return true to see the menu
        return true;
     }
-   
+   /**
+    * Manejador de teclas
+    * @param keyCode Código de tecla
+    * @param event Evento de tecla
+    * @return Devuelve true
+    */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
       switch (keyCode) {
@@ -129,6 +142,11 @@ public class Svg4mobile extends Activity {
       }
       return true;
     }
+    
+    /**
+     * Manejador de los botones del menu
+     * @param item Elemento del menu
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) 
     {
@@ -141,14 +159,17 @@ public class Svg4mobile extends Activity {
        else if (item.getItemId() == 3) {
     	   this.renderer.zoomIn();
        }
-       //should return true if the menu item
-       //is handled
        return true;
     }
 
-    
+    /**
+     * Maneja los eventos táctiles.
+     * @param event Evento
+     * @return Devuelve true si se ha producido algún evento táctil.
+     */
     public boolean onTouchEvent(MotionEvent event)
     {
+    	/*
             int startX=0;
             int startY=0;
             int endX;
@@ -189,7 +210,7 @@ public class Svg4mobile extends Activity {
                             else
                     {
                         resX = (endX-startX);
-                    }*/
+                    } * /
                    
                        
                     if(resX <  0)
@@ -219,6 +240,43 @@ public class Svg4mobile extends Activity {
             }
                    
         return false;
+        */
+    	int action = event.getAction();
+    	switch (action)
+        {
+               
+        case MotionEvent.ACTION_DOWN:
+        	xtemp = event.getX();
+        	x_mouse = xtemp;
+            return true;
+
+        case MotionEvent.ACTION_MOVE:
+        	prevx = x_mouse;
+        	x_mouse = event.getX();
+        	if (xtemp < x_mouse && x_mouse > prevx)    	  
+      		  this.renderer.camLeft();
+      	  	else
+      		  this.renderer.camRight();
+        	return true;
+        }
+        	
+    	/*if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) 
+    	{    	  
+    	  float x_mouse = event.getX();
+    	  Log.v("svg4mobile", Float.toString(x_mouse));
+    	  //float width = getWidth();
+    	  int progress = (int) (x_mouse / 10);
+
+    	  if (progress < 0)    	  
+    		  this.renderer.camLeft();
+    	  else
+    		  this.renderer.camRight();
+
+    	  //if (listener != null)    	  
+    		//  listener.onProgressChanged(this, progress);
+    	}*/
+
+    	return true;
     }
 
 }
