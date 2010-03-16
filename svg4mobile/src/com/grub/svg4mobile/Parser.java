@@ -75,7 +75,7 @@ public class Parser {
 				// fill:#rrggbb;fill-opacity:1;...
 				String rgb = style.substring(style.indexOf(":")+1);
 				rgb = rgb.substring(0,rgb.indexOf(";"));
-				BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0);
+				BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0, new Transformations());
 				elementos.add(rectangulo);
 			}
 			//else ...

@@ -12,25 +12,7 @@ public class BRect extends Figure {
 	private Line borderDown;
 	private Line borderLeft;
 	private Line borderRight;
-	/*
-	transform="matrix(0.69743725,0.71664586,-0.71664586,0.69743725,0,0)"
-	private float[] tmatrix = {0.69743725f,	-0.71664586f,	0,0,
-							   0.71664586f,	0.69743725f, 	0,0,
-							   0,			0,				0,0,
-							   0,			0,				0,1};
-	es decir
-	transform="matrix(a,b,c,d,e,f)" tmatrix = {a,c,e,0,
-											   b,d,f,0,
-											   0,0,0,0,
-											   0,0,0,1};
-	*/
-	private float[] tmatrix = {1,0,0,0,
-							   0,1,0,0,
-							   0,0,1,0,
-							   0,0,0,1};
-	private float rotation_angle = 0;
-	private float scalex = 1, scaley = 1;
-	private float translatex = 0, translatey = 0;
+	private Transformations tr;
 	
 	/**
 	 * Crea un rectángulo con borde
@@ -42,9 +24,9 @@ public class BRect extends Figure {
 	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
 	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
 	 */
-	public BRect(float x, float y, float w, float h, String rgb, String brgb, float bwidth) {
+	public BRect(float x, float y, float w, float h, String rgb, String brgb, float bwidth, Transformations tr) {
 		// TODO: cargar parámetros transform
-		
+		this.tr = tr;
 		this.shape = new Rect(x,y,w,h,rgb);
 		this.hasWidth = ( bwidth > 0);
 		if (this.hasWidth) {
@@ -59,12 +41,10 @@ public class BRect extends Figure {
 	 * @param gl
 	 */
 	public void draw(GL10 gl) {
+		
 		//Se aplican las transformaciones a la figura
 		gl.glPushMatrix();
-		gl.glMultMatrixf(tmatrix, 0);
-		gl.glRotatef(this.rotation_angle, 0, 0, 1.0f);
-		gl.glScalef(this.scalex, this.scaley, 1.0f);
-		gl.glTranslatef(this.translatex, this.translatey, 0);
+		this.tr.applyTransformations(gl);
 		
 		this.shape.draw(gl);
 		if (this.hasWidth) {
