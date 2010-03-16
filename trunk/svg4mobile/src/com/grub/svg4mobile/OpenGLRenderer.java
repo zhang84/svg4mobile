@@ -7,6 +7,7 @@ import java.util.Vector;
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 //import android.util.Log;
+import android.util.Log;
 
 public class OpenGLRenderer implements Renderer {
 	private float zoom;
@@ -125,6 +126,9 @@ public class OpenGLRenderer implements Renderer {
 		gl.glEnable(GL10.GL_DEPTH_TEST);
 		// The type of depth testing to do.
 		gl.glDepthFunc(GL10.GL_LEQUAL);
+		
+        gl.glEnable(GL10.GL_TEXTURE_2D);
+
 		// Really nice perspective calculations.
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
 		this.camReset();
@@ -138,21 +142,32 @@ public class OpenGLRenderer implements Renderer {
 	 * khronos.opengles.GL10)
 	 */
 	public void onDrawFrame(GL10 gl) {
+		//Rendimiento
+        gl.glDisable(GL10.GL_DITHER);
+        gl.glTexEnvx(GL10.GL_TEXTURE_ENV, GL10.GL_TEXTURE_ENV_MODE, GL10.GL_MODULATE);
+
 		// Limpia la pantalla y el buffer de profundidad.
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+		
 		// Reemplaza la matriz actual con la matriz Identidad
 		gl.glLoadIdentity();
 		
 		//Ajusta la cámara
 		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
-		//Log.v("svg4mobile", "///");
-
+		Log.v("svg4mobile", this.xposcam+"/"+this.yposcam+"/"+this.zoom);
+		
 		//BRect doc = new BRect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
 		//doc.draw(gl);
 		
-		BRect prueba = new BRect(-1f, -1f, 3, 3, "#0000FF", "#FF0000", 2f); 
+		BRect prueba = new BRect(-1f, -1f, 3, 3, "#0000FF", "#FF0000", 2f, new Transformations()); 
 		prueba.draw(gl);
 		
+		/*Text pruebatexto = new Text(10, 8, 12, "#00FF00");
+		pruebatexto.draw(gl);
+		
+		Text pruebatexto2 = new Text(10, 16, 12, "#00FF00");
+		pruebatexto2.draw(gl);*/
+			
 		Line pruebaline= new Line(4.5f, -4.5f, 0.5f, 0.5f, "#00FF00", 10f);
 		pruebaline.draw(gl);
 		
