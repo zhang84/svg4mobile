@@ -43,9 +43,9 @@ public class Svg4mobile extends Activity {
      */
 	private OpenGLRenderer renderer;
 	private Menu menu;
-	private float xtemp;
-	private float prevx;
-	private float x_mouse = 0;
+	private float xtemp, ytemp;
+	private float prevx, prevy;
+	private float x_mouse = 0, y_mouse =0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -167,114 +167,33 @@ public class Svg4mobile extends Activity {
      * @param event Evento
      * @return Devuelve true si se ha producido algún evento táctil.
      */
-    public boolean onTouchEvent(MotionEvent event)
-    {
-    	/*
-            int startX=0;
-            int startY=0;
-            int endX;
-            int endY;
-            int resY;
-            int resX;
-            // float mAngle_x=0;
-            // float mAngle_y=0;
-            switch (event.getAction())
-            {
-                   
-            case MotionEvent.ACTION_DOWN:
-                       
-                    startX= (int)event.getX();
-                    startY= (int)event.getY();                         
-                    return true;
-
-            case MotionEvent.ACTION_MOVE:
-                       
-                    endX = (int)event.getX();
-                    endY= (int)event.getY();
-                    resY= endY-startY;
-                    resX= endX-startX;
-                    
-                    /*if((endY-startY)<0)
-                    {
-                        resY= -(endY-startY);
-                    }
-                    else
-                    {
-                        resY= (endY-startY);
-                    }
-                   
-                    if((endX -startX < 0))
-                    {
-                        resX= -(endX-startX);
-                    }
-                            else
-                    {
-                        resX = (endX-startX);
-                    } * /
-                   
-                       
-                    if(resX <  0)
-                    {
-                        this.renderer.camRight();
-                    } else {
-                    	this.renderer.camLeft();
-                    }
-                       
-                       
-                    if(resY<0)
-                    {
-                    	this.renderer.camUp();
-                    } else {
-                    	this.renderer.camDown();
-                    }
-                    Log.v("svg4mobile", "startX: " + startX + ", startY: " + startY);
-                    Log.v("svg4mobile", "endX: " + endX + ", endY: " + endY);
-
-                    Log.v("svg4mobile", "resX: " + resX + ", resY: " + resY);
-                    //obj.rotateY(mAngle_y); 
-                    //obj.rotateZ(mAngle_x);
-                    //this.renderer.setY(resY/100);
-                    //this.renderer.setX(resX/100);
-                    return true;
-                                                               
-            }
-                   
-        return false;
-        */
+    public boolean onTouchEvent(MotionEvent event) {
     	int action = event.getAction();
-    	switch (action)
-        {
+    	switch (action) {
                
         case MotionEvent.ACTION_DOWN:
         	xtemp = event.getX();
+        	ytemp = event.getY();
         	x_mouse = xtemp;
+        	y_mouse = ytemp;
             return true;
 
         case MotionEvent.ACTION_MOVE:
         	prevx = x_mouse;
+        	prevy = y_mouse;
+        	
         	x_mouse = event.getX();
         	if (xtemp < x_mouse && x_mouse > prevx)    	  
       		  this.renderer.camLeft();
       	  	else
       		  this.renderer.camRight();
+        	y_mouse = event.getY();
+        	if (ytemp < y_mouse && y_mouse > prevy)    	  
+        	  this.renderer.camUp();
+        	else
+        	  this.renderer.camDown();
         	return true;
         }
-        	
-    	/*if (action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_MOVE) 
-    	{    	  
-    	  float x_mouse = event.getX();
-    	  Log.v("svg4mobile", Float.toString(x_mouse));
-    	  //float width = getWidth();
-    	  int progress = (int) (x_mouse / 10);
-
-    	  if (progress < 0)    	  
-    		  this.renderer.camLeft();
-    	  else
-    		  this.renderer.camRight();
-
-    	  //if (listener != null)    	  
-    		//  listener.onProgressChanged(this, progress);
-    	}*/
 
     	return true;
     }

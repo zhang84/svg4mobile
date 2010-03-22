@@ -15,11 +15,23 @@ public class OpenGLRenderer implements Renderer {
 	private float yposcam;
 	private float x2poscam;
 	private float y2poscam;
-	//private static double SMOOTHNESS = .0001;
+	private float rotcam;
+	private static double SMOOTHNESS = .02;
 	private Vector<Object> v = new Vector<Object>();
 	private Parser parser = new Parser();
 	private float width, height;
 	
+
+	
+	
+	
+	
+	
+	
+	
+	private BRect doc =    new BRect( 0f,  0f, 200, 200, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
+	private BRect prueba = new BRect(-1f, -1f,   3,   3, "#0000FF", "#FF0000", 2f, new Transformations()); 
+	private Text pruebatexto = new Text(-10, 8, 12, "#00FF00");
 	/**
 	 * Constructor
 	 */
@@ -36,6 +48,7 @@ public class OpenGLRenderer implements Renderer {
 	/**
 	 * Incrementa la posición de la cámara en el eje Y 
 	 * @param d
+	 * @deprecated
 	 */
 	public void incX(double d) {
 		this.xposcam+=d;
@@ -44,6 +57,7 @@ public class OpenGLRenderer implements Renderer {
 	/**
 	 * Incrementa la posición de la cámara en el eje Y 
 	 * @param d
+	 * @deprecated
 	 */
 	public void incY(double d) {
 		this.yposcam+=d;
@@ -58,7 +72,8 @@ public class OpenGLRenderer implements Renderer {
 		this.xposcam=0;
 		this.yposcam=0;
 		this.x2poscam=0;
-		this.y2poscam=0;	
+		this.y2poscam=0;
+		this.rotcam=0;
 	}
 	
 	/**
@@ -71,39 +86,56 @@ public class OpenGLRenderer implements Renderer {
 	/**
 	 * Aleja la cámara
 	*/
-	public void zoomOut() { this.zoom++; }
+	public void zoomOut() {
+		if (this.zoom < 100) this.zoom++;
+	
+	}
 	
 	/**
-	 * Mueve la cámara a la izquierda
+	 * Rota la cámara
+	 * @param angle Ángulo en grados
 	 */
-	public void camRight() {
-		/*double i;
-		for (i=0; i<=1; i+=SMOOTHNESS) {
-			this.xposcam+=SMOOTHNESS; this.x2poscam=this.xposcam; }
-		*/
-		if (this.xposcam < this.width) { this.xposcam++; this.x2poscam=this.xposcam; }
+	public void setNorth(float angle) {
+		this.rotcam=angle;
+	}
+	
+	/**
+	 * Posiciona la cámara
+	 * @param angle Ángulo en el que se moverá la cámara en grados.
+	 */
+	private void posCam(float angle) {
+		angle = (float) Math.toRadians( angle - this.rotcam );
+		this.xposcam+=(float) (SMOOTHNESS*this.zoom)*Math.cos(angle); this.x2poscam=this.xposcam;
+		this.yposcam+=(float) (SMOOTHNESS*this.zoom)*Math.sin(angle); this.y2poscam=this.yposcam; 
 	}
 	
 	/**
 	 * Mueve la cámara a la derecha
 	 */
-	public void camLeft() { 
-		if (this.xposcam > 0) { this.xposcam--; this.x2poscam=this.xposcam; }	 
+	public void camRight() {
+		posCam(0);
 	}
 	
 	/**
-	 * Mueve la cámara hacia abajo
+	 * Mueve la cámara a la izquierda
 	 */
-	public void camUp() { 
-		if (this.yposcam < this.height) { this.yposcam++; this.y2poscam=this.yposcam; } 
+	public void camLeft() {
+		posCam(180);
 	}
 	
 	/**
 	 * Mueve la cámara hacia arriba
 	 */
+	public void camUp() {
+		posCam(90);
+	}
+	
+	/**
+	 * Mueve la cámara hacia abajo
+	 */
 	public void camDown() {
-		if (this.yposcam > 0) { this.yposcam--; this.y2poscam=this.yposcam; }
-		}
+		posCam(270);
+	}
 	
 	/**
 	 * Se ejecuta al crear la surface
@@ -131,6 +163,10 @@ public class OpenGLRenderer implements Renderer {
 
 		// Really nice perspective calculations.
 		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST);
+		
+		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
+		gl.glDisable(GL10.GL_TEXTURE_2D);
+
 		this.camReset();
 	}
 
@@ -153,19 +189,18 @@ public class OpenGLRenderer implements Renderer {
 		gl.glLoadIdentity();
 		
 		//Ajusta la cámara
+		gl.glRotatef(this.rotcam, 0.f, 0.f, 1.f);
 		GLU.gluLookAt(gl, this.xposcam, this.yposcam, this.zoom, this.x2poscam, this.y2poscam, 0, 0, 1, 0);
-		Log.v("svg4mobile", this.xposcam+"/"+this.yposcam+"/"+this.zoom);
+		//Log.v("svg4mobile", this.xposcam+"/"+this.yposcam+"/"+this.zoom);
 		
-		//BRect doc = new BRect(0f, 0f, this.width, this.height, "#FFFF9C", "#FFFFFF", 3f); 
-		//doc.draw(gl);
 		
-		BRect prueba = new BRect(-1f, -1f, 3, 3, "#0000FF", "#FF0000", 2f, new Transformations()); 
+		doc.draw(gl);
 		prueba.draw(gl);
 		
-		/*Text pruebatexto = new Text(10, 8, 12, "#00FF00");
-		pruebatexto.draw(gl);
 		
-		Text pruebatexto2 = new Text(10, 16, 12, "#00FF00");
+		//pruebatexto.draw(gl);
+		/*
+		Text pruebatexto2 = new Text(-10, 26, 12, "#00FF00");
 		pruebatexto2.draw(gl);*/
 			
 		Line pruebaline= new Line(4.5f, -4.5f, 0.5f, 0.5f, "#00FF00", 10f);
