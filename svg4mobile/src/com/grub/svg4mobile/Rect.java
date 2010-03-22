@@ -6,8 +6,6 @@ import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
 import android.graphics.Color;
-import android.util.Log;
-
 import javax.microedition.khronos.opengles.GL10;
 
 public class Rect extends Figure{
