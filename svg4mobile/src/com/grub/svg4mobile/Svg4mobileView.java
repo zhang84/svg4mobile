@@ -1,13 +1,9 @@
 package com.grub.svg4mobile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Camera;
-import android.graphics.Paint;
-import android.os.Bundle;
 import android.view.View;
 
 public class Svg4mobileView extends View{
