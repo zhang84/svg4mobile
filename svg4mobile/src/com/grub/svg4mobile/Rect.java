@@ -7,7 +7,6 @@ import android.graphics.RectF;
 
 public class Rect extends Figure{
 	
-	private float x1, x2, y1, y2;
 	private Paint paint;
 	private RectF rectElement;
 	
@@ -18,10 +17,12 @@ public class Rect extends Figure{
 		this.paint = new Paint();		
 		this.paint.setColor(Color.parseColor(rgb));
 		this.paint.setAntiAlias(true);
+		this.paint.setStrokeWidth(10);
+
 		
 	}
 	
-	public void Draw (Canvas canvas){
+	public void draw (Canvas canvas){
 		canvas.drawRect(this.rectElement, this.paint);
 	}
 	

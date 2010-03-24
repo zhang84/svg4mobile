@@ -22,10 +22,10 @@ public class Svg4mobileView extends View{
 	private float width, height;
 
 	
-	private Rect doc =    new Rect( 0f,  0f, 200, 200, "#FFFF9C"); 
-	private Rect prueba = new Rect(-1f, -1f,   3,   3, "#0000FF"); 
-	//private BRect doc =    new BRect( 0f,  0f, 200, 200, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
-	//private BRect prueba = new BRect(-1f, -1f,   3,   3, "#0000FF", "#FF0000", 2f, new Transformations()); 
+	//private Rect doc =    new Rect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C"); 
+	//private Rect prueba = new Rect(54.642841f, 305.49658f, 98.571426f, 196.42857f, "#FFD700"); 
+	private BRect doc =    new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
+	private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
 	//private Text pruebatexto = new Text(-10, 8, 12, "#00FF00");
 
 	//private Line myLine;
@@ -268,8 +268,8 @@ public class Svg4mobileView extends View{
 		*/
 
 		
-		doc.Draw(canvas);
-		prueba.Draw(canvas);
+		doc.draw(canvas);
+		prueba.draw(canvas);
     	//myLine.Draw(canvas);
     	//myRect.Draw(canvas);
 		camera.restore();
