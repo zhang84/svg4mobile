@@ -1,29 +1,28 @@
 package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 
-public class Rect {
+public class Rect extends Figure{
 	
 	private float x1, x2, y1, y2;
 	private Paint paint;
+	private RectF rectElement;
 	
-	public Rect (float izq, float arriba, float drch, float abajo, int color){
-		this.x1 = izq;
-		this.y1 = arriba;
+	public Rect (float x, float y, float w, float h, String rgb){
+				
+		this.rectElement = new RectF(x, y, w, h);
 		
-		this.x2 = drch;
-		this.y2 = abajo;
-		
-		this.paint = new Paint();
-		
-		this.paint.setColor(color);
+		this.paint = new Paint();		
+		this.paint.setColor(Color.parseColor(rgb));
 		this.paint.setAntiAlias(true);
 		
 	}
 	
 	public void Draw (Canvas canvas){
-		canvas.drawRect(this.x1, this.y1, this.x2, this.y2, this.paint);
+		canvas.drawRect(this.rectElement, this.paint);
 	}
 	
 }

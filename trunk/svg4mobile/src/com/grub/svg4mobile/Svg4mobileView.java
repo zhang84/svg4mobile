@@ -6,33 +6,30 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Camera;
+import android.util.Log;
 import android.view.View;
 
 public class Svg4mobileView extends View{
+	private static final double ZOOMFACTOR = 10;
 	private Camera camera = new Camera();
 	private float zoom;
-	private float xposcam, x2poscam;
-	private float yposcam, y2poscam;
+	private float xposcam;
+	private float yposcam;
 	private float rotcam;
-	private static double SMOOTHNESS = 100.0;
+	private static double SMOOTHNESS = 5.0;
 	private Vector<Object> v = new Vector<Object>();
 	private Parser parser = new Parser();
 	private float width, height;
-	
 
 	
-	
-	
-	
-	
-	
-	
+	private Rect doc =    new Rect( 0f,  0f, 200, 200, "#FFFF9C"); 
+	private Rect prueba = new Rect(-1f, -1f,   3,   3, "#0000FF"); 
 	//private BRect doc =    new BRect( 0f,  0f, 200, 200, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	//private BRect prueba = new BRect(-1f, -1f,   3,   3, "#0000FF", "#FF0000", 2f, new Transformations()); 
 	//private Text pruebatexto = new Text(-10, 8, 12, "#00FF00");
 
-	private Line myLine;
-    private Rect myRect;
+	//private Line myLine;
+    //private Rect myRect;
     
 	/**
 	 * Constructor
@@ -43,9 +40,9 @@ public class Svg4mobileView extends View{
         setFocusable(true);
         setFocusableInTouchMode(true);
         
-        myLine = new Line(10, 20, 30, 40, Color.WHITE);
-        
-        myRect = new Rect(100, 100, 200, 200, Color.CYAN);
+        //myLine = new Line(10, 20, 30, 40, Color.WHITE);
+        //myRect = new Rect(100, 100, 200, 200, Color.CYAN);
+        camReset();
 	}
 	
 	/**
@@ -55,7 +52,6 @@ public class Svg4mobileView extends View{
 	 */
 	public void incX(double d) {
 		this.xposcam+=d;
-		this.x2poscam=this.xposcam;
 	}
 	/**
 	 * Incrementa la posición de la cámara en el eje Y 
@@ -64,33 +60,34 @@ public class Svg4mobileView extends View{
 	 */
 	public void incY(double d) {
 		this.yposcam+=d;
-		this.y2poscam=this.yposcam;
 	}
 	
 	/**
 	 * Resetea los valores de posición de la cámara.
 	 */
 	public void camReset() {
-		this.zoom=8;
+		this.zoom=1;
 		this.xposcam=0;
 		this.yposcam=0;
-		this.x2poscam=0;
-		this.y2poscam=0;
 		this.rotcam=0;
+		this.invalidate();
 	}
 	
 	/**
 	 * Acerca la cámara
 	*/
 	public void zoomIn() {
-		if (this.zoom > 1) this.zoom--;
+		if (this.zoom > 1) this.zoom-=ZOOMFACTOR;
+		this.invalidate();
 	}
 	
 	/**
 	 * Aleja la cámara
 	*/
 	public void zoomOut() {
-		if (this.zoom < 100) this.zoom++;
+		//if (this.zoom < 100) 
+		this.zoom+=ZOOMFACTOR;
+		this.invalidate();
 	
 	}
 	
@@ -100,6 +97,7 @@ public class Svg4mobileView extends View{
 	 */
 	public void setNorth(float angle) {
 		this.rotcam=angle;
+		this.invalidate();
 	}
 	
 	/**
@@ -108,36 +106,41 @@ public class Svg4mobileView extends View{
 	 */
 	private void posCam(float angle) {
 		angle = (float) Math.toRadians( angle - this.rotcam );
-		this.xposcam+=(float) (SMOOTHNESS*this.zoom)*Math.cos(angle); this.x2poscam=this.xposcam;
-		this.yposcam+=(float) (SMOOTHNESS*this.zoom)*Math.sin(angle); this.y2poscam=this.yposcam; 
+		this.xposcam+=(float) (SMOOTHNESS*this.zoom)*Math.cos(angle);
+		this.yposcam+=(float) (SMOOTHNESS*this.zoom)*Math.sin(angle);
+		this.invalidate();
 	}
 	
 	/**
 	 * Mueve la cámara a la derecha
 	 */
 	public void camRight() {
-		posCam(0);
+		this.xposcam+=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);
+		this.invalidate();
 	}
 	
 	/**
 	 * Mueve la cámara a la izquierda
 	 */
 	public void camLeft() {
-		posCam(180);
+		this.xposcam-=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);
+		this.invalidate();
 	}
 	
 	/**
 	 * Mueve la cámara hacia arriba
 	 */
 	public void camUp() {
-		posCam(90);
+		this.yposcam+=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);
+		this.invalidate();
 	}
 	
 	/**
 	 * Mueve la cámara hacia abajo
 	 */
 	public void camDown() {
-		posCam(270);
+		this.yposcam-=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);	
+		this.invalidate();
 	}
 	
 	/**
@@ -155,7 +158,7 @@ public class Svg4mobileView extends View{
 		camera.translate(this.xposcam, this.yposcam, this.zoom);
 		camera.rotateZ(this.rotcam);
 		camera.applyToCanvas(canvas);
-		
+		Log.v("svg4mobile", "draw");
 		
 		// custom drawing code here
 		// remember: y increases from top to bottom
@@ -263,14 +266,13 @@ public class Svg4mobileView extends View{
 		canvas.drawLine(0, 300 , 320, 300, paint);
 		
 		*/
-		
-		
-		
-		
-    	myLine.Draw(canvas);
-    	myRect.Draw(canvas);
-		
 
+		
+		doc.Draw(canvas);
+		prueba.Draw(canvas);
+    	//myLine.Draw(canvas);
+    	//myRect.Draw(canvas);
+		camera.restore();
 	}
 
 }
