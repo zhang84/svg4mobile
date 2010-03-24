@@ -80,24 +80,24 @@ public class Svg4mobile extends Activity {
         }        
         case KeyEvent.KEYCODE_DPAD_LEFT: {
           // Mueve la cámara hacia la derecha
-        	this.view.camLeft();
+        	this.view.camRight();
           break;
         }
         case KeyEvent.KEYCODE_DPAD_RIGHT: {
           // Mueve la cámara hacia la izquierda
-          this.view.getRight();
+          this.view.camLeft();
           break;
         }
         case KeyEvent.KEYCODE_DPAD_UP: {
           // Mueve la cámara hacia abajo
           //this.renderer.zoomOut();
-        	this.view.camUp();
+        	this.view.camDown();
           break;
         }
         case KeyEvent.KEYCODE_DPAD_DOWN: {
         	// Mueve la cámara hacia arriba
         	//this.renderer.zoomIn();
-        	this.view.camDown();
+        	this.view.camUp();
         	break;
         }
         case KeyEvent.KEYCODE_Z: {
@@ -164,14 +164,14 @@ public class Svg4mobile extends Activity {
         	
         	x_mouse = event.getX();
         	if (xtemp < x_mouse && x_mouse > prevx)    	  
-      		  this.view.camLeft();
+      		  this.view.camRight();
       	  	else
-      		  this.view.getRight();
+      		  this.view.camLeft();
         	y_mouse = event.getY();
         	if (ytemp < y_mouse && y_mouse > prevy)    	  
-        	  this.view.camUp();
-        	else
         	  this.view.camDown();
+        	else
+        	  this.view.camUp();
         	return true;
         }
 
