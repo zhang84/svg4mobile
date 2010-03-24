@@ -4,7 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
-public class Line {
+public class Line extends Figure {
 	
 	private float x1, x2, y1, y2;
 	private Paint paint;

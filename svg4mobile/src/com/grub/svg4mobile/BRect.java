@@ -40,10 +40,9 @@ public class BRect extends Figure {
 	 * @param gl
 	 */
 	public void draw(Canvas canvas) {
-		
 		//Se aplican las transformaciones a la figura
-		//this.tr.applyTransformations(gl);
-		
+		canvas.save();
+		canvas = this.tr.applyTransformations(canvas);
 		this.shape.draw(canvas);
 		if (this.hasWidth) {
 			this.borderTop.draw(canvas);
@@ -51,7 +50,7 @@ public class BRect extends Figure {
 			this.borderLeft.draw(canvas);
 			this.borderRight.draw(canvas);
 		}
-		
+		canvas.restore();
 	}
 	
 }
