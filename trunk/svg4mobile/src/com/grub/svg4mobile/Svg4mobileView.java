@@ -26,7 +26,7 @@ public class Svg4mobileView extends View{
 	//private Rect prueba = new Rect(54.642841f, 305.49658f, 98.571426f, 196.42857f, "#FFD700"); 
 	private BRect doc =    new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
-	//private Text pruebatexto = new Text(-10, 8, 12, "#00FF00");
+	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!ñóá", "#FF0000");
 
 	//private Line myLine;
     //private Rect myRect;
@@ -66,7 +66,7 @@ public class Svg4mobileView extends View{
 	 * Resetea los valores de posición de la cámara.
 	 */
 	public void camReset() {
-		this.zoom=1;
+		this.zoom=100;
 		this.xposcam=0;
 		this.yposcam=0;
 		this.rotcam=0;
@@ -97,17 +97,6 @@ public class Svg4mobileView extends View{
 	 */
 	public void setNorth(float angle) {
 		this.rotcam=angle;
-		this.invalidate();
-	}
-	
-	/**
-	 * Posiciona la cámara
-	 * @param angle Ángulo en el que se moverá la cámara en grados.
-	 */
-	private void posCam(float angle) {
-		angle = (float) Math.toRadians( angle - this.rotcam );
-		this.xposcam+=(float) (SMOOTHNESS*this.zoom)*Math.cos(angle);
-		this.yposcam+=(float) (SMOOTHNESS*this.zoom)*Math.sin(angle);
 		this.invalidate();
 	}
 	
@@ -270,6 +259,7 @@ public class Svg4mobileView extends View{
 		
 		doc.draw(canvas);
 		prueba.draw(canvas);
+		pruebatexto.draw(canvas);
     	//myLine.Draw(canvas);
     	//myRect.Draw(canvas);
 		camera.restore();

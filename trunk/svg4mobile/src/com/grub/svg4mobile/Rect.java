@@ -16,10 +16,7 @@ public class Rect extends Figure{
 		
 		this.paint = new Paint();		
 		this.paint.setColor(Color.parseColor(rgb));
-		this.paint.setAntiAlias(true);
-		this.paint.setStrokeWidth(10);
-
-		
+		this.paint.setAntiAlias(true);		
 	}
 	
 	public void draw (Canvas canvas){

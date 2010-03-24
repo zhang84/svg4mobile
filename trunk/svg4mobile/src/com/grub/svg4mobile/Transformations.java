@@ -1,14 +1,13 @@
 package com.grub.svg4mobile;
 
-import javax.microedition.khronos.opengles.GL10;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 
 public class Transformations {
-	private float[] tmatrix = {1,0,0,0,
-			   0,1,0,0,
-			   0,0,1,0,
-			   0,0,0,1};
-	private float[] skewxmatrix = tmatrix;
-	private float[] skewymatrix = tmatrix;
+	private float[] tmatrix = {1,0,0,
+							   0,1,0,
+							   0,0,1};
+	private float skewx=0, skewy=0;
 	private float rotation_angle = 0;
 	private float scalex = 1, scaley = 1;
 	private float translatex = 0, translatey = 0;
@@ -23,18 +22,17 @@ public class Transformations {
 	 */
 	public void setTMatrix(float[] tmatrix) {
 		/*
-		transform="matrix(a,b,c,d,e,f)" ==> tmatrix = {	a,c,e,0,
-												   		b,d,f,0,
-												   		0,0,0,0,
-												   		0,0,0,1};
+		transform="matrix(a,b,c,d,e,f)" ==> tmatrix = {	a,c,e,
+												   		b,d,f,
+												   		0,0,1};
 		*/
 		if (tmatrix.length==6) {
 			this.tmatrix[0] = tmatrix[0];
 			this.tmatrix[1] = tmatrix[2];
 			this.tmatrix[2] = tmatrix[4];
-			this.tmatrix[4] = tmatrix[1];
-			this.tmatrix[5] = tmatrix[3];
-			this.tmatrix[6] = tmatrix[5];
+			this.tmatrix[3] = tmatrix[1];
+			this.tmatrix[4] = tmatrix[3];
+			this.tmatrix[5] = tmatrix[5];
 		}
 	}
 	
@@ -89,27 +87,28 @@ public class Transformations {
 	 * @param skew_anglex
 	 */
 	public void setSkewX(float skew_anglex) {
-		this.skewxmatrix[1]=(float) Math.tan(skew_anglex);
+		this.skewx=skew_anglex;
 	}
 	/**
 	 * 
 	 * @param skew_angley
 	 */
 	public void setSkewY(float skew_angley) {
-		this.skewymatrix[4]=(float) Math.tan(skew_angley);
+		this.skewy=skew_angley;
 		}
 	
 	/**
 	 * Aplica las transformaciones a la matriz ModelView
 	 * @param gl
 	 */
-	public void applyTransformations(GL10 gl) {
-		gl.glMultMatrixf(tmatrix, 0);
-		gl.glMultMatrixf(skewxmatrix, 0);
-		gl.glMultMatrixf(skewymatrix, 0);		
-		gl.glRotatef(this.rotation_angle, 0, 0, 1.0f);
-		gl.glScalef(this.scalex, this.scaley, 1.0f);
-		gl.glTranslatef(this.translatex, this.translatey, 0);
-
+	public Canvas applyTransformations(Canvas canvas) {
+		//Matrix m = canvas.getMatrix();
+		//m.setValues(this.tmatrix);
+		//canvas.setMatrix(m);
+		canvas.rotate(this.rotation_angle);
+		canvas.skew(this.skewx, this.skewy);
+		canvas.scale(this.scalex, this.scaley);
+		canvas.translate(this.translatex, this.translatey);
+		return canvas;
 	}
 }
