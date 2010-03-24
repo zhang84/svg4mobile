@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import java.util.Vector;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,11 +10,33 @@ import android.view.View;
 
 public class Svg4mobileView extends View{
 	private Camera camera = new Camera();
+	private float zoom;
+	private float xposcam, x2poscam;
+	private float yposcam, y2poscam;
+	private float rotcam;
+	private static double SMOOTHNESS = 100.0;
+	private Vector<Object> v = new Vector<Object>();
+	private Parser parser = new Parser();
+	private float width, height;
+	
+
 	
 	
+	
+	
+	
+	
+	
+	//private BRect doc =    new BRect( 0f,  0f, 200, 200, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
+	//private BRect prueba = new BRect(-1f, -1f,   3,   3, "#0000FF", "#FF0000", 2f, new Transformations()); 
+	//private Text pruebatexto = new Text(-10, 8, 12, "#00FF00");
+
 	private Line myLine;
     private Rect myRect;
     
+	/**
+	 * Constructor
+	 */
 	public Svg4mobileView(Context context){
 		super(context);
 		
@@ -23,14 +47,113 @@ public class Svg4mobileView extends View{
         
         myRect = new Rect(100, 100, 200, 200, Color.CYAN);
 	}
-
+	
+	/**
+	 * Incrementa la posición de la cámara en el eje Y 
+	 * @param d
+	 * @deprecated
+	 */
+	public void incX(double d) {
+		this.xposcam+=d;
+		this.x2poscam=this.xposcam;
+	}
+	/**
+	 * Incrementa la posición de la cámara en el eje Y 
+	 * @param d
+	 * @deprecated
+	 */
+	public void incY(double d) {
+		this.yposcam+=d;
+		this.y2poscam=this.yposcam;
+	}
+	
+	/**
+	 * Resetea los valores de posición de la cámara.
+	 */
+	public void camReset() {
+		this.zoom=8;
+		this.xposcam=0;
+		this.yposcam=0;
+		this.x2poscam=0;
+		this.y2poscam=0;
+		this.rotcam=0;
+	}
+	
+	/**
+	 * Acerca la cámara
+	*/
+	public void zoomIn() {
+		if (this.zoom > 1) this.zoom--;
+	}
+	
+	/**
+	 * Aleja la cámara
+	*/
+	public void zoomOut() {
+		if (this.zoom < 100) this.zoom++;
+	
+	}
+	
+	/**
+	 * Rota la cámara
+	 * @param angle Ángulo en grados
+	 */
+	public void setNorth(float angle) {
+		this.rotcam=angle;
+	}
+	
+	/**
+	 * Posiciona la cámara
+	 * @param angle Ángulo en el que se moverá la cámara en grados.
+	 */
+	private void posCam(float angle) {
+		angle = (float) Math.toRadians( angle - this.rotcam );
+		this.xposcam+=(float) (SMOOTHNESS*this.zoom)*Math.cos(angle); this.x2poscam=this.xposcam;
+		this.yposcam+=(float) (SMOOTHNESS*this.zoom)*Math.sin(angle); this.y2poscam=this.yposcam; 
+	}
+	
+	/**
+	 * Mueve la cámara a la derecha
+	 */
+	public void camRight() {
+		posCam(0);
+	}
+	
+	/**
+	 * Mueve la cámara a la izquierda
+	 */
+	public void camLeft() {
+		posCam(180);
+	}
+	
+	/**
+	 * Mueve la cámara hacia arriba
+	 */
+	public void camUp() {
+		posCam(90);
+	}
+	
+	/**
+	 * Mueve la cámara hacia abajo
+	 */
+	public void camDown() {
+		posCam(270);
+	}
+	
+	/**
+	 * Se ejecuta cada vez que se redibuja la pantalla.
+	 * @param canvas
+	 * @see
+	 * android.view.View#onDraw
+	 */
+	
 	@Override protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		//Ejemplo de camara
+		//Ajusta la cámara
 		camera.save();
-		camera.translate(0.0f, 0.0f, 900.0f);
-		camera.rotateY(6f);
+		camera.translate(this.xposcam, this.yposcam, this.zoom);
+		camera.rotateZ(this.rotcam);
 		camera.applyToCanvas(canvas);
 		
 		
@@ -149,4 +272,5 @@ public class Svg4mobileView extends View{
 		
 
 	}
+
 }
