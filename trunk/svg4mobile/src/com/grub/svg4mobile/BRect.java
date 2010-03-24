@@ -1,6 +1,6 @@
 package com.grub.svg4mobile;
 
-import javax.microedition.khronos.opengles.GL10;
+import android.graphics.Canvas;
 
 public class BRect extends Figure {
 	/**
@@ -25,9 +25,8 @@ public class BRect extends Figure {
 	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
 	 */
 	public BRect(float x, float y, float w, float h, String rgb, String brgb, float bwidth, Transformations tr) {
-		// TODO: cargar parámetros transform
 		this.tr = tr;
-		/*this.shape = new Rect(x,y,w,h,rgb);
+		this.shape = new Rect(x,y,w,h,rgb);
 		this.hasWidth = ( bwidth > 0);
 		if (this.hasWidth) {
 			this.borderTop = new Line( x, y+h, x+w, y+h, brgb, bwidth );
@@ -35,26 +34,24 @@ public class BRect extends Figure {
 			this.borderLeft = new Line( x, y+h, x, y, brgb, bwidth );
 			this.borderRight = new Line( x+w, y, x+w, y+h, brgb, bwidth );
 		}
-		*/
 	}
 	/**
 	 * Pinta la figura
 	 * @param gl
 	 */
-	public void draw(GL10 gl) {
+	public void draw(Canvas canvas) {
 		
 		//Se aplican las transformaciones a la figura
-		gl.glPushMatrix();
-		this.tr.applyTransformations(gl);
-		/*
-		this.shape.draw(gl);
+		//this.tr.applyTransformations(gl);
+		
+		this.shape.draw(canvas);
 		if (this.hasWidth) {
-			this.borderTop.draw(gl);
-			this.borderDown.draw(gl);
-			this.borderLeft.draw(gl);
-			this.borderRight.draw(gl);
-		}*/
-		gl.glPopMatrix();
+			this.borderTop.draw(canvas);
+			this.borderDown.draw(canvas);
+			this.borderLeft.draw(canvas);
+			this.borderRight.draw(canvas);
+		}
+		
 	}
 	
 }
