@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, DrawDemo!</string>
     <string name="app_name">Svg4mobile</string>
+	<string name="perspective">Perspectiva</string>
+	<string name="zoom_out">Zoom -</string>
+	<string name="zoom_in">Zoom +</string>
+	<string name="load">Cargar</string>
+	<string name="set_north">Nortear</string>
+	<string name="auto_set_north">Autonortear</string>	
 </resources>
