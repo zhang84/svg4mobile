@@ -42,7 +42,8 @@ public class BRect extends Figure {
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura
 		canvas.save();
-		canvas = this.tr.applyTransformations(canvas);
+		//canvas = 
+		this.tr.applyTransformations(canvas);
 		this.shape.draw(canvas);
 		if (this.hasWidth) {
 			this.borderTop.draw(canvas);

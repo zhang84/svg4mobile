@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
+import android.util.Log;
 
 public class Text extends Figure {
   
@@ -13,12 +14,13 @@ public class Text extends Figure {
 	private float x,y;
 	private String text;
     
-  public Text(float x, float y, int size, String txt, String rgb) {
+  public Text(float x, float y, int size, String txt, String rgb, Transformations tr) {
     
 	  this.text = txt;
 	  this.x = x;
 	  this.y = y;
-	  	  
+	  this.tr = tr;
+	  
 	  this.paint = new Paint();
 	  this.paint.setColor(Color.parseColor(rgb));
 	  this.paint.setAntiAlias(true);		 
@@ -37,9 +39,8 @@ public class Text extends Figure {
   public void draw(Canvas canvas) {  
 		//Se aplican las transformaciones a la figura
 		canvas.save();
-		//canvas.rotate(30);
-		//canvas = this.tr.applyTransformations(canvas);
-		
+		this.tr.applyTransformations(canvas);
+				
 		canvas.drawText(text, this.x, this.y, paint);
 		canvas.restore();
   }
