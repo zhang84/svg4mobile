@@ -1,7 +1,15 @@
 package com.grub.svg4mobile;
 
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,11 +27,16 @@ import android.view.WindowManager;
  */
 public class Svg4mobile extends Activity {
 	
-	Svg4mobileView view;
+	private Svg4mobileView view;
 	private Menu menu;
 	private float xtemp, ytemp;
 	private float prevx, prevy;
 	private float x_mouse = 0, y_mouse =0;
+    private SensorManager sm; 
+    private Sensor oriSensor; 
+    private List<Sensor> sensors;
+    private Boolean setNorthRequest = false;
+    private Boolean AutoSetNorth = false;
 
 	
     /**
@@ -37,6 +50,13 @@ public class Svg4mobile extends Activity {
         					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.view = new Svg4mobileView(this);
 		setContentView(view);
+		
+        // Set Sensor + Manager 
+        sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE); 
+        sensors = sm.getSensorList(Sensor.TYPE_ORIENTATION); 
+        if(sensors.size() > 0) { 
+          oriSensor = sensors.get(0); 
+        } 
 	}
 	
 	/**
@@ -127,17 +147,33 @@ public class Svg4mobile extends Activity {
      * @param item Elemento del menu
      */
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-       if (item.getItemId() == 1) {
-    	   
-       }
-       else if (item.getItemId() == 2) {
-    	   this.view.zoomOut();
-       }
-       else if (item.getItemId() == 3) {
-    	   this.view.zoomIn();
-       }
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	
+    	switch ( item.getItemId() ) {
+    		case 1: { //Perspectiva
+    			break;
+    		}
+    		case 2: { //Zoom Out
+    			this.view.zoomOut();
+    			break;    			
+    		}
+    		case 3: {
+    			this.view.zoomIn();
+    			break;    			
+    		}
+    		case 4: {
+    			this.setNorthRequest = true;
+    			break;    			
+    		}
+    		case 5: {
+    			this.AutoSetNorth = !this.AutoSetNorth;
+    			break;    			
+    		}
+    		case 6: {
+    			
+    			break;    			
+    		}
+    	}
        return true;
     }
 
@@ -177,5 +213,31 @@ public class Svg4mobile extends Activity {
 
     	return true;
     }
-
+    
+    @Override 
+    protected void onResume() { 
+     super.onResume(); 
+     sm.registerListener(sl, oriSensor, SensorManager.SENSOR_DELAY_GAME);       
+    } 
+    
+    @Override 
+    protected void onStop() {      
+     sm.unregisterListener(sl); 
+     super.onStop();
+    }
+    
+    private final SensorEventListener sl = new SensorEventListener() { 
+    	public void onSensorChanged(SensorEvent event) {
+    		//Log.v("svg4mobile", event.values[0] + " - " + event.values[1] + " - " + event.values[2]);
+    		if (setNorthRequest || AutoSetNorth) {
+    			view.setNorth(event.values[0]);
+    			setNorthRequest = !setNorthRequest;
+    		}
+    	}
+      
+    	@Override
+		public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    		// TODO Auto-generated method stub	
+    	}
+    };
 }
