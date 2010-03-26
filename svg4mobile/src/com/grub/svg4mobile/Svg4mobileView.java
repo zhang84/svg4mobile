@@ -1,15 +1,13 @@
 package com.grub.svg4mobile;
 
-import java.util.Vector;
-
+import java.util.ArrayList;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Camera;
 import android.util.Log;
 import android.view.View;
 
-public class Svg4mobileView extends View{
+public class Svg4mobileView extends View {
 	private static final double ZOOMFACTOR = 10;
 	private Camera camera = new Camera();
 	private float zoom;
@@ -17,14 +15,15 @@ public class Svg4mobileView extends View{
 	private float yposcam;
 	private float rotcam;
 	private static double SMOOTHNESS = 1.0;
-	private Vector<Object> v = new Vector<Object>();
-	private Parser parser = new Parser();
+	private ArrayList<Figure> figures = new ArrayList<Figure>();
+	private Parser parser = Parser.getInstance();
 	private float width, height;
 
 	
 	private BRect doc =    new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
 	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!ñóá", "#FF0000", new Transformations());
+	private float perspective = 0;
    
 	/**
 	 * Constructor
@@ -63,6 +62,7 @@ public class Svg4mobileView extends View{
 		this.xposcam=0;
 		this.yposcam=0;
 		this.rotcam=0;
+		this.perspective = 0;
 		this.invalidate();
 	}
 	
@@ -78,7 +78,6 @@ public class Svg4mobileView extends View{
 	 * Aleja la cámara
 	*/
 	public void zoomOut() {
-		//if (this.zoom < 100) 
 		this.zoom+=ZOOMFACTOR;
 		this.invalidate();
 	
@@ -90,6 +89,11 @@ public class Svg4mobileView extends View{
 	 */
 	public void setNorth(float angle) {
 		this.rotcam=angle;
+		this.invalidate();
+	}
+	
+	public void setPerspective(float perspective) {
+		this.perspective = perspective;
 		this.invalidate();
 	}
 	
@@ -139,13 +143,14 @@ public class Svg4mobileView extends View{
 		camera.save();
 		camera.translate(this.xposcam, this.yposcam, this.zoom);
 		camera.rotateZ(this.rotcam);
+		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
-		Log.v("svg4mobile", "draw");
 		
 		// custom drawing code here
 		// remember: y increases from top to bottom
 		// x increases from left to right
-		/*int x = 0;
+		/*
+		int x = 0;
 		int y = 0;
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.FILL);
@@ -244,7 +249,6 @@ public class Svg4mobileView extends View{
 		paint.setPathEffect(dashPath);
 		paint.setStrokeWidth(8);
 		canvas.drawLine(0, 300 , 320, 300, paint);
-		
 		*/
 
 		

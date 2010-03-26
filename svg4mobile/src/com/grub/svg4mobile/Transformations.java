@@ -112,7 +112,6 @@ public class Transformations {
 		canvas.skew(this.skewx, this.skewy);
 		canvas.scale(this.scalex, this.scaley);
 		canvas.translate(this.translatex, this.translatey);
-		//return canvas;
 	}
 	
 	/**

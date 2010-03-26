@@ -35,6 +35,7 @@ public class Svg4mobile extends Activity {
     private SensorManager sm; 
     private Sensor oriSensor; 
     private List<Sensor> sensors;
+    private Boolean isPerspectiveOn = false;
     private Boolean setNorthRequest = false;
     private Boolean AutoSetNorth = false;
 
@@ -51,7 +52,7 @@ public class Svg4mobile extends Activity {
 		this.view = new Svg4mobileView(this);
 		setContentView(view);
 		
-        // Set Sensor + Manager 
+        // Establece Sensor y Manager 
         sm = (SensorManager)getSystemService(Context.SENSOR_SERVICE); 
         sensors = sm.getSensorList(Sensor.TYPE_ORIENTATION); 
         if(sensors.size() > 0) { 
@@ -70,18 +71,23 @@ public class Svg4mobile extends Activity {
        //call the base class to include system menus
        super.onCreateOptionsMenu(menu);
        this.menu = menu;
-       MenuItem itemChPersp = this.menu.add(0,1,0,"Perspectiva"); //Cambiar Perspectiva
-       itemChPersp.setIcon(android.R.drawable.ic_menu_mapmode);
        
-       MenuItem itemZoomOut = this.menu.add(1,2,0,"Zoom -"); //Zoom -
-       MenuItem itemZoomIn = this.menu.add(1,3,1,"Zoom +"); //Zoom +
+       MenuItem openFile = this.menu.add(3,6,0,R.string.load); //Abrir fichero
+       openFile.setIcon(android.R.drawable.ic_menu_add);
+              
+       MenuItem itemZoomOut = this.menu.add(1,2,0,R.string.zoom_out); //Zoom -
+       MenuItem itemZoomIn = this.menu.add(1,3,1,R.string.zoom_in); //Zoom +
        itemZoomOut.setIcon(android.R.drawable.btn_minus);
        itemZoomIn.setIcon(android.R.drawable.btn_plus);
        
-       MenuItem compassSync = this.menu.add(2,4,0,"Nortear"); //Nortear
-       MenuItem autoCompassSync = this.menu.add(2,5,1,"Autonortear"); //Autonortear
+       MenuItem itemChPersp = this.menu.add(0,1,0,R.string.perspective); //Cambiar Perspectiva
+       itemChPersp.setIcon(android.R.drawable.ic_menu_mapmode);
+       
+       MenuItem compassSync = this.menu.add(2,4,0,R.string.set_north); //Nortear
+       MenuItem autoCompassSync = this.menu.add(2,5,1,R.string.auto_set_north); //Autonortear
        compassSync.setIcon(android.R.drawable.ic_menu_rotate);
        autoCompassSync.setIcon(android.R.drawable.ic_menu_compass);
+       
        return true;
     }
    /**
@@ -151,26 +157,32 @@ public class Svg4mobile extends Activity {
     	
     	switch ( item.getItemId() ) {
     		case 1: { //Perspectiva
+    			if (this.isPerspectiveOn) {
+    				this.view.setPerspective(0f);
+    			} else {
+    				this.view.setPerspective(64f);		
+    			}
+    			this.isPerspectiveOn = !this.isPerspectiveOn; 
+
     			break;
     		}
     		case 2: { //Zoom Out
     			this.view.zoomOut();
     			break;    			
     		}
-    		case 3: {
+    		case 3: { //Zoom In
     			this.view.zoomIn();
     			break;    			
     		}
-    		case 4: {
+    		case 4: { //Nortear
     			this.setNorthRequest = true;
     			break;    			
     		}
-    		case 5: {
+    		case 5: { //Autonortear
     			this.AutoSetNorth = !this.AutoSetNorth;
     			break;    			
     		}
-    		case 6: {
-    			
+    		case 6: { // Cargar fichero    
     			break;    			
     		}
     	}
@@ -225,19 +237,20 @@ public class Svg4mobile extends Activity {
      sm.unregisterListener(sl); 
      super.onStop();
     }
-    
-    private final SensorEventListener sl = new SensorEventListener() { 
+
+    private final SensorEventListener sl = new SensorEventListener() {
+    	/**
+    	 * Se ejecuta cada vez que recibe un cambio en algún sensor
+    	 * @param event Evento
+    	 */
     	public void onSensorChanged(SensorEvent event) {
-    		//Log.v("svg4mobile", event.values[0] + " - " + event.values[1] + " - " + event.values[2]);
     		if (setNorthRequest || AutoSetNorth) {
     			view.setNorth(event.values[0]);
-    			setNorthRequest = !setNorthRequest;
+    			setNorthRequest = false;
     		}
     	}
       
     	@Override
-		public void onAccuracyChanged(Sensor sensor, int accuracy) {
-    		// TODO Auto-generated method stub	
-    	}
+		public void onAccuracyChanged(Sensor sensor, int accuracy) { }
     };
 }
