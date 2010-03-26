@@ -22,15 +22,10 @@ public class Svg4mobileView extends View{
 	private float width, height;
 
 	
-	//private Rect doc =    new Rect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C"); 
-	//private Rect prueba = new Rect(54.642841f, 305.49658f, 98.571426f, 196.42857f, "#FFD700"); 
 	private BRect doc =    new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
-	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!ñóá", "#FF0000");
-
-	//private Line myLine;
-    //private Rect myRect;
-    
+	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!ñóá", "#FF0000", new Transformations());
+   
 	/**
 	 * Constructor
 	 */
@@ -40,8 +35,6 @@ public class Svg4mobileView extends View{
         setFocusable(true);
         setFocusableInTouchMode(true);
         
-        //myLine = new Line(10, 20, 30, 40, Color.WHITE);
-        //myRect = new Rect(100, 100, 200, 200, Color.CYAN);
         camReset();
 	}
 	
@@ -77,7 +70,7 @@ public class Svg4mobileView extends View{
 	 * Acerca la cámara
 	*/
 	public void zoomIn() {
-		if (this.zoom > 1) this.zoom-=ZOOMFACTOR;
+		if (this.zoom > 10) this.zoom-=ZOOMFACTOR;
 		this.invalidate();
 	}
 	
@@ -237,8 +230,7 @@ public class Svg4mobileView extends View{
 		canvas.translate(-x, -y);
 
 		// rotate the canvas on center of the text to draw
-		canvas.rotate(-45, x + rect.exactCenterX(),
-                                           y + rect.exactCenterY());
+		canvas.rotate(-45, x + rect.exactCenterX(), y + rect.exactCenterY());
 		// draw the rotated text
 		paint.setStyle(Paint.Style.FILL);
 		canvas.drawText(str2rotate, x, y, paint);
@@ -248,8 +240,7 @@ public class Svg4mobileView extends View{
 		canvas.drawText("After canvas.restore()", 50, 250, paint);
 
 		// draw a thick dashed line
-		DashPathEffect dashPath =
-                        new DashPathEffect(new float[]{20,5}, 1);
+		DashPathEffect dashPath = new DashPathEffect(new float[]{20,5}, 1);
 		paint.setPathEffect(dashPath);
 		paint.setStrokeWidth(8);
 		canvas.drawLine(0, 300 , 320, 300, paint);
@@ -260,8 +251,6 @@ public class Svg4mobileView extends View{
 		doc.draw(canvas);
 		prueba.draw(canvas);
 		pruebatexto.draw(canvas);
-    	//myLine.Draw(canvas);
-    	//myRect.Draw(canvas);
 		camera.restore();
 	}
 
