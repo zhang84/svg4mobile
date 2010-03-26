@@ -9,7 +9,7 @@ public class Transformations {
 							   0,0,1};
 	
 	private float skewx=0, skewy=0;
-	private float rotation_angle = 40;
+	private float rotation_angle = 0;
 	private float scalex = 1, scaley = 1;
 	private float translatex = 0, translatey = 0;
 	

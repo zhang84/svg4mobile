@@ -16,7 +16,7 @@ public class Svg4mobileView extends View{
 	private float xposcam;
 	private float yposcam;
 	private float rotcam;
-	private static double SMOOTHNESS = 5.0;
+	private static double SMOOTHNESS = 1.0;
 	private Vector<Object> v = new Vector<Object>();
 	private Parser parser = new Parser();
 	private float width, height;
