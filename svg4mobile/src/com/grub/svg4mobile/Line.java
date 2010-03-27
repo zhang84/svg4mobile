@@ -26,8 +26,10 @@ public class Line extends Figure {
 		
 		this.paint = new Paint();
 		
+		this.paint.setStrokeWidth(bwidth);
 		this.paint.setColor(Color.parseColor(brgb));
 		this.paint.setAntiAlias(true);
+		
 		
 	}
 	
