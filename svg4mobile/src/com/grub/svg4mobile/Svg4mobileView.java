@@ -22,9 +22,17 @@ public class Svg4mobileView extends View {
 	
 	private BRect doc =    new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
-	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!ñóá", "#FF0000", new Transformations());
+	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!", "#FF0000", new Transformations());
 	private float perspective = 0;
-   
+	
+	private float[] pointsPath = {100,10,
+								40,180, 
+								190,60, 
+								10,60, 
+								160,180 };
+	private myPath pruebaPath;
+	
+	
 	/**
 	 * Constructor
 	 */
@@ -38,7 +46,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Incrementa la posición de la cámara en el eje Y 
+	 * Incrementa la posicion de la camara en el eje Y 
 	 * @param d
 	 * @deprecated
 	 */
@@ -46,7 +54,7 @@ public class Svg4mobileView extends View {
 		this.xposcam+=d;
 	}
 	/**
-	 * Incrementa la posición de la cámara en el eje Y 
+	 * Incrementa la posicion de la camara en el eje Y 
 	 * @param d
 	 * @deprecated
 	 */
@@ -55,7 +63,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Resetea los valores de posición de la cámara.
+	 * Resetea los valores de posicion de la camara.
 	 */
 	public void camReset() {
 		this.zoom=100;
@@ -67,7 +75,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Acerca la cámara
+	 * Acerca la camara
 	*/
 	public void zoomIn() {
 		if (this.zoom > 10) this.zoom-=ZOOMFACTOR;
@@ -75,7 +83,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Aleja la cámara
+	 * Aleja la camara
 	*/
 	public void zoomOut() {
 		this.zoom+=ZOOMFACTOR;
@@ -84,8 +92,8 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Rota la cámara
-	 * @param angle Ángulo en grados
+	 * Rota la camara
+	 * @param angle angulo en grados
 	 */
 	public void setNorth(float angle) {
 		this.rotcam=angle;
@@ -250,11 +258,13 @@ public class Svg4mobileView extends View {
 		paint.setStrokeWidth(8);
 		canvas.drawLine(0, 300 , 320, 300, paint);
 		*/
-
+		
+		pruebaPath = new myPath('M', 100, 10, 'L', pointsPath, true, "#0000ff", 10);
 		
 		doc.draw(canvas);
 		prueba.draw(canvas);
 		pruebatexto.draw(canvas);
+		pruebaPath.draw(canvas);
 		camera.restore();
 	}
 
