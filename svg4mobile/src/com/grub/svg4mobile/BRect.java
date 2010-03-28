@@ -2,6 +2,10 @@ package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
 
+/**
+ * Pinta figuras de tipo Rect
+ * @see http://www.w3.org/TR/SVG11/shapes.html#RectElement
+ */
 public class BRect extends Figure {
 	/**
 	 * Crea un rectángulo con borde utilizando las clases Rect y Line 

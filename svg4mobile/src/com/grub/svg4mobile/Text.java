@@ -6,6 +6,10 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.Log;
 
+/**
+ * Pinta figuras de tipo Text 
+ * @see http://www.w3.org/TR/SVG11/text.html
+ */
 public class Text extends Figure {
   
 	private Paint paint;

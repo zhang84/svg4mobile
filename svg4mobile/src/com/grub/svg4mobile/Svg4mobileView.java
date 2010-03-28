@@ -41,6 +41,8 @@ public class Svg4mobileView extends View {
 		
         setFocusable(true);
         setFocusableInTouchMode(true);
+        //parser.parseXML("/sdcard/test.xml");
+        
         
         camReset();
 	}
