@@ -16,7 +16,7 @@ public class myPath extends Figure {
 	
 	/**
 	 * Crea un camino entre puntos
-	 * @param isRelative indica si la posición de los primeros puntos es relativa o absoluta
+	 * @param isRelative indica si la posiciÃ³n de los primeros puntos es relativa o absoluta
 	 * @param x1 Coordenada x del punto 1
 	 * @param y1 Coordenada y del punto 1
 	 * @param type Tipo de camino (1 L, 2 H, 3 V, etc...)

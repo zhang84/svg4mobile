@@ -6,6 +6,8 @@ import java.util.Vector;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
+import android.util.Log;
+
 import javax.xml.parsers.*;
 
 public class Parser {
@@ -41,25 +43,27 @@ public class Parser {
 	 * Método privado encargado de ir parseando el archivo SVG e insertando
 	 * los elementos en la correspondiente lista.
 	 */
-	private void parseXML (String path){
+	public void parseXML (String path){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
+			//openFileInput("myFileXml.xml")
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Inicializamos el documento.
+			Log.d("svg4mobile", path);
 			dom = db.parse(path);
 		}catch(ParserConfigurationException pce) {
-			pce.printStackTrace();
+			Log.e("svg4mobile", "" + pce);
 		}catch(SAXException se) {
-			se.printStackTrace();
+			Log.e("svg4mobile", "" + se);
 		}catch(IOException ioe) {
-			ioe.printStackTrace();
+			Log.e("svg4mobile", "" + ioe);
 		}
 		
 		Element root = dom.getDocumentElement();
 		if (root.getAttribute("width") != null && root.getAttribute("height") != null){
 			this.width = Float.parseFloat(root.getAttribute("width"));
 			this.height = Float.parseFloat(root.getAttribute("height"));
-			System.out.println(width);
+			Log.d("svg4mobile", "" + width);
 		}
 		NodeList lista = root.getChildNodes();
 		int i = 0;

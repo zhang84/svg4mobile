@@ -3,6 +3,10 @@ package com.grub.svg4mobile;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 
+/**
+ * Aplica transformaciones a las figuras
+ * @see http://www.w3.org/TR/SVG11/coords.html#TransformAttribute
+ */
 public class Transformations {
 	private float[] tmatrix = {1,0,0,
 							   0,1,0,
