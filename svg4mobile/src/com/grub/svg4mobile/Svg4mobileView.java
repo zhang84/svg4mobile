@@ -32,8 +32,6 @@ public class Svg4mobileView extends View {
 								160,180 };
 	private myPath pruebaPath;
 	
-	private Parser Parseador = new Parser();
-	
 	/**
 	 * Constructor
 	 */
@@ -42,14 +40,15 @@ public class Svg4mobileView extends View {
 		
         setFocusable(true);
         setFocusableInTouchMode(true);
-        //parser.parseXML("/sdcard/test.xml");
+		parser.parseXML("/sdcard/test.xml");
+        //parser.parseXML("http://svg4mobile.googlecode.com/svn/trunk/svg4mobile/res/drawable/svg4mobile.svg");
         
         
         camReset();
 	}
 	
 	/**
-	 * Incrementa la posicion de la camara en el eje Y 
+	 * Incrementa la posición de la camara en el eje Y 
 	 * @param d
 	 * @deprecated
 	 */
@@ -57,7 +56,7 @@ public class Svg4mobileView extends View {
 		this.xposcam+=d;
 	}
 	/**
-	 * Incrementa la posicion de la camara en el eje Y 
+	 * Incrementa la posición de la cámara en el eje Y 
 	 * @param d
 	 * @deprecated
 	 */
@@ -66,7 +65,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Resetea los valores de posicion de la camara.
+	 * Resetea los valores de posición de la cámara.
 	 */
 	public void camReset() {
 		this.zoom=100;
@@ -78,7 +77,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Acerca la camara
+	 * Acerca la cámara
 	*/
 	public void zoomIn() {
 		if (this.zoom > 10) this.zoom-=ZOOMFACTOR;
@@ -86,7 +85,7 @@ public class Svg4mobileView extends View {
 	}
 	
 	/**
-	 * Aleja la camara
+	 * Aleja la cámara
 	*/
 	public void zoomOut() {
 		this.zoom+=ZOOMFACTOR;
@@ -156,8 +155,6 @@ public class Svg4mobileView extends View {
 		camera.rotateZ(this.rotcam);
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
-		
-		Parseador.parseXML("prue");
 		
 		// custom drawing code here
 		// remember: y increases from top to bottom

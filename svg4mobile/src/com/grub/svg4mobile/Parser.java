@@ -47,18 +47,10 @@ public class Parser {
 	public void parseXML (String path){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			//InputtStream openFileInput("myFileXml.xml");
-			
-
-            String sFichero = "/sdcard/test.svg";
-            File fichero = new File(sFichero);
-			
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Inicializamos el documento.
-			Log.d("svg4mobile", path);
-			Log.d("svg4mobile", fichero.toString());
-			
-			dom = db.parse(fichero);
+			Log.d("svg4mobile", path);			
+			dom = db.parse(new File(path));
 		}catch(ParserConfigurationException pce) {
 			Log.e("svg4mobile", "pce " + pce);
 		}catch(SAXException se) {
