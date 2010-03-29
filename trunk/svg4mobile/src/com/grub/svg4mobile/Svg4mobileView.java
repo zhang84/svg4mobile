@@ -32,6 +32,7 @@ public class Svg4mobileView extends View {
 								160,180 };
 	private myPath pruebaPath;
 	
+	private Parser Parseador = new Parser();
 	
 	/**
 	 * Constructor
@@ -155,6 +156,8 @@ public class Svg4mobileView extends View {
 		camera.rotateZ(this.rotcam);
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
+		
+		Parseador.parseXML("prue");
 		
 		// custom drawing code here
 		// remember: y increases from top to bottom
