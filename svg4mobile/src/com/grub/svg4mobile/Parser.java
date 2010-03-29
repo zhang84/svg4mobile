@@ -1,5 +1,6 @@
 package com.grub.svg4mobile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -46,24 +47,32 @@ public class Parser {
 	public void parseXML (String path){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			//openFileInput("myFileXml.xml")
+			//InputtStream openFileInput("myFileXml.xml");
+			
+
+            String sFichero = "/sdcard/test.svg";
+            File fichero = new File(sFichero);
+			
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Inicializamos el documento.
 			Log.d("svg4mobile", path);
-			dom = db.parse(path);
+			Log.d("svg4mobile", fichero.toString());
+			
+			dom = db.parse(fichero);
 		}catch(ParserConfigurationException pce) {
-			Log.e("svg4mobile", "" + pce);
+			Log.e("svg4mobile", "pce " + pce);
 		}catch(SAXException se) {
-			Log.e("svg4mobile", "" + se);
+			Log.e("svg4mobile", "se " + se);
 		}catch(IOException ioe) {
-			Log.e("svg4mobile", "" + ioe);
+			Log.e("svg4mobile", "ioe " + ioe);
 		}
 		
 		Element root = dom.getDocumentElement();
 		if (root.getAttribute("width") != null && root.getAttribute("height") != null){
 			this.width = Float.parseFloat(root.getAttribute("width"));
 			this.height = Float.parseFloat(root.getAttribute("height"));
-			Log.d("svg4mobile", "" + width);
+			Log.d("svg4mobile", "width " + width);
+			Log.d("svg4mobile", "height " + height);
 		}
 		NodeList lista = root.getChildNodes();
 		int i = 0;
@@ -79,6 +88,7 @@ public class Parser {
 				// fill:#rrggbb;fill-opacity:1;...
 				String rgb = style.substring(style.indexOf(":")+1);
 				rgb = rgb.substring(0,rgb.indexOf(";"));
+				Log.d("svg4mobile", "rgb  " + rgb);
 				BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0, new Transformations());
 				elementos.add(rectangulo);
 			}
