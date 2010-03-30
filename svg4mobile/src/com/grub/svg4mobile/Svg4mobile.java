@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -69,7 +72,7 @@ public class Svg4mobile extends Activity {
     public boolean onCreateOptionsMenu(Menu menu)
     {
        //call the base class to include system menus
-       super.onCreateOptionsMenu(menu);
+       boolean result = super.onCreateOptionsMenu(menu);
        this.menu = menu;
        
        MenuItem openFile = this.menu.add(3,6,0,R.string.load); //Abrir fichero
@@ -88,7 +91,7 @@ public class Svg4mobile extends Activity {
        compassSync.setIcon(android.R.drawable.ic_menu_rotate);
        autoCompassSync.setIcon(android.R.drawable.ic_menu_compass);
        
-       return true;
+       return result;
     }
    /**
     * Manejador de teclas
@@ -182,14 +185,37 @@ public class Svg4mobile extends Activity {
     			this.AutoSetNorth = !this.AutoSetNorth;
     			break;    			
     		}
-    		case 6: { // Cargar fichero    
+    		case 6: { // Cargar fichero
+    			openFile();
     			break;    			
     		}
     	}
        return true;
     }
 
-    /**
+    private void openFile() {
+    	Intent i = new Intent(this, FileExplorer.class);
+    	startActivityForResult(i, 6);		
+	}
+    
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (data == null)   // Cancel case
+			return;
+		switch(requestCode) {
+		case 6:
+		    Bundle extras = data.getExtras();
+		    String fname = extras.getString("filename");
+		    Log.d("svg4mobile", fname);
+		    //Toast.makeText(this, "Hello " + name, Toast.LENGTH_SHORT).show();
+		    //TextView tv = (TextView) findViewById(R.id.hello_message);
+		    //tv.setText("Hello " + name);
+		    break;
+		}
+	}
+
+
+	/**
      * Maneja los eventos táctiles.
      * @param event Evento
      * @return Devuelve true si se ha producido algún evento táctil.
