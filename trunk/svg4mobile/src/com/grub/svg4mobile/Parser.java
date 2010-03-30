@@ -68,25 +68,29 @@ public class Parser {
 		}
 		NodeList lista = root.getChildNodes();
 		int i = 0;
-		while (i++ < lista.getLength()){
-			Element nodo = (Element) lista.item(i);
-			if (nodo.getTagName().compareToIgnoreCase("rect")==0){
-				String x = nodo.getAttribute("x");
-				String y = nodo.getAttribute("y");
-				String w = nodo.getAttribute("width");
-				String h = nodo.getAttribute("height");
-				String style = nodo.getAttribute("style");
-				//La cadena que contiene el atributo style tiene la forma:
-				// fill:#rrggbb;fill-opacity:1;...
-				String rgb = style.substring(style.indexOf(":")+1);
-				rgb = rgb.substring(0,rgb.indexOf(";"));
-				Log.d("svg4mobile", "rgb  " + rgb);
-				BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0, new Transformations());
-				elementos.add(rectangulo);
+		while (i++ < (lista.getLength()-1)){
+			Log.d("svg4mobile", "lista (" + i + ") " + String.valueOf(lista.item(i).getNodeType()));
+			if(lista.item(i).getNodeType() == 1){
+				Element nodo = (Element) lista.item(i);
+				if (nodo.getTagName().compareToIgnoreCase("rect")==0){
+					String x = nodo.getAttribute("x");
+					String y = nodo.getAttribute("y");
+					String w = nodo.getAttribute("width");
+					String h = nodo.getAttribute("height");
+					String style = nodo.getAttribute("style");
+					//La cadena que contiene el atributo style tiene la forma:
+					// fill:#rrggbb;fill-opacity:1;...
+					String rgb = style.substring(style.indexOf(":")+1);
+					rgb = rgb.substring(0,rgb.indexOf(";"));
+					Log.d("svg4mobile", "rgb  " + rgb);
+					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0, new Transformations());
+					elementos.add(rectangulo);
+				}
+				//else ...
+				//Aquí han de utilizarse el resto de tipos para parsear.
 			}
-			//else ...
-			//Aquí han de utilizarse el resto de tipos para parsear.
 		}
+		Log.d("svg4mobile", "fin while  ");
 	}
 	
 	/**
