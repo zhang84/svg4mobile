@@ -82,8 +82,8 @@ public class Parser {
 					// fill:#rrggbb;fill-opacity:1;...
 					String rgb = style.substring(style.indexOf(":")+1);
 					rgb = rgb.substring(0,rgb.indexOf(";"));
-					//Log.d("svg4mobile", "rgb  " + rgb);
-					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",2f, new Transformations());
+					//Log.d("svg4mobile", " rgb:  " + rgb + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
+					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",1.5f, new Transformations());
 					elementos.add(rectangulo);
 				}
 				//else ...
@@ -118,7 +118,7 @@ public class Parser {
 	 */
 	public Figure next() {
 		contador++;
-		Log.d("svg4mobile", "next  " + String.valueOf(contador) + " " + String.valueOf(elementos.size()));
+		//Log.d("svg4mobile", "next  " + String.valueOf(contador) + " " + String.valueOf(elementos.size()));
 		return elementos.get(contador);
 		//return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	}
