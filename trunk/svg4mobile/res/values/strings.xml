@@ -6,5 +6,11 @@
 	<string name="zoom_in">Zoom +</string>
 	<string name="load">Cargar</string>
 	<string name="set_north">Nortear</string>
-	<string name="auto_set_north">Autonortear</string>	
+	<string name="auto_set_north">Autonortear</string>
+	
+	<string name="no_files">Este directorio está vacío</string>
+    <string name="raiz">[Volver arriba]</string>
+    <string name="titulo_no_directorio">No es un directorio</string>
+    <string name="no_directorio">Eso es un archivo. ¡No un directorio!</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
