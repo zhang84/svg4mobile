@@ -173,13 +173,15 @@ public class Svg4mobileView extends View {
 		//pruebatexto.draw(canvas);
 		//pruebaPath.draw(canvas);
 		
+		parser.First();
+		
 		while(parser.hasNext()){
 			Figure f = (Figure)parser.next();
 		    //Log.d("svg4mobile", "figure " + f.toString());
 		    f.draw(canvas);
 		    }
 		
-		parser.First();
+		
 
 		camera.restore();
 	}

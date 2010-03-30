@@ -121,7 +121,9 @@ public class Parser {
 
                     
                     Transformations t = new Transformations();
-                    t.setTMatrix(this.parseTransform(transform));
+                    if (transform.length()>1)
+                    	t.setTMatrix(this.parseTransform(transform));
+                    
 					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",1.5f, t);
 					elementos.add(rectangulo);
 
@@ -151,7 +153,8 @@ public class Parser {
                     for (int c = 0; c < nLista.getLength(); c++){
                         if (nLista.item(c).getNodeType() == 1){
                             Element tspan = (Element) nLista.item(c);
-                            text = tspan.getTextContent();
+                            //text = tspan.getTextContent();
+                            //text = tspan.getNodeValue();
                         }
                     }
                     Text texto = new Text(x, y, size, text, rgb, new Transformations());
