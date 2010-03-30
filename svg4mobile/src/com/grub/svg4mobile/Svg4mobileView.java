@@ -40,7 +40,7 @@ public class Svg4mobileView extends View {
 		
         setFocusable(true);
         setFocusableInTouchMode(true);
-		parser.parseXML("/sdcard/test.xml");
+		parser.parseXML("/sdcard/test.svg");
         //parser.parseXML("http://svg4mobile.googlecode.com/svn/trunk/svg4mobile/res/drawable/svg4mobile.svg");
         
         
