@@ -1,6 +1,8 @@
 package com.grub.svg4mobile;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Camera;
@@ -40,11 +42,16 @@ public class Svg4mobileView extends View {
 		
         setFocusable(true);
         setFocusableInTouchMode(true);
-		//parser.parseXML("/sdcard/test.svg");
-        //parser.parseXML("http://svg4mobile.googlecode.com/svn/trunk/svg4mobile/res/drawable/svg4mobile.svg");
-        
+        this.setPath("/sdcard/test.svg");
         
         camReset();
+	}
+	
+	public void setPath(String path) {
+		parser.parseXML( path );
+		/*while (parser.hasNext()) {  
+			figures.add(parser.next());
+		}*/
 	}
 	
 	/**
@@ -156,117 +163,21 @@ public class Svg4mobileView extends View {
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
 		
-		// custom drawing code here
-		// remember: y increases from top to bottom
-		// x increases from left to right
-		/*
-		int x = 0;
-		int y = 0;
-		Paint paint = new Paint();
-		paint.setStyle(Paint.Style.FILL);
-
-		// make the entire canvas white
-		paint.setColor(Color.WHITE);
-		canvas.drawPaint(paint);
-		// another way to do this is to use:
-		// canvas.drawColor(Color.WHITE);
-
-		// draw a solid blue circle
-		paint.setColor(Color.BLUE);
-		canvas.drawCircle(20, 20, 15, paint);
-
-		// draw blue circle with antialiasing turned on
-		paint.setAntiAlias(true);
-		paint.setColor(Color.BLUE);
-		canvas.drawCircle(60, 20, 15, paint);
-
-		// compare the above circles once drawn
-		// the fist circle has a jagged perimeter
-		// the second circle has a smooth perimeter
-
-		// draw a solid red rectangle
-		paint.setAntiAlias(false);
-		paint.setColor(Color.RED);
-
-		// create and draw triangles
-		// use a Path object to store the 3 line segments
-		// use .offset to draw in many locations
-		// note: this triangle is not centered at 0,0
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(2);
-		paint.setColor(Color.RED);
-		Path path = new Path();
-		path.moveTo(0, -10);
-		path.lineTo(5, 0);
-		path.lineTo(-5, 0);
-		path.close();
-		path.offset(10, 40);
-		canvas.drawPath(path, paint);
-		path.offset(50, 100);
-		canvas.drawPath(path, paint);
-		// offset is cumlative
-		// next draw displaces 50,100 from previous
-		path.offset(50, 100);
-		canvas.drawPath(path, paint);
-
-		// draw some text using STROKE style
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(1);
-		paint.setColor(Color.MAGENTA);
-		paint.setTextSize(30);
-		canvas.drawText("Style.STROKE", 75, 75, paint);
-
-		// draw some text using FILL style
-		paint.setStyle(Paint.Style.FILL);
-		//turn antialiasing on
-		paint.setAntiAlias(true);
-		paint.setTextSize(30);
-		canvas.drawText("Style.FILL", 75, 110, paint);
-
-		// draw some rotated text
-		// get text width and height
-		// set desired drawing location
-		x = 75;
-		y = 185;
-		paint.setColor(Color.GRAY);
-		paint.setTextSize(25);
-		String str2rotate = "Rotated!";
-
-		// draw bounding rect before rotating text
-		Rect rect = new Rect();
-		paint.getTextBounds(str2rotate, 0, str2rotate.length(), rect);
-		canvas.translate(x, y);
-		paint.setStyle(Paint.Style.FILL);
-		// draw unrotated text
-		canvas.drawText("!Rotated", 0, 0, paint);
-		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(rect, paint);
-		// undo the translate
-		canvas.translate(-x, -y);
-
-		// rotate the canvas on center of the text to draw
-		canvas.rotate(-45, x + rect.exactCenterX(), y + rect.exactCenterY());
-		// draw the rotated text
-		paint.setStyle(Paint.Style.FILL);
-		canvas.drawText(str2rotate, x, y, paint);
-
-		//undo the rotate
-		canvas.restore();
-		canvas.drawText("After canvas.restore()", 50, 250, paint);
-
-		// draw a thick dashed line
-		DashPathEffect dashPath = new DashPathEffect(new float[]{20,5}, 1);
-		paint.setPathEffect(dashPath);
-		paint.setStrokeWidth(8);
-		canvas.drawLine(0, 300 , 320, 300, paint);
-		*/
-		
 		pruebaPath = new myPath('M', 100, 10, 'L', pointsPath, true, "#0000ff", 10);
 		
 		doc.draw(canvas);
 		prueba.draw(canvas);
 		pruebatexto.draw(canvas);
 		pruebaPath.draw(canvas);
+		
+		/*
+		for (Iterator<Figure> it = figures.iterator(); it.hasNext(); ) {
+		    Figure f = (Figure)it.next();
+		    f.draw(canvas);
+		}
+		*/
+
+		
 		camera.restore();
 	}
 

@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import android.graphics.Canvas;
+
 public abstract class Figure {
 	
 	private String id = "";
@@ -36,6 +38,13 @@ public abstract class Figure {
 	 */
 	public String getTransform(){
 		return this.transform;
+	}
+
+	/**
+	 * Método que pinta la figura
+	 * @param canvas
+	 */
+	public void draw(Canvas canvas) {
 	}
 
 }

@@ -41,6 +41,7 @@ public class Svg4mobile extends Activity {
     private Boolean isPerspectiveOn = false;
     private Boolean setNorthRequest = false;
     private Boolean AutoSetNorth = false;
+	private static final int OPENFILE_ID = 6;
 
 	
     /**
@@ -75,7 +76,7 @@ public class Svg4mobile extends Activity {
        boolean result = super.onCreateOptionsMenu(menu);
        this.menu = menu;
        
-       MenuItem openFile = this.menu.add(3,6,0,R.string.load); //Abrir fichero
+       MenuItem openFile = this.menu.add(3,OPENFILE_ID,0,R.string.load); //Abrir fichero
        openFile.setIcon(android.R.drawable.ic_menu_add);
               
        MenuItem itemZoomOut = this.menu.add(1,2,0,R.string.zoom_out); //Zoom -
@@ -185,7 +186,7 @@ public class Svg4mobile extends Activity {
     			this.AutoSetNorth = !this.AutoSetNorth;
     			break;    			
     		}
-    		case 6: { // Cargar fichero
+    		case OPENFILE_ID: { // Cargar fichero
     			openFile();
     			break;    			
     		}
@@ -193,23 +194,30 @@ public class Svg4mobile extends Activity {
        return true;
     }
 
+    /**
+     * 
+     */
     private void openFile() {
     	Intent i = new Intent(this, FileExplorer.class);
-    	startActivityForResult(i, 6);		
+    	startActivityForResult(i, OPENFILE_ID);		
 	}
     
+    /**
+     * 
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (data == null)   // Cancel case
 			return;
 		switch(requestCode) {
-		case 6:
+		case OPENFILE_ID:
 		    Bundle extras = data.getExtras();
 		    String fname = extras.getString("filename");
 		    Log.d("svg4mobile", fname);
-		    //Toast.makeText(this, "Hello " + name, Toast.LENGTH_SHORT).show();
-		    //TextView tv = (TextView) findViewById(R.id.hello_message);
-		    //tv.setText("Hello " + name);
+		    this.view.setPath(fname);
 		    break;
 		}
 	}
