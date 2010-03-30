@@ -63,13 +63,13 @@ public class Parser {
 		if (root.getAttribute("width") != null && root.getAttribute("height") != null){
 			this.width = Float.parseFloat(root.getAttribute("width"));
 			this.height = Float.parseFloat(root.getAttribute("height"));
-			Log.d("svg4mobile", "width " + width);
-			Log.d("svg4mobile", "height " + height);
+			//Log.d("svg4mobile", "width " + width);
+			//Log.d("svg4mobile", "height " + height);
 		}
 		NodeList lista = root.getChildNodes();
 		int i = 0;
 		while (i++ < (lista.getLength()-1)){
-			Log.d("svg4mobile", "lista (" + i + ") " + String.valueOf(lista.item(i).getNodeType()));
+			//Log.d("svg4mobile", "lista (" + i + ") " + String.valueOf(lista.item(i).getNodeType()));
 			if(lista.item(i).getNodeType() == 1){
 				Element nodo = (Element) lista.item(i);
 				if (nodo.getTagName().compareToIgnoreCase("rect")==0){
@@ -82,7 +82,7 @@ public class Parser {
 					// fill:#rrggbb;fill-opacity:1;...
 					String rgb = style.substring(style.indexOf(":")+1);
 					rgb = rgb.substring(0,rgb.indexOf(";"));
-					Log.d("svg4mobile", "rgb  " + rgb);
+					//Log.d("svg4mobile", "rgb  " + rgb);
 					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0, new Transformations());
 					elementos.add(rectangulo);
 				}
@@ -90,7 +90,14 @@ public class Parser {
 				//Aquí han de utilizarse el resto de tipos para parsear.
 			}
 		}
-		Log.d("svg4mobile", "fin while  ");
+		//Log.d("svg4mobile", "fin while  ");
+	}
+	
+	/**
+	 * Método que devuelve el puntero al primer elemento.
+	 */
+	public void First() {
+			contador = 0;
 	}
 	
 	/**
@@ -99,9 +106,9 @@ public class Parser {
 	 * @return Devuelve true si quedan más elementos en el iterador.
 	 */
 	public Boolean hasNext() {
-		if (contador>elementos.size())
-			return false;
-		else return true;
+		if ((contador +1) <elementos.size())
+			return true;
+		else return false;
 	}
 	
 	/**
@@ -110,10 +117,10 @@ public class Parser {
 	 * @return Devuelve el siguiente elemento.
 	 */
 	public Figure next() {
-		return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
-		/*if (contador++ == 0)
-			return new FlatColoredSquare();
-		else return new SmoothColoredSquare();*/
+		contador++;
+		Log.d("svg4mobile", "next  " + String.valueOf(contador) + " " + String.valueOf(elementos.size()));
+		return elementos.get(contador);
+		//return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 	}
 	/**
 	 * Anchura del documento obtenida de parsear el SVG

@@ -2,6 +2,7 @@ package com.grub.svg4mobile;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Vector;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -17,7 +18,8 @@ public class Svg4mobileView extends View {
 	private float yposcam;
 	private float rotcam;
 	private static double SMOOTHNESS = 1.0;
-	private ArrayList<Figure> figures = new ArrayList<Figure>();
+	//private ArrayList<Figure> figures = new ArrayList<Figure>();
+	public Vector<Figure> figures;
 	private Parser parser = Parser.getInstance();
 	private float width, height;
 
@@ -49,6 +51,7 @@ public class Svg4mobileView extends View {
 	
 	public void setPath(String path) {
 		parser.parseXML( path );
+		
 		/*while (parser.hasNext()) {  
 			figures.add(parser.next());
 		}*/
@@ -163,19 +166,22 @@ public class Svg4mobileView extends View {
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
 		
-		pruebaPath = new myPath('M', 100, 10, 'L', pointsPath, true, "#0000ff", 10);
+		//pruebaPath = new myPath('M', 100, 10, 'L', pointsPath, true, "#0000ff", 10);
 		
-		doc.draw(canvas);
-		prueba.draw(canvas);
-		pruebatexto.draw(canvas);
-		pruebaPath.draw(canvas);
+		//doc.draw(canvas);
+		//prueba.draw(canvas);
+		//pruebatexto.draw(canvas);
+		//pruebaPath.draw(canvas);
 		
-		/*
-		for (Iterator<Figure> it = figures.iterator(); it.hasNext(); ) {
-		    Figure f = (Figure)it.next();
+		while(parser.hasNext()){
+			Figure f = (Figure)parser.next();
+		    Log.d("svg4mobile", "figure " + f.toString());
 		    f.draw(canvas);
-		}
-		*/
+		    }
+		
+		parser.First();
+		
+		Log.d("svg4mobile", "onDraw ");
 
 		
 		camera.restore();

@@ -45,6 +45,7 @@ public abstract class Figure {
 	 * @param canvas
 	 */
 	public void draw(Canvas canvas) {
+		
 	}
 
 }
