@@ -73,6 +73,7 @@ public class Parser {
 			if(lista.item(i).getNodeType() == 1){
 				Element nodo = (Element) lista.item(i);
 				if (nodo.getTagName().compareToIgnoreCase("rect")==0){
+					
 					String x = nodo.getAttribute("x");
 					String y = nodo.getAttribute("y");
 					String w = nodo.getAttribute("width");
@@ -83,9 +84,39 @@ public class Parser {
 					String rgb = style.substring(style.indexOf(":")+1);
 					rgb = rgb.substring(0,rgb.indexOf(";"));
 					//Log.d("svg4mobile", " rgb:  " + rgb + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
+					
+					String transform = nodo.getAttribute("transform");
+					
+					if (transform.length()>1){
+					transform = transform.substring(transform.indexOf("(")+1,transform.indexOf(")"));
+					
+					String a = transform.substring(0,transform.indexOf(","));
+					transform = transform.substring(transform.indexOf(",")+1,transform.length());
+					
+					String b = transform.substring(0,transform.indexOf(","));
+					transform = transform.substring(transform.indexOf(",")+1,transform.length());
+					
+					String c = transform.substring(0,transform.indexOf(","));
+					transform = transform.substring(transform.indexOf(",")+1,transform.length());
+					
+					String d = transform.substring(0,transform.indexOf(","));
+					transform = transform.substring(transform.indexOf(",")+1,transform.length());
+					
+					String e = transform.substring(0,transform.indexOf(","));
+					transform = transform.substring(transform.indexOf(",")+1,transform.length());
+					
+					String f = transform.substring(0,transform.length());
+					
+					
+					Log.d("svg4mobile", " trans:  "  + " a: " +a  + " b: " +b + " c: " +c + " d: " +d + " e: " +e + " f: " +f);
+					}
+					
 					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",1.5f, new Transformations());
 					elementos.add(rectangulo);
+					
 				}
+				
+				
 				//else ...
 				//Aquí han de utilizarse el resto de tipos para parsear.
 			}
