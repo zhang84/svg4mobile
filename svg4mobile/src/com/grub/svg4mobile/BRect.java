@@ -1,6 +1,7 @@
 package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
+import android.util.Log;
 
 /**
  * Pinta figuras de tipo Rect
@@ -45,6 +46,7 @@ public class BRect extends Figure {
 	 */
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura
+		Log.d("svg4mobile", "BRect " + this.shape.toString());
 		canvas.save();
 		//canvas = 
 		this.tr.applyTransformations(canvas);
