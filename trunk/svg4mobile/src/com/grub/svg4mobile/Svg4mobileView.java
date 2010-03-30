@@ -175,15 +175,12 @@ public class Svg4mobileView extends View {
 		
 		while(parser.hasNext()){
 			Figure f = (Figure)parser.next();
-		    Log.d("svg4mobile", "figure " + f.toString());
+		    //Log.d("svg4mobile", "figure " + f.toString());
 		    f.draw(canvas);
 		    }
 		
 		parser.First();
-		
-		Log.d("svg4mobile", "onDraw ");
 
-		
 		camera.restore();
 	}
 
