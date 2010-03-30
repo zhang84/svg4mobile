@@ -109,8 +109,8 @@ public class Parser {
 	 * de la lista e incrementar el contador.
 	 * @return Devuelve el siguiente elemento.
 	 */
-	public Object next() {
-		return new Object();
+	public Figure next() {
+		return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
 		/*if (contador++ == 0)
 			return new FlatColoredSquare();
 		else return new SmoothColoredSquare();*/
