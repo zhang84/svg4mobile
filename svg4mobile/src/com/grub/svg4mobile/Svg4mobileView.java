@@ -168,7 +168,7 @@ public class Svg4mobileView extends View {
 		
 		//pruebaPath = new myPath('M', 100, 10, 'L', pointsPath, true, "#0000ff", 10);
 		
-		//doc.draw(canvas);
+		doc.draw(canvas);
 		//prueba.draw(canvas);
 		//pruebatexto.draw(canvas);
 		//pruebaPath.draw(canvas);

@@ -83,7 +83,7 @@ public class Parser {
 					String rgb = style.substring(style.indexOf(":")+1);
 					rgb = rgb.substring(0,rgb.indexOf(";"));
 					//Log.d("svg4mobile", "rgb  " + rgb);
-					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",0, new Transformations());
+					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",2f, new Transformations());
 					elementos.add(rectangulo);
 				}
 				//else ...
