@@ -180,7 +180,7 @@ public class Parser {
 	 * @return Devuelve true si quedan mÃ¡s elementos en el iterador.
 	 */
 	public Boolean hasNext() {
-		if ((contador +1) <elementos.size())
+		if ((contador +1) <=elementos.size())
 			return true;
 		else return false;
 	}
