@@ -9,7 +9,7 @@
 	<string name="auto_set_north">Autonortear</string>
 	
 	<string name="no_files">Este directorio está vacío</string>
-    <string name="raiz">[Volver arriba]</string>
+    <string name="subir">[Subir un directorio]</string>
     <string name="titulo_no_directorio">No es un directorio</string>
     <string name="no_directorio">Eso es un archivo. ¡No un directorio!</string>
     <string name="cancelar">Cancelar</string>
