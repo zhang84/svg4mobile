@@ -29,6 +29,8 @@ public class Svg4mobileView extends View {
 	//private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!", "#FF0000", new Transformations());
 	private float perspective = 0;
 	
+	private SubPath[] mysubPath;
+	private float[] iniPoints = {100,10};
 	private float[] pointsPath = {100,10,
 								40,180, 
 								190,60, 
@@ -168,12 +170,16 @@ public class Svg4mobileView extends View {
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
 		
-		//pruebaPath = new myPath('M', 100, 10, 'L', pointsPath, true, "#0000ff", 10);
+		mysubPath = new SubPath[2];
+		mysubPath[0] = new SubPath('M', iniPoints);
+		mysubPath[1] = new SubPath('L', pointsPath);
+		
+		pruebaPath = new myPath(mysubPath, true, "#0000ff", 10);
 		
 		doc.draw(canvas);
 		//prueba.draw(canvas);
 		//pruebatexto.draw(canvas);
-		//pruebaPath.draw(canvas);
+		pruebaPath.draw(canvas);
 		
 		parser.First();
 		
