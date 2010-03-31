@@ -9,10 +9,10 @@ public class myPath extends Figure {
 	
 	private float[] points;
 	private Paint paint;
-	private boolean relative;
 	private char type;
-	private Path myPath;
+	private Path path;
 	private boolean Z;
+	private SubPath[] subPath;
 	
 	/**
 	 * Crea un camino entre puntos
@@ -24,61 +24,61 @@ public class myPath extends Figure {
 	 * @param brgb Código de color hexadecimal de la forma #FFFFFF
 	 * @param bwidth Grosor del segmento.
 	 */
-	public myPath (char m, float m_x1, float m_y1, char type, float[] points, boolean isZ, String brgb, float bwidth)
+	public myPath (SubPath[] subPath, boolean isZ, String brgb, float bwidth)
 	{
 		
-		if(m == 'M')
-			this.relative = false;
-		else this.relative = true;
+		this.subPath = new SubPath[subPath.length];
+		
+		for(int i=0; i<subPath.length;i++)
+			this.subPath[i] = new SubPath(subPath[i].getType(), subPath[i].getPoints());
 		
 		this.Z = isZ;
 		
-		this.points = new float[points.length + 2];
-		
-		this.points[0] = m_x1;
-		this.points[1] = m_y1;
-		
-		this.type = type;
-		
-		for(int i = 0; i < points.length; i++){
-			this.points[i+2] = points[i];
-		}
-			
 		this.paint = new Paint();
 		this.paint.setStrokeWidth(bwidth);
 		this.paint.setColor(Color.parseColor(brgb));
 		this.paint.setAntiAlias(true);
 		
-		this.myPath = new Path();
-
+		this.path = new Path();
+		
 	}
 	
 	public void draw (Canvas canvas){
 		
-		if(this.relative)
-			myPath.rMoveTo(this.points[0], this.points[1]);
-		else
-			myPath.moveTo(this.points[0], this.points[1]);
-		
-		switch (this.type) {
-		case 'L':
-			for(int i=2; i<this.points.length; i+=2)
-				myPath.lineTo(this.points[i], this.points[i+1]);
-			break;
-		case 'C':
-			for(int i=2; i<this.points.length; i+=6)
-				myPath.cubicTo(this.points[i], this.points[i+1],this.points[i+2],this.points[i+3],this.points[i+4],this.points[i+5]);
-			break;
-		case 'Q':
-			for(int i=2; i<this.points.length; i+=4)
-				myPath.quadTo(this.points[i], this.points[i+1],this.points[i+2],this.points[i+3]);
-			break;
+		for(int i=0; i<subPath.length; i++)
+		{
+			type = subPath[i].getType();
+			points = subPath[i].getPoints();
+			
+			switch(type){
+			case 'm':
+				path.rMoveTo(points[0], points[1]);
+				break;
+			case 'M':
+				path.moveTo(points[0], points[1]);
+				break;
+			case 'L':
+				for (int j=0; j<points.length; j+=2)
+					path.lineTo(points[j], points[j+1]);
+				break;
+			case 'C':
+				for(int j=0; j<points.length; j+=6)
+					path.cubicTo(points[j], points[j+1],points[j+2],points[j+3],points[j+4],points[j+5]);
+				break;
+			case 'Q':
+				for(int j=0; j<points.length; j+=4)
+					path.quadTo(points[j], points[j+1],points[j+2],points[j+3]);
+				break;
+			}
+				
 		}
 		
-		if(Z)
-			myPath.lineTo(this.points[0], this.points[1]);
-			
-		canvas.drawPath(myPath, paint);
+		
+		if(Z){
+			points = subPath[0].getPoints();
+			path.lineTo(points[0], points[1]);
+		}
+		canvas.drawPath(path, paint);
 	}
 	
 }
