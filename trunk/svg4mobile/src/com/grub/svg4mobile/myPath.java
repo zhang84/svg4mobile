@@ -9,10 +9,12 @@ public class myPath extends Figure {
 	
 	private float[] points;
 	private Paint paint;
+	private Paint paintBorder;
 	private char type;
 	private Path path;
 	private boolean Z;
 	private SubPath[] subPath;
+	private Transformations tr;
 	
 	/**
 	 * Crea un camino entre puntos
@@ -24,9 +26,9 @@ public class myPath extends Figure {
 	 * @param brgb Código de color hexadecimal de la forma #FFFFFF
 	 * @param bwidth Grosor del segmento.
 	 */
-	public myPath (SubPath[] subPath, boolean isZ, String brgb, float bwidth)
+	public myPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr)
 	{
-		
+		this.tr = tr;
 		this.subPath = new SubPath[subPath.length];
 		
 		for(int i=0; i<subPath.length;i++)
@@ -34,17 +36,24 @@ public class myPath extends Figure {
 		
 		this.Z = isZ;
 		
+		this.paintBorder = new Paint();
+		if (bwidth>0) {
+			this.paintBorder.setStyle(Paint.Style.STROKE);
+			this.paintBorder.setStrokeWidth(bwidth);
+			this.paintBorder.setColor(Color.parseColor(brgb));
+			this.paintBorder.setAntiAlias(true);
+		}
+		
 		this.paint = new Paint();
-		this.paint.setStrokeWidth(bwidth);
-		this.paint.setColor(Color.parseColor(brgb));
+		this.paint.setColor(Color.parseColor(rgb));
 		this.paint.setAntiAlias(true);
 		
 		this.path = new Path();
-		
 	}
 	
 	public void draw (Canvas canvas){
-		
+		canvas.save();
+		this.tr.applyTransformations(canvas);
 		for(int i=0; i<subPath.length; i++)
 		{
 			type = subPath[i].getType();
@@ -79,6 +88,8 @@ public class myPath extends Figure {
 			path.lineTo(points[0], points[1]);
 		}
 		canvas.drawPath(path, paint);
+		canvas.drawPath(path, paintBorder);
+		canvas.restore();
 	}
 	
 }

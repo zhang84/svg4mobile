@@ -46,9 +46,7 @@ public class BRect extends Figure {
 	 */
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura
-		//Log.d("svg4mobile", "BRect " + this.shape.);
 		canvas.save();
-		//canvas = 
 		this.tr.applyTransformations(canvas);
 		this.shape.draw(canvas);
 		if (this.hasWidth) {
