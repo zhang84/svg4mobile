@@ -191,9 +191,8 @@ public class Parser {
 	 * @return Devuelve el siguiente elemento.
 	 */
 	public Figure next() {
-		contador++;
 		//Log.d("svg4mobile", "next  " + String.valueOf(contador) + " " + String.valueOf(elementos.size()));
-		return elementos.get(contador);
+		return elementos.get(contador++);
 		//return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 	}
 	/**
