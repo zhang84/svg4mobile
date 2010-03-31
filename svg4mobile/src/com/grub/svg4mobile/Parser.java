@@ -152,9 +152,11 @@ public class Parser {
                     NodeList nLista = nodo.getChildNodes();
                     for (int c = 0; c < nLista.getLength(); c++){
                         if (nLista.item(c).getNodeType() == 1){
-                            Element tspan = (Element) nLista.item(c);
-                            //text = tspan.getTextContent();
-                            //text = tspan.getNodeValue();
+                           Element tspan = (Element) nLista.item(c);
+                           NodeList tLista = tspan.getChildNodes();
+                           text = tLista.item(0).getNodeValue(); //suponeos que hay solo un texto, sino hay que ahcer un for
+                            
+                          //Log.d("svg4mobile", " text:  " + tLista.item(0).getNodeValue() );
                         }
                     }
                     Text texto = new Text(x, y, size, text, rgb, new Transformations());
