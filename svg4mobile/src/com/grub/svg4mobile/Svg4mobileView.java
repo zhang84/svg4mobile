@@ -24,9 +24,9 @@ public class Svg4mobileView extends View {
 	private float width, height;
 
 	
-	private BRect doc =    new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
-	private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
-	private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!", "#FF0000", new Transformations());
+	private BRect doc =    new BRect( 0f,  0f, 100f, 100f, "#FFFF9C", "#FFFFFF", 3f, new Transformations()); 
+	//private BRect prueba = new BRect(0f, 0f,   23,   23, "#0000FF", "#FF0000", 2f, new Transformations()); 
+	//private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!", "#FF0000", new Transformations());
 	private float perspective = 0;
 	
 	private float[] pointsPath = {100,10,
@@ -45,13 +45,14 @@ public class Svg4mobileView extends View {
         setFocusable(true);
         setFocusableInTouchMode(true);
         this.setPath("/sdcard/test.svg");
-        
+         
         camReset();
 	}
 	
 	public void setPath(String path) {
 		parser.parseXML( path );
-		
+		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFF9C", "#FFFFFF", 3f, new Transformations());
+		this.camReset();
 		/*while (parser.hasNext()) {  
 			figures.add(parser.next());
 		}*/
@@ -78,11 +79,12 @@ public class Svg4mobileView extends View {
 	 * Resetea los valores de posición de la cámara.
 	 */
 	public void camReset() {
-		this.zoom=100;
+		this.zoom=parser.getWidth();
 		this.xposcam=0;
 		this.yposcam=0;
 		this.rotcam=0;
 		this.perspective = 0;
+
 		this.invalidate();
 	}
 	

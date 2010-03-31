@@ -5,12 +5,14 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -279,8 +281,14 @@ public class Svg4mobile extends Activity {
     	 */
     	public void onSensorChanged(SensorEvent event) {
     		if (setNorthRequest || AutoSetNorth) {
-    			view.setNorth(event.values[0]);
+    			Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay(); 
+    			if (display.getOrientation() == 0) { // Vertical
+    				view.setNorth(event.values[0]);
+    			} else { // Apaisado
+    				view.setNorth(event.values[0]+90);
+    			}
     			setNorthRequest = false;
+    			Log.v("svg4mobile", "Display width: " + display.getWidth() );
     		}
     	}
       

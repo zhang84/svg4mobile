@@ -81,17 +81,17 @@ public class Parser {
 	 */
 	public void parseXML (String path){
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		elementos = new Vector<Figure>();
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Inicializamos el documento.
-			//Log.d("svg4mobile", path);
 			dom = db.parse(new File(path));
 		}catch(ParserConfigurationException pce) {
-			//Log.e("svg4mobile", "pce " + pce);
+			Log.e("svg4mobile", "pce " + pce);
 		}catch(SAXException se) {
-			//Log.e("svg4mobile", "se " + se);
+			Log.e("svg4mobile", "se " + se);
 		}catch(IOException ioe) {
-			//Log.e("svg4mobile", "ioe " + ioe);
+			Log.e("svg4mobile", "ioe " + ioe);
 		}
 
 		Element root = dom.getDocumentElement();
@@ -146,7 +146,7 @@ public class Parser {
                     int size = Integer.parseInt(style.substring(style.indexOf(":")+1,style.indexOf("px")));
                     style = style.substring(style.indexOf("fill:"));
                     String rgb = style.substring(style.indexOf(":")+1, style.indexOf(";"));
-                    String text = "";
+                    String text = "E";
                     float x = Float.parseFloat(nodo.getAttribute("x"));
                     float y = Float.parseFloat(nodo.getAttribute("y"));
                     NodeList nLista = nodo.getChildNodes();
