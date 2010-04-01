@@ -82,12 +82,14 @@ public class InfoParser {
 					String h = nodo.getAttribute("height");
 					String title = nodo.getAttribute("title");
 					String description = nodo.getAttribute("description"); 
-					String image = "/sdcard/" + nodo.getAttribute("image"); 
+					String image = nodo.getAttribute("image"); 
 					String notes = nodo.getAttribute("notes"); 
 					String rgb = nodo.getAttribute("rgb"); 
 					String[] tags = {""};
 
-					Log.d("svg4mobile", " rgb:  " + rgb + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
+					image = path.substring(0, path.lastIndexOf("/")) + "/"+ image;
+					
+					Log.d("svg4mobile", " image:  " + image  + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
 
 					ExtraInfo info = new ExtraInfo(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h), title, description, image, notes, rgb, tags);
 					elementos.add(info);
@@ -126,6 +128,9 @@ public class InfoParser {
 		return elementos.get(contador++);
 		//return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 	}
+	
+
+	
 	
 
 }
