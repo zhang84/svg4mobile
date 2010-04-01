@@ -27,10 +27,10 @@ public class FileExplorer extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         int IDFilaSeleccionada = position;
+        File archivo = new File(elementos.get(IDFilaSeleccionada));
         if (IDFilaSeleccionada==0){
             rellenarConElRaiz();
         } else {
-            File archivo = new File(elementos.get(IDFilaSeleccionada));
             if (archivo.isDirectory())
                 rellenar(archivo.listFiles());
              else {
