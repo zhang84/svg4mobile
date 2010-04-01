@@ -166,10 +166,11 @@ public class Svg4mobile extends Activity {
     			if (this.isPerspectiveOn) {
     				this.view.setPerspective(0f);
     			} else {
-    				this.view.setPerspective(64f);		
+    				this.view.setNorth(0);
+    				this.view.setPerspective(64f);
     			}
     			this.isPerspectiveOn = !this.isPerspectiveOn; 
-
+    			this.menu.setGroupEnabled(2, !this.isPerspectiveOn);
     			break;
     		}
     		case 2: { //Zoom Out

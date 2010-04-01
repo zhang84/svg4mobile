@@ -14,7 +14,7 @@ public class ExtraInfo {
 	private Paint paint=new Paint();
 	private Paint paint2=new Paint();
 	private RectF drawable_area;  
-	private Bitmap cached_dummy = BitmapFactory.decodeFile("/sdcard/1.png");
+	private Bitmap cached_dummy;
 	private float x;
 	private float y;
 	private float w;
@@ -51,7 +51,11 @@ public class ExtraInfo {
 		this.tags = tags;
 		this.image = image;
 		
-		cached_dummy = BitmapFactory.decodeFile(image);
+		try {
+			cached_dummy = BitmapFactory.decodeFile(image);
+		} catch (Exception e) {
+			Log.e("svg4mobile", ""+e);
+		}
 		drawable_area = new RectF(0,0,w,h);
 	}
 	/**
