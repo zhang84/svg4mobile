@@ -30,7 +30,7 @@ public class Svg4mobileView extends View {
 
 	
 	private BRect doc =    new BRect( 0f,  0f, 100f, 100f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
-	private ExtraInfo prueba = new ExtraInfo(500, 500, 100, 100,"titulo", "desc", "/sdcard/2.png", "notas", "#0000FF", new String[0]);
+	private ExtraInfo prueba = new ExtraInfo(500, 500, 100, 100,"titulo", "desc", "/sdcard/1.png", "notas", "#0000FF", new String[0]);
 	//private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!", "#FF0000", new Transformations());
 	private float perspective = 0;
 	

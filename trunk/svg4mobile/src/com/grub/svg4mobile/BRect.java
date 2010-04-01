@@ -28,6 +28,7 @@ public class BRect extends Figure {
 	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
 	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
 	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
 	public BRect(float x, float y, float w, float h, String rgb, String brgb, float bwidth, Transformations tr) {
 		this.tr = tr;

@@ -5,6 +5,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 
+/**
+ * Pinta figuras de tipo Path
+ * @see http://www.w3.org/TR/SVG11/paths.html
+ */
 public class myPath extends Figure {
 	
 	private float[] points;
@@ -18,13 +22,12 @@ public class myPath extends Figure {
 	
 	/**
 	 * Crea un camino entre puntos
-	 * @param isRelative indica si la posición de los primeros puntos es relativa o absoluta
-	 * @param x1 Coordenada x del punto 1
-	 * @param y1 Coordenada y del punto 1
-	 * @param type Tipo de camino (1 L, 2 H, 3 V, etc...)
-	 * @param points Array de puntos para dibujar el camino.
-	 * @param brgb Código de color hexadecimal de la forma #FFFFFF
-	 * @param bwidth Grosor del segmento.
+	 * @param subPath
+	 * @param isZ
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
 	public myPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr)
 	{
@@ -51,6 +54,10 @@ public class myPath extends Figure {
 		this.path = new Path();
 	}
 	
+	/**
+	 * Dibuja la figura
+	 * @param canvas
+	 */
 	public void draw (Canvas canvas){
 		canvas.save();
 		this.tr.applyTransformations(canvas);
