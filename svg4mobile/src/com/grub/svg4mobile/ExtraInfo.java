@@ -9,13 +9,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 import android.content.Context;
 import android.app.Instrumentation; 
 
 public class ExtraInfo {
 
 	private BRect frame;
-	private Text title;
+	//private Text title;
 	private Paint paint=new Paint();
 	private Paint paint2=new Paint();
 	private RectF drawable_area;  
@@ -25,6 +26,13 @@ public class ExtraInfo {
 	private float w;
 	private float h;
 	
+	private String title;
+	private String description; 
+	private String image; 
+	private String notes; 
+	private String rgb ; 
+	private String[] tags;
+	
 
 	public ExtraInfo(float x, float y, float w, float h, String title, String description, String image, String notes, String rgb, String[] tags){
 		
@@ -32,7 +40,12 @@ public class ExtraInfo {
 		this.y = y;
 		this.w = w;
 		this.h = h;
-		//this.title = title;
+		this.title = title;
+		this.image = image;
+		this.notes = notes;
+		this.rgb = rgb;
+		this.tags = tags;
+		
 		cached_dummy = BitmapFactory.decodeFile(image);
 		//BitmapFactory.
 		drawable_area = new RectF(0,0,w,h);
@@ -44,6 +57,10 @@ public class ExtraInfo {
 	 */
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura
+		
+		Log.d("svg4mobile", " ExtraInfo:  " + rgb + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
+
+		
 		frame.draw(canvas);
 		canvas.save();
 		paint.setStyle(Paint.Style.FILL);  
@@ -59,7 +76,7 @@ public class ExtraInfo {
         this.paint2.setFakeBoldText(true);
 
         
-		canvas.drawText("itIsPizzaTime", 16, 110, this.paint2); 
+		canvas.drawText(this.title, 16, 110, this.paint2); 
 		canvas.restore();
 	}
 	

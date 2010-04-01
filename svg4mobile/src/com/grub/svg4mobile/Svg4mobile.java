@@ -220,6 +220,7 @@ public class Svg4mobile extends Activity {
 		    String fname = extras.getString("filename");
 		    Log.d("svg4mobile", fname);
 		    this.view.setPath(fname);
+		    this.view.setInfoPath(fname);
 		    break;
 		}
 	}
