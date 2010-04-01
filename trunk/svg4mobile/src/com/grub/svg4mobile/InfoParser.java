@@ -60,6 +60,10 @@ public class InfoParser {
 		
 		String path2 = path.substring(0,(path.length()-3));
 		path2 = path2 + "s4m";
+		
+		File file = new File(path2);
+	if( file.exists()){
+		
 		String tempdir = System.getProperty("java.io.tmpdir")+"/tmp/";
 		new File(tempdir).mkdir();
 		
@@ -126,6 +130,8 @@ public class InfoParser {
 			}
 		}
 		//Log.d("svg4mobile", "fin while  ");
+		
+	 }// if no existe s4m
 	}
 
 	 private static final void copyInputStream(InputStream in, OutputStream out) throws IOException
