@@ -18,6 +18,15 @@ public class Text extends Figure {
 	private float x,y;
 	private String text;
     
+	/**
+	 * Crea una figura de tipo texto 
+	 * @param x Posición X
+	 * @param y Posición Y
+	 * @param size Tamaño de la fuente
+	 * @param txt Cadena de texto 
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param tr Transformaciones que se aplicarán a la figura
+	 */
   public Text(float x, float y, int size, String txt, String rgb, Transformations tr) {
     
 	  this.text = txt;
