@@ -53,10 +53,7 @@ public class Svg4mobileView extends View {
 		super(context);
 		
         setFocusable(true);
-        setFocusableInTouchMode(true);
-        this.setInfoPath("/sdcard/test.svg");
-        this.setPath("/sdcard/test.svg");
-         
+        setFocusableInTouchMode(true);   
         camReset();
 	}
 	

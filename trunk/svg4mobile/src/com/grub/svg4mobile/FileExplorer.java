@@ -2,6 +2,7 @@ package com.grub.svg4mobile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.ListActivity;
@@ -51,7 +52,7 @@ public class FileExplorer extends ListActivity {
     
     private void rellenar(File[] archivos) {
         elementos = new ArrayList<String>();
-        elementos.add("[Subir un directorio]");
+        elementos.add("[Subir a raiz]");
         for( File archivo: archivos){
         	if (archivo.isDirectory())
         		elementos.add(archivo.getPath()+"/");
@@ -59,8 +60,8 @@ public class FileExplorer extends ListActivity {
         		elementos.add(archivo.getPath());
         	}
         }
-       
-        ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, R.layout.fila, elementos);
+        Collections.sort(elementos);
+        ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elementos);
         setListAdapter(listaArchivos);
     }
 

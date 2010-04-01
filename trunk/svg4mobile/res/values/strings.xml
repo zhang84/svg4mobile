@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Svg4mobile</string>
 	<string name="perspective">Perspectiva</string>
+	<string name="extra_info">Info.</string>
 	<string name="zoom_out">Zoom -</string>
 	<string name="zoom_in">Zoom +</string>
 	<string name="load">Cargar</string>

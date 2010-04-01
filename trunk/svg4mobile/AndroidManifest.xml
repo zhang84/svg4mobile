@@ -12,6 +12,8 @@
             </intent-filter>
         </activity>
 		<activity android:name=".FileExplorer"></activity>
+		<activity android:name=".ExtraInfoList"></activity>
+		
 
     </application>
     <uses-sdk android:minSdkVersion="3" />

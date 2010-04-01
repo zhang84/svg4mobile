@@ -56,6 +56,8 @@ public class Svg4mobile extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.view = new Svg4mobileView(this);
+		this.view.setPath("/sdcard/test.svg");
+		this.view.setInfoPath("/sdcard/test.svg");
 		setContentView(view);
 		
         // Establece Sensor y Manager 
@@ -88,6 +90,8 @@ public class Svg4mobile extends Activity {
        
        MenuItem itemChPersp = this.menu.add(0,1,0,R.string.perspective); //Cambiar Perspectiva
        itemChPersp.setIcon(android.R.drawable.ic_menu_mapmode);
+       MenuItem itemExtraInfo = this.menu.add(0,7,0,R.string.extra_info); //Mostrar información extra
+       itemExtraInfo.setIcon(android.R.drawable.btn_star_big_on);
        
        MenuItem compassSync = this.menu.add(2,4,0,R.string.set_north); //Nortear
        MenuItem autoCompassSync = this.menu.add(2,5,1,R.string.auto_set_north); //Autonortear
@@ -193,6 +197,10 @@ public class Svg4mobile extends Activity {
     			openFile();
     			break;    			
     		}
+    		case 7: { //ExtraInfo
+    			showExtraInfo();
+    			break;
+    		}
     	}
        return true;
     }
@@ -202,7 +210,14 @@ public class Svg4mobile extends Activity {
      */
     private void openFile() {
     	Intent i = new Intent(this, FileExplorer.class);
-    	startActivityForResult(i, OPENFILE_ID);		
+    	startActivityForResult(i, OPENFILE_ID);
+	}
+    
+    private void showExtraInfo() {
+    	Intent i = new Intent(this, ExtraInfoList.class);
+    	Log.v("svg4mobile", "show extra info");
+    	startActivity(i);
+    	//startActivityForResult(i, 7);		
 	}
     
     /**
