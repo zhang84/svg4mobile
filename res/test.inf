@@ -13,4 +13,16 @@
 	rgb= "#001122"
 	tags = "tag1,tag2"
     />
+    <pin
+	width="100.446712"
+	height="130.26907"
+	x="44.20206"
+	y="35.87439"
+	title="pr2"
+	description="des2"
+	image="2.png"
+	notes="notas2"
+	rgb= "#FF1122"
+	tags = "tag5,tag2,pepe"
+    />
 </inf>
