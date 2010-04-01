@@ -82,7 +82,7 @@ public class InfoParser {
 					String h = nodo.getAttribute("height");
 					String title = nodo.getAttribute("title");
 					String description = nodo.getAttribute("description"); 
-					String image = nodo.getAttribute("image"); 
+					String image = "/sdcard/" + nodo.getAttribute("image"); 
 					String notes = nodo.getAttribute("notes"); 
 					String rgb = nodo.getAttribute("rgb"); 
 					String[] tags = {""};

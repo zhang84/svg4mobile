@@ -258,6 +258,8 @@ public class Svg4mobile extends Activity {
         	else
         	  this.view.camUp();
         	return true;
+        case MotionEvent.ACTION_UP:
+        	return true;
         }
 
     	return true;

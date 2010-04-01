@@ -38,8 +38,8 @@ public class FileExplorer extends ListActivity {
 	             bundle.putString("filename", archivo.getPath());  
 	             
 	             Intent intent = new Intent();
-	             intent.putExtras(bundle);   // Pone el Bundle en un Intent
-	             setResult(RESULT_OK, intent);   // Devuelve el Intent
+	             intent.putExtras(bundle);   	// Pone el Bundle en un Intent
+	             setResult(RESULT_OK, intent);  // Devuelve el Intent
 	             finish();
              }
         }
@@ -52,8 +52,13 @@ public class FileExplorer extends ListActivity {
     private void rellenar(File[] archivos) {
         elementos = new ArrayList<String>();
         elementos.add("[Subir un directorio]");
-        for( File archivo: archivos)
-            elementos.add(archivo.getPath());
+        for( File archivo: archivos){
+        	if (archivo.isDirectory())
+        		elementos.add(archivo.getPath()+"/");
+        	else if (archivo.getName().matches("(?i).*svg")) {
+        		elementos.add(archivo.getPath());
+        	}
+        }
        
         ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, R.layout.fila, elementos);
         setListAdapter(listaArchivos);
