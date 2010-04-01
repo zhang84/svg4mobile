@@ -212,7 +212,7 @@ public class Svg4mobileView extends View {
 		    info.draw(canvas);
 		    }
 		
-		prueba.draw(canvas);
+		//prueba.draw(canvas);
 		
 				
 		camera.restore();
