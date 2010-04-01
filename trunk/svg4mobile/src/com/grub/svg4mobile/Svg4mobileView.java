@@ -26,6 +26,7 @@ public class Svg4mobileView extends View {
 	//private ArrayList<Figure> figures = new ArrayList<Figure>();
 	public Vector<Figure> figures;
 	private Parser parser = Parser.getInstance();
+	private InfoParser infoparser = InfoParser.getInstance();
 	private float width, height;
 
 	
@@ -53,6 +54,7 @@ public class Svg4mobileView extends View {
 		
         setFocusable(true);
         setFocusableInTouchMode(true);
+        this.setInfoPath("/sdcard/test.svg");
         this.setPath("/sdcard/test.svg");
          
         camReset();
@@ -65,6 +67,12 @@ public class Svg4mobileView extends View {
 		/*while (parser.hasNext()) {  
 			figures.add(parser.next());
 		}*/
+	}
+	
+	public void setInfoPath(String path) {
+		infoparser.parseXML( path );
+		//this.camReset();
+
 	}
 	
 	/**
@@ -195,6 +203,13 @@ public class Svg4mobileView extends View {
 			Figure f = (Figure)parser.next();
 		    //Log.d("svg4mobile", "figure " + f.toString());
 		    f.draw(canvas);
+		    }
+		
+		infoparser.First();
+		
+		while(infoparser.hasNext()){
+			ExtraInfo info = (ExtraInfo)infoparser.next();;
+		    info.draw(canvas);
 		    }
 		
 		prueba.draw(canvas);

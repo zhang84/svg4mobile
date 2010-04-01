@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<inf>
+    <pin
+	width="44.446712"
+	height="126.26907"
+	x="443.20206"
+	y="357.87439"
+	title="pr"
+	description="des"
+	image="1.png"
+	notes="notas"
+	rgb= "#001122"
+	tags = "tag1,tag2"
+    />
+</inf>
