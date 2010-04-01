@@ -62,10 +62,11 @@ public class InfoParser {
 		path2 = path2 + "s4m";
 		
 		File file = new File(path2);
-	if( file.exists()){
+		elementos = new Vector<ExtraInfo>();
+		if( file.exists()){
 		
-		String tempdir = System.getProperty("java.io.tmpdir")+"/tmp/";
-		new File(tempdir).mkdir();
+			String tempdir = System.getProperty("java.io.tmpdir")+"/tmp/";
+			new File(tempdir).mkdir();
 		
 			try{
 				ZipFile zipFile = new ZipFile(path2);
@@ -77,8 +78,7 @@ public class InfoParser {
 				 zipFile.close();
 
 			 } catch (IOException ioe) {
-				 Log.d("svg4mobile", " zipfail:  " + ioe);
-				      //return;
+				 Log.e("svg4mobile", " zipfail:  " + ioe);
 		    }	 
 			 
 		path = path.substring(0,(path.length()-3));
@@ -86,7 +86,7 @@ public class InfoParser {
 		path = tempdir + path + "inf";
 	
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-		elementos = new Vector<ExtraInfo>();
+		
 		try {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			//Inicializamos el documento.
@@ -131,7 +131,9 @@ public class InfoParser {
 		}
 		//Log.d("svg4mobile", "fin while  ");
 		
-	 }// if no existe s4m
+	 } else {
+		 // if no existe s4m
+	 }
 	}
 
 	 private static final void copyInputStream(InputStream in, OutputStream out) throws IOException
