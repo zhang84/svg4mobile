@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 public class ExtraInfo {
 
@@ -22,6 +23,7 @@ public class ExtraInfo {
 	private String notes;
 	private String[] tags;
 	private String description;
+	private String image;
 	
 	/**
 	 * Pinta círculos con imágenes que al ser pulsados muestran información adicional
@@ -47,6 +49,7 @@ public class ExtraInfo {
 		this.description = description;
 		this.notes = notes;
 		this.tags = tags;
+		this.image = image;
 		
 		cached_dummy = BitmapFactory.decodeFile(image);
 		drawable_area = new RectF(0,0,w,h);
@@ -58,6 +61,8 @@ public class ExtraInfo {
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura		
 		float radio = (float) (Math.sqrt(x*x+y*y))/8;
+		
+		Log.d("svg4mobile", " extrainfo:  " + image  + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
 		
 		canvas.save();
 		canvas.translate(this.x, this.y);
