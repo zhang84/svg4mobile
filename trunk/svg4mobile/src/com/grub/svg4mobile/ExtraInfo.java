@@ -60,9 +60,9 @@ public class ExtraInfo {
 	 */
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura		
-		float radio = (float) (Math.sqrt(x*x+y*y))/8;
+		float radio = (float) (Math.sqrt(w*w+h*h))/2;
 		
-		Log.d("svg4mobile", " extrainfo:  " + image  + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
+		//Log.d("svg4mobile", " extrainfo:  " + image  + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
 		
 		canvas.save();
 		canvas.translate(this.x, this.y);

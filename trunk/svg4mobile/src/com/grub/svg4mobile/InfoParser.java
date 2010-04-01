@@ -1,8 +1,15 @@
 package com.grub.svg4mobile;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
 import java.util.Vector;
+import java.util.zip.*;
+import java.io.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -51,10 +58,29 @@ public class InfoParser {
 	 */
 	public void parseXML (String path){
 		
-		path = path.substring(0,(path.length()-3));
-		path = path + "inf";
-		Log.d("svg4mobile", "inf " + path);
+		String path2 = path.substring(0,(path.length()-3));
+		path2 = path2 + "s4m";
+		String tempdir = System.getProperty("java.io.tmpdir")+"/tmp/";
+		new File(tempdir).mkdir();
 		
+			try{
+				ZipFile zipFile = new ZipFile(path2);
+				Enumeration entries = zipFile.entries();
+				while(entries.hasMoreElements()) {
+			        ZipEntry entry = (ZipEntry)entries.nextElement();
+			        copyInputStream(zipFile.getInputStream(entry), new BufferedOutputStream(new FileOutputStream(tempdir + entry.getName())));
+				}				
+				 zipFile.close();
+
+			 } catch (IOException ioe) {
+				 Log.d("svg4mobile", " zipfail:  " + ioe);
+				      //return;
+		    }	 
+			 
+		path = path.substring(0,(path.length()-3));
+		path = path.substring(path.lastIndexOf("/"),path.length());
+		path = tempdir + path + "inf";
+	
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		elementos = new Vector<ExtraInfo>();
 		try {
@@ -69,6 +95,7 @@ public class InfoParser {
 			Log.e("svg4mobile", "ioe " + ioe);
 		}
 
+		
 		Element root = dom.getDocumentElement();
 		NodeList lista = root.getChildNodes();
 		int i = 0;
@@ -88,9 +115,7 @@ public class InfoParser {
 					String tag = nodo.getAttribute("tags");
 					String[] tags = tag.split(",");
 					
-					image = path.substring(0, path.lastIndexOf("/")) + "/"+ image;
-					
-					
+					image = tempdir + image;
 					
 					Log.d("svg4mobile", " image:  " + image  + " x:  " + x+ " y: " + y+ " tag1  " + tags[1] +" h:  " + h);
 
@@ -103,6 +128,19 @@ public class InfoParser {
 		//Log.d("svg4mobile", "fin while  ");
 	}
 
+	 private static final void copyInputStream(InputStream in, OutputStream out) throws IOException
+	  {
+	    byte[] buffer = new byte[1024];
+	    int len;
+
+	    while((len = in.read(buffer)) >= 0)
+	      out.write(buffer, 0, len);
+
+	    in.close();
+	    out.close();
+	  }
+
+	
 	/**
 	 * MÃ©todo que devuelve el puntero al primer elemento.
 	 */
