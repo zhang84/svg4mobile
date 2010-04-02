@@ -136,53 +136,63 @@ public class Parser {
 					rgb = rgb.substring(0,rgb.indexOf(";"));
 					String transform = nodo.getAttribute("transform");
 					String d = nodo.getAttribute("d");
-					String d2[] = d.split(" ");
+					d = d.replaceAll(" ", ",");
+					Log.d("svg4mobile", " d:  " + d);
+					String d2[] = d.split(",");
 					int partes = 0;
 					for (int z=0; z< d2.length;z++){
-						if(  d2[z].equals("M")  || d2[z].equals("L")|| d2[z].equals("C") || d2[z].equals("Q") || d2[z].equals("m") ){
+						if(  d2[z].equals("M")  || d2[z].equals("L")|| d2[z].equals("C") || d2[z].equals("Q") || d2[z].equals("m") || d2[z].equals("c")){
 							partes ++;
 						}		
 					}
 					
 					SubPath[] mysubPath = new SubPath[partes];
 					String tipo = "";
-					int letra = 1;
-					float[] d3 = {0f};
-					float[] d3reset = {0f};
 					int indice = 0;
+					int iteracion = 0;
 					
-					for (int z=0; z< d2.length;z++){
-						if(  d2[z].equals("M")  || d2[z].equals("L")|| d2[z].equals("C") || d2[z].equals("Q") || d2[z].equals("m") ){
-							if(tipo == ""){
-								tipo = d2[z];
-								Log.d("svg4mobile", " d2:  " + d2[z]);
-							}else{
-								char tip[] = tipo.toCharArray();
-								mysubPath[letra] = new SubPath(tip[0], d3);
-								letra++;
-								tipo = d2[z];
-								d3 = d3reset;
-								indice = 0;
-								Log.d("svg4mobile", " d2:  " + d2[z]);
-							}
-						}else{
-							Log.d("svg4mobile", " d2e:  " +  d2[z] );
-							String d4[] = d2[z].split(",");
-							for (int q=0; q<d4.length; q++){
-								Log.d("svg4mobile", " d4:  " + d4[q] + " indice " + indice);
-								d3[indice] = (float) Float.parseFloat(d4[q]);
-								indice++;
-								Log.d("svg4mobile", " d4:  " + d4[q]);
-							}
+					while (indice < d2.length-1){
 						
+						tipo = d2[indice];
+						Log.d("svg4mobile", " d2:  " + d2[indice] + " length " + indice +"/"+ d2.length);
+						indice++;
+						
+						int indiceaux = indice;
+						int numelem =0;
+						while ((d2[indiceaux].equals("M")  || d2[indiceaux].equals("L")|| d2[indiceaux].equals("C") || d2[indiceaux].equals("Q") || d2[indiceaux].equals("m") || d2[indiceaux].equals("c") || d2[indiceaux].equals("z"))== false){
+							numelem++;
+							indiceaux++;
 						}
+						Log.d("svg4mobile", " creando d3");
+						float[] d3 = new float[numelem];
+						
+						indiceaux = indice;
+						numelem =0;
+						while ((d2[indiceaux].equals("M")  || d2[indiceaux].equals("L")|| d2[indiceaux].equals("C") || d2[indiceaux].equals("Q") || d2[indiceaux].equals("m") || d2[indiceaux].equals("c") || d2[indiceaux].equals("z"))== false){
+							d3[numelem] = (float) Float.parseFloat(d2[indiceaux]);
+							Log.d("svg4mobile", " d2:  " + d2[indiceaux]);
+							numelem++;
+							indiceaux++;
+						}
+						
+						char tip[] = tipo.toCharArray();
+						mysubPath[iteracion] = new SubPath(tip[0], d3);
+						
+						iteracion++;
+						indice=indiceaux;
+						
 					}
+					
+					Log.d("svg4mobile", " añadiendo Path..  ");
 					
 					myPath mPath = new myPath(mysubPath, true, rgb, "#000000", 2, new Transformations());
 					elementos.add(mPath);
 					
-				}catch (Exception e){
+					Log.d("svg4mobile", "  Path agregado  ");
 					
+				}catch (Exception e){
+					 
+					Log.d("svg4mobile", "  Error en Path:  " + e);
 				}
 					
 	                    

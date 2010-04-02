@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.Log;
 
 /**
  * Pinta figuras de tipo Path
@@ -65,6 +66,8 @@ public class myPath extends Figure {
 		{
 			type = subPath[i].getType();
 			points = subPath[i].getPoints();
+			
+			Log.d("svg4mobile", " Pintnado Path tipo: " + type );
 			
 			switch(type){
 			case 'm':
