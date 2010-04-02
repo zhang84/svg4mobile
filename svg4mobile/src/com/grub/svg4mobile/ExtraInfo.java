@@ -65,9 +65,7 @@ public class ExtraInfo {
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura		
 		float radio = (float) (Math.sqrt(w*w+h*h))/2;
-		
-		//Log.d("svg4mobile", " extrainfo:  " + image  + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
-		
+				
 		canvas.save();
 		canvas.translate(this.x, this.y);
 		this.paint2.setColor(Color.parseColor(rgb));
@@ -80,16 +78,7 @@ public class ExtraInfo {
         canvas.drawPaint(paint);  
         this.paint.setColor(Color.WHITE);  
 		canvas.drawBitmap(cached_dummy,null,drawable_area,this.paint);
-		canvas.restore();
-		
-		/*
-		new AlertDialog.Builder(this)
-        .setTitle("Archivo Seleccionado")
-        .setMessage(archivo.getPath())
-        .setNeutralButton("Aceptar", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int whichButton) { }
-        }).create().show();
-        */	
+		canvas.restore();	
 	}
 	
 	public float getX() {

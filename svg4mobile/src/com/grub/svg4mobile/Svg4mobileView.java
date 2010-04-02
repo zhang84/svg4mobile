@@ -1,18 +1,8 @@
 package com.grub.svg4mobile;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Vector;
-
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Camera;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.Log;
 import android.view.View;
 
 public class Svg4mobileView extends View {
@@ -23,16 +13,13 @@ public class Svg4mobileView extends View {
 	private float yposcam;
 	private float rotcam;
 	private static double SMOOTHNESS = 1.0;
-	public Vector<Figure> figures;
 	private Parser parser = Parser.getInstance();
 	private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
-	private float width, height;
-
+	private BRect doc = new BRect( 0f,  0f, 100f, 100f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 	
-	private BRect doc =    new BRect( 0f,  0f, 100f, 100f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 	private float perspective = 0;
-	
-     
+/*	
+*/   
 	/**
 	 * Constructor
 	 */
@@ -44,19 +31,22 @@ public class Svg4mobileView extends View {
         camReset();
 	}
 	
+	/**
+	 * Asigna una ruta al fichero SVG para que sea parseado
+	 * @param path Ruta del SVG.
+	 */
 	public void setPath(String path) {
 		parser.parseXML( path );
 		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 		this.camReset();
-		/*while (parser.hasNext()) {  
-			figures.add(parser.next());
-		}*/
 	}
 	
+	/**
+	 * Asigna una ruta al fichero de información extra para que sea parseado
+	 * @param path Debe coincidir con la ruta del svg.
+	 */
 	public void setInfoPath(String path) {
 		infoparser.parseXML( path );
-		//this.camReset();
-
 	}
 	
 	/**
@@ -84,7 +74,7 @@ public class Svg4mobileView extends View {
 		this.xposcam=0;
 		this.yposcam=0;
 		this.rotcam=0;
-		this.perspective = 0;
+		//this.perspective = 0;
 
 		this.invalidate();
 	}
@@ -103,12 +93,11 @@ public class Svg4mobileView extends View {
 	public void zoomOut() {
 		this.zoom+=ZOOMFACTOR;
 		this.invalidate();
-	
 	}
 	
 	/**
-	 * Rota la camara
-	 * @param angle angulo en grados
+	 * Rota la cámara
+	 * @param angle ángulo en grados
 	 */
 	public void setNorth(float angle) {
 		this.rotcam=angle;
@@ -168,14 +157,14 @@ public class Svg4mobileView extends View {
 		camera.rotateZ(this.rotcam);
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
-		
+				
 		doc.draw(canvas);
+		
 			
 		parser.First();
 		
 		while(parser.hasNext()){
 			Figure f = (Figure)parser.next();
-		    //Log.d("svg4mobile", "figure " + f.toString());
 		    f.draw(canvas);
 		    }
 		
@@ -184,9 +173,27 @@ public class Svg4mobileView extends View {
 		while(infoparser.hasNext()){
 			ExtraInfo info = (ExtraInfo)infoparser.next();
 		    info.draw(canvas);
-		    }
+	    }
+
+		/*
+		mysubPath = new SubPath[3];
+		mysubPath[0] = new SubPath('M', iniPoints);
+		mysubPath[1] = new SubPath('C', pointsPathC);
+		mysubPath[2] = new SubPath('L', pointsPathL);
+		*/
+		
+		//pruebaPath = new myPath(mysubPath, true, "#32cd32", "#000000", 3, new Transformations());
+
+		//pruebatexto.draw(canvas);
+		//pruebaPath.draw(canvas);
+		//prueba.draw(canvas);
+		
 				
 		camera.restore();
+	}
+	
+	public Boolean extraInfoExist() {
+		return (infoparser.getSize()>0);
 	}
 
 }

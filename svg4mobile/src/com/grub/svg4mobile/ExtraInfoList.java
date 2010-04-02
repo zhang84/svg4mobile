@@ -20,42 +20,37 @@ import android.content.Context;
 import android.graphics.BitmapFactory;
 
 /**
- * 
+ * Clase que implementa la activity que muestra una lista con la información extra.
  */
 public class ExtraInfoList extends ListActivity {  
 
-     /** Attribute key for the list item text. */
+     /** Clave del atributo con el texto de la lista. */
     private static final String LABEL = "LABEL";
-    /** Attribute key for the list item icon's drawable resource. */
+    /** Clave del atriburo con la ruta de la imagen. */
     private static final String ICON  = "ICON";
     private String[] images;
     private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
     
-     ///////////////////////////////////////////////////////////////////////
-     //  Public Methods
-    /** Called when the activity is first created. */
+    /** 
+     * Se llama al crear la actividad. 
+     * @param savedInsance 
+     */
     @Override
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
        
-        // Format the data for the SimpleListAdapter:
-        // Each item in the list represents one list entry.
-        // The attributes of this item are represented in a Map,
-        // with the names of the attributes as the keys.
-        // Our keys are LABEL and ICON.
         List< Map<String,Object> > drawables = buildListForSimpleAdapter();
-       
-        // Now build the list adapter
+
         SimpleAdapter adapter = new SimpleAdapter(
-          // the Context
+          // Context
           this,
-          // the data to display
+          // Datos a mostrar
           drawables,
-          // The layout to use for each item
+          // Layout a emplear
             R.layout.activity_extrainfo_list_item,
-            // The list item attributes to display
+            // Lista atribuos de los elementos a mostrar
             new String[] { LABEL, ICON },
-            // And the ids of the views where they should be displayed (same order)
+            // Identificadores del layout
             new int[] { R.id.text, R.id.icon }
      );
 
@@ -75,9 +70,7 @@ public class ExtraInfoList extends ListActivity {
 
         ImageView image = (ImageView) layout.findViewById(R.id.image);
 
-        image.setImageBitmap(BitmapFactory.decodeFile(images[position]));
-
-        
+        image.setImageBitmap(BitmapFactory.decodeFile(images[position])); 
 
         builder = new AlertDialog.Builder(mContext);
         builder.setView(layout);
@@ -86,8 +79,9 @@ public class ExtraInfoList extends ListActivity {
         
     }
 
-     /**
-     * @return
+    /**
+     * Genera la lista de elementos
+     * @return Lista de elementos
      */
     private List< Map<String,Object> > buildListForSimpleAdapter() {
 
@@ -109,11 +103,17 @@ public class ExtraInfoList extends ListActivity {
         return list;
     }
     
-    private static String implode(String[] ary, String delim) {
+    /**
+     * Método que une elementos de un array con un string
+     * @param arr Array a unir
+     * @param st String que unirá los elementos
+     * @return
+     */
+    private static String implode(String[] arr, String st) {
         String out = "";
-        for(int i=0; i<ary.length; i++) {
-            if(i!=0) { out += delim; }
-            out += ary[i];
+        for(int i=0; i<arr.length; i++) {
+            if(i!=0) { out += st; }
+            out += arr[i];
         }
         return out;
     }
