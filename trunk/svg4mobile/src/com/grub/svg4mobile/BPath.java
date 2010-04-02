@@ -10,7 +10,7 @@ import android.util.Log;
  * Pinta figuras de tipo Path
  * @see http://www.w3.org/TR/SVG11/paths.html
  */
-public class myPath extends Figure {
+public class BPath extends Figure {
 	
 	private float[] points;
 	private Paint paint;
@@ -30,7 +30,7 @@ public class myPath extends Figure {
 	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
 	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
-	public myPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr)
+	public BPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr)
 	{
 		this.tr = tr;
 		this.subPath = new SubPath[subPath.length];
