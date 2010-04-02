@@ -182,17 +182,17 @@ public class Svg4mobileView extends View {
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
 		
-		mysubPath = new SubPath[3];
+/*		mysubPath = new SubPath[3];
 		mysubPath[0] = new SubPath('M', iniPoints);
 		mysubPath[1] = new SubPath('C', pointsPathC);
-		mysubPath[2] = new SubPath('L', pointsPathL);
+		mysubPath[2] = new SubPath('L', pointsPathL);*/
 		
-		pruebaPath = new myPath(mysubPath, true, "#32cd32", "#000000", 3, new Transformations());
+		//pruebaPath = new myPath(mysubPath, true, "#32cd32", "#000000", 3, new Transformations());
 		
 		doc.draw(canvas);
 		
 		//pruebatexto.draw(canvas);
-		pruebaPath.draw(canvas);
+		//pruebaPath.draw(canvas);
 			
 		parser.First();
 		
