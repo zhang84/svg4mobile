@@ -123,4 +123,8 @@ public class ExtraInfo {
 	public String[] getTags() {
 		return this.tags;
 	}
+	
+	public String getImagePath() {
+		return this.image;
+	}
 }
