@@ -9,8 +9,6 @@ import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
 import java.util.zip.*;
-import java.io.*;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -178,8 +176,13 @@ public class ExtraInfoParser {
 		//return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 	}
 	
-
-	
+	/**
+	 * Devuelve el tamaño de la lista de elementos.
+	 * @return Tamaño de la lista.
+	 */
+	public int getSize() {
+		return elementos.size();
+	}
 	
 
 }

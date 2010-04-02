@@ -271,4 +271,12 @@ public class Parser {
 			h = height;
 		return h;
 	}
+	
+	/**
+	 * Devuelve el tamaño de la lista de elementos.
+	 * @return Tamaño de la lista.
+	 */
+	public int getSize() {
+		return elementos.size();
+	}
 }

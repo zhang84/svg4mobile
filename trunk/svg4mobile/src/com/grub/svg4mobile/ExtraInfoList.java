@@ -1,13 +1,11 @@
 package com.grub.svg4mobile;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,11 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.BitmapFactory;
 
 /**
@@ -32,8 +28,9 @@ public class ExtraInfoList extends ListActivity {
     private static final String LABEL = "LABEL";
     /** Attribute key for the list item icon's drawable resource. */
     private static final String ICON  = "ICON";
-
-     
+    private String[] images;
+    private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
+    
      ///////////////////////////////////////////////////////////////////////
      //  Public Methods
     /** Called when the activity is first created. */
@@ -67,14 +64,7 @@ public class ExtraInfoList extends ListActivity {
     }
     
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-    	/*new AlertDialog.Builder(this)
-        .setTitle("Título")
-        .setMessage("nDescripción del elemento .. Descripción del elemento .. Descripción del elemento .. \nNotas Notas Notas Notas Notas Notas Notas \n tag1, tag 2")
-        .setNeutralButton("Aceptar", new DialogInterface.OnClickListener(){
-        public void onClick(DialogInterface dialog, int whichButton) {  }
-        }).create().show();*/
-        
+    protected void onListItemClick(ListView l, View v, int position, long id) {      
         AlertDialog.Builder builder;
         AlertDialog alertDialog;
 
@@ -83,12 +73,10 @@ public class ExtraInfoList extends ListActivity {
         View layout = inflater.inflate(R.layout.image_dialog,
                                        (ViewGroup) findViewById(R.id.layout_root));
 
-        //TextView text = (TextView) layout.findViewById(R.id.text);
-        //text.setText("");
         ImageView image = (ImageView) layout.findViewById(R.id.image);
-        //image.setImageResource(R.drawable.icon);
-        //image.setImageURI(Uri.fromFile(new File("/sdcard/1.png")));
-        image.setImageBitmap(BitmapFactory.decodeFile("/sdcard/1.jpg"));
+
+        image.setImageBitmap(BitmapFactory.decodeFile(images[position]));
+
         
 
         builder = new AlertDialog.Builder(mContext);
@@ -103,18 +91,31 @@ public class ExtraInfoList extends ListActivity {
      */
     private List< Map<String,Object> > buildListForSimpleAdapter() {
 
-     List< Map<String,Object> > list = new ArrayList< Map<String,Object> > (3) ;
-     Map<String,Object> map = new HashMap<String,Object>();
-     map.put( LABEL, "Título\nDescripción del elemento .. Descripción del elemento .. Descripción del elemento .. \nNotas Notas Notas Notas Notas Notas Notas \n tag1, tag 2" );
-     map.put( ICON, "/sdcard/1.png" );
-     list.add( map );
-     //map.put( LABEL, "Título" );
-     //map.put( ICON, "/sdcard/1.png" );
-     list.add( map );
-     //map.put( LABEL, "32423fdsfsdf" );
-     //map.put( ICON, "/sdcard/1.png" );
-     list.add( map );
+    	List< Map<String,Object> > list = new ArrayList< Map<String,Object> > (3) ;
      
-         return list;
+    	infoparser.First();
+		images = new String[infoparser.getSize()];
+
+		int i=0;
+    	while(infoparser.hasNext()){
+    		ExtraInfo info = (ExtraInfo)infoparser.next();
+    		Log.v("svg4mobile", ""+info.getTitle());
+    		Map<String,Object> map = new HashMap<String,Object>();
+    		map.put( LABEL, info.getTitle()+"\n"+info.getDesc()+"\n"+info.getNotes()+"\n"+implode(info.getTags(), ", ") );
+    		map.put( ICON, info.getImagePath() );
+    		images[i++]=info.getImagePath();
+    		list.add( map );
+    	}     
+        return list;
     }
+    
+    private static String implode(String[] ary, String delim) {
+        String out = "";
+        for(int i=0; i<ary.length; i++) {
+            if(i!=0) { out += delim; }
+            out += ary[i];
+        }
+        return out;
+    }
+
 }
