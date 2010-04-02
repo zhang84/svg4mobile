@@ -19,7 +19,7 @@ public class FileExplorer extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listado);
+        setContentView(R.layout.activity_file_explorer_list);
         rellenarConElRaiz();
     }
 	

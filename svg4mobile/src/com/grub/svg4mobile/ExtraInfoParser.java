@@ -22,10 +22,10 @@ import org.xml.sax.SAXException;
 
 import android.util.Log;
 
-public class InfoParser {
+public class ExtraInfoParser {
 	
 
-	public static InfoParser instance = null;
+	public static ExtraInfoParser instance = null;
 
 	private int contador=0;
 	private float width = 0;
@@ -35,11 +35,11 @@ public class InfoParser {
 
 	private synchronized static void createInstance() {
 		if (instance == null) {
-			instance = new InfoParser();
+			instance = new ExtraInfoParser();
 	    }
 	}
 
-	public static InfoParser getInstance() {
+	public static ExtraInfoParser getInstance() {
 		if (instance == null)
 			createInstance();
 	    return instance;
@@ -48,7 +48,7 @@ public class InfoParser {
 	/**
 	 * Constructor de la clase genÃ©rico
 	 */
-	public InfoParser() {
+	public ExtraInfoParser() {
 		elementos = new Vector<ExtraInfo>();
 	}
 	

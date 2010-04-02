@@ -26,7 +26,7 @@ public class Svg4mobileView extends View {
 	//private ArrayList<Figure> figures = new ArrayList<Figure>();
 	public Vector<Figure> figures;
 	private Parser parser = Parser.getInstance();
-	private InfoParser infoparser = InfoParser.getInstance();
+	private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
 	private float width, height;
 
 	
@@ -44,7 +44,7 @@ public class Svg4mobileView extends View {
 									485.71875f, 170.5f,
 									295.53125f, 170.5f};
 	
-	private myPath pruebaPath;
+	private BPath pruebaPath;
      
 	/**
 	 * Constructor

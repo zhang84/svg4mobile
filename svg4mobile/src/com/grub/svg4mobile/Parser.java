@@ -185,7 +185,7 @@ public class Parser {
 					
 					Log.d("svg4mobile", " añadiendo Path..  ");
 					
-					myPath mPath = new myPath(mysubPath, true, rgb, "#000000", 2, new Transformations());
+					BPath mPath = new BPath(mysubPath, true, rgb, "#000000", 2, new Transformations());
 					elementos.add(mPath);
 					
 					Log.d("svg4mobile", "  Path agregado  ");

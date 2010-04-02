@@ -2,22 +2,22 @@
 
 <inf>
     <pin
-	width="44.446712"
-	height="126.26907"
-	x="443.20206"
-	y="357.87439"
+	width="48"
+	height="48"
+	x="600"
+	y="600"
 	title="pr"
 	description="des"
 	image="1.png"
 	notes="notas"
-	rgb= "#001122"
+	rgb= "#33AA22"
 	tags = "tag1,tag2"
     />
     <pin
-	width="100.446712"
-	height="130.26907"
-	x="44.20206"
-	y="35.87439"
+	width="30.446712"
+	height="33.26907"
+	x="94.20206"
+	y="95.87439"
 	title="pr2"
 	description="des2"
 	image="2.png"
