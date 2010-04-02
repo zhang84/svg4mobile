@@ -128,17 +128,64 @@ public class Parser {
 					elementos.add(rectangulo);
 
 				}else if (nodo.getTagName().compareToIgnoreCase("path") == 0){
-                    //Obtenemos los parámetros del path que se encuentran
-                    //almacenados en el atributo d.
-                    /*String d = nodo.getAttribute("d");
-                    char Mm = d.charAt(0);
-                    d = d.substring(2);
-                    float primeroX = Float.parseFloat(d.substring(0,d.indexOf(" ")));
-                    d = d.substring(d.indexOf(" ")+1);
-                    float primeroY = Float.parseFloat(d.substring(0,d.indexOf(" ")));
-                    //Obtenemos el parámetro de transformación del path.
-                    String transform = nodo.getAttribute("transform");
-                    */
+					
+					try{
+					
+					String style = nodo.getAttribute("style");
+					String rgb = style.substring(style.indexOf(":")+1);
+					rgb = rgb.substring(0,rgb.indexOf(";"));
+					String transform = nodo.getAttribute("transform");
+					String d = nodo.getAttribute("d");
+					String d2[] = d.split(" ");
+					int partes = 0;
+					for (int z=0; z< d2.length;z++){
+						if(  d2[z].equals("M")  || d2[z].equals("L")|| d2[z].equals("C") || d2[z].equals("Q") || d2[z].equals("m") ){
+							partes ++;
+						}		
+					}
+					
+					SubPath[] mysubPath = new SubPath[partes];
+					String tipo = "";
+					int letra = 1;
+					float[] d3 = {0f};
+					float[] d3reset = {0f};
+					int indice = 0;
+					
+					for (int z=0; z< d2.length;z++){
+						if(  d2[z].equals("M")  || d2[z].equals("L")|| d2[z].equals("C") || d2[z].equals("Q") || d2[z].equals("m") ){
+							if(tipo == ""){
+								tipo = d2[z];
+								Log.d("svg4mobile", " d2:  " + d2[z]);
+							}else{
+								char tip[] = tipo.toCharArray();
+								mysubPath[letra] = new SubPath(tip[0], d3);
+								letra++;
+								tipo = d2[z];
+								d3 = d3reset;
+								indice = 0;
+								Log.d("svg4mobile", " d2:  " + d2[z]);
+							}
+						}else{
+							Log.d("svg4mobile", " d2e:  " +  d2[z] );
+							String d4[] = d2[z].split(",");
+							for (int q=0; q<d4.length; q++){
+								Log.d("svg4mobile", " d4:  " + d4[q] + " indice " + indice);
+								d3[indice] = (float) Float.parseFloat(d4[q]);
+								indice++;
+								Log.d("svg4mobile", " d4:  " + d4[q]);
+							}
+						
+						}
+					}
+					
+					myPath mPath = new myPath(mysubPath, true, rgb, "#000000", 2, new Transformations());
+					elementos.add(mPath);
+					
+				}catch (Exception e){
+					
+				}
+					
+	                    
                 }else if (nodo.getTagName().compareToIgnoreCase("text") == 0){
                     String style = nodo.getAttribute("style");
                     //tiene la siguiente forma:
