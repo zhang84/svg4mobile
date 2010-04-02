@@ -23,7 +23,6 @@ public class Svg4mobileView extends View {
 	private float yposcam;
 	private float rotcam;
 	private static double SMOOTHNESS = 1.0;
-	//private ArrayList<Figure> figures = new ArrayList<Figure>();
 	public Vector<Figure> figures;
 	private Parser parser = Parser.getInstance();
 	private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
@@ -31,20 +30,8 @@ public class Svg4mobileView extends View {
 
 	
 	private BRect doc =    new BRect( 0f,  0f, 100f, 100f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
-	private ExtraInfo prueba = new ExtraInfo(500, 500, 100, 100,"titulo", "desc", "/sdcard/2.png", "notas", "#0000FF", new String[0]);
-	//private Text pruebatexto = new Text(100, 8, 22, "Freedom!!!", "#FF0000", new Transformations());
 	private float perspective = 0;
 	
-	private SubPath[] mysubPath;
-	private float[] iniPoints = {295.53125f,170.5f};
-	private float[] pointsPathC = {295.59288f,172.1545f, 295.625f,173.83146f, 295.625f, 175.5f,
-								295.625f, 252.1161f, 230.09863f, 314.41288f, 148.5625f, 316.1875f};
-	private float[] pointsPathL = {148.5625f, 497.625f, 
-									485.71875f, 497.625f,
-									485.71875f, 170.5f,
-									295.53125f, 170.5f};
-	
-	private BPath pruebaPath;
      
 	/**
 	 * Constructor
@@ -182,17 +169,7 @@ public class Svg4mobileView extends View {
 		camera.rotateX(this.perspective);
 		camera.applyToCanvas(canvas);
 		
-/*		mysubPath = new SubPath[3];
-		mysubPath[0] = new SubPath('M', iniPoints);
-		mysubPath[1] = new SubPath('C', pointsPathC);
-		mysubPath[2] = new SubPath('L', pointsPathL);*/
-		
-		//pruebaPath = new myPath(mysubPath, true, "#32cd32", "#000000", 3, new Transformations());
-		
 		doc.draw(canvas);
-		
-		//pruebatexto.draw(canvas);
-		//pruebaPath.draw(canvas);
 			
 		parser.First();
 		
@@ -208,9 +185,6 @@ public class Svg4mobileView extends View {
 			ExtraInfo info = (ExtraInfo)infoparser.next();
 		    info.draw(canvas);
 		    }
-		
-		//prueba.draw(canvas);
-		
 				
 		camera.restore();
 	}
