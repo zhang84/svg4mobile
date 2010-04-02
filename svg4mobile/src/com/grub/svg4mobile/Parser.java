@@ -47,34 +47,49 @@ public class Parser {
      * @param transform Cadena que contiene la transformación a aplicar a un elemento del SVG
      * @return Matriz de transformación
      */
-    private float[] parseTransform(String transform) {
-        float valores[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
+    private float[] parseMatrix(String transform) {
+        float valores_m[] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
         if (transform.length() > 1) {
-            transform = transform.substring(transform.indexOf("(") + 1, transform.indexOf(")"));
-
-            String a = transform.substring(0, transform.indexOf(","));
-            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
-            valores[0] = Float.parseFloat(a);
-            String b = transform.substring(0, transform.indexOf(","));
-            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
-            valores[1] = Float.parseFloat(b);
-            String c = transform.substring(0, transform.indexOf(","));
-            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
-            valores[2] = Float.parseFloat(c);
-            String d = transform.substring(0, transform.indexOf(","));
-            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
-            valores[3] = Float.parseFloat(d);
-            String e = transform.substring(0, transform.indexOf(","));
-            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
-            valores[4] = Float.parseFloat(e);
-            String f = transform.substring(0, transform.length());
-            valores[5] = Float.parseFloat(f);
-
+	            transform = transform.substring(transform.indexOf("(") + 1, transform.indexOf(")"));
+	
+	            String a = transform.substring(0, transform.indexOf(","));
+	            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
+	            valores_m[0] = Float.parseFloat(a);
+	            String b = transform.substring(0, transform.indexOf(","));
+	            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
+	            valores_m[1] = Float.parseFloat(b);
+	            String c = transform.substring(0, transform.indexOf(","));
+	            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
+	            valores_m[2] = Float.parseFloat(c);
+	            String d = transform.substring(0, transform.indexOf(","));
+	            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
+	            valores_m[3] = Float.parseFloat(d);
+	            String e = transform.substring(0, transform.indexOf(","));
+	            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
+	            valores_m[4] = Float.parseFloat(e);
+	            String f = transform.substring(0, transform.length());
+	            valores_m[5] = Float.parseFloat(f);
         //Log.d("svg4mobile", " trans:  "  + " a: " +a  + " b: " +b + " c: " +c + " d: " +d + " e: " +e + " f: " +f);
         }
-        return valores;
+        
+        return valores_m;
     }
 
+    private float[] parseTranslate(String transform) {
+        float valores_m[] = {0.0f, 0.0f};
+       
+       
+	            transform = transform.substring(transform.indexOf("(") + 1, transform.indexOf(")"));
+	          
+	            String a = transform.substring(0, transform.indexOf(","));
+	            transform = transform.substring(transform.indexOf(",") + 1, transform.length());
+	            valores_m[0] = Float.parseFloat(a);
+	            String b = transform.substring(0, transform.length());
+	            valores_m[1] = Float.parseFloat(b);
+        
+        return valores_m;
+    }
+    
 	/**
 	 * MÃ©todo privado encargado de ir parseando el archivo SVG e insertando
 	 * los elementos en la correspondiente lista.
@@ -119,10 +134,16 @@ public class Parser {
 					//Log.d("svg4mobile", " rgb:  " + rgb + " x:  " + x+ " y: " + y+ " w:  " + w+ " h:  " + h);
 					String transform = nodo.getAttribute("transform");
 
-                    
                     Transformations t = new Transformations();
-                    if (transform.length()>1)
-                    	t.setTMatrix(this.parseTransform(transform));
+     
+                    if (transform.length()>1){
+	                    if( transform.substring(0, transform.indexOf("(")).equals("matrix")){
+	                    	t.setTMatrix(this.parseMatrix(transform));
+	                    }else if( transform.substring(0, transform.indexOf("(")).equals("translate")){
+	                    	float [] ta = this.parseTranslate(transform);
+	                    	t.setTranslate(ta[0],ta[1]);
+	                    }
+                    }
                     
 					BRect rectangulo = new BRect(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h),rgb,"#000000",1.5f, t);
 					elementos.add(rectangulo);
@@ -137,7 +158,7 @@ public class Parser {
 					String transform = nodo.getAttribute("transform");
 					String d = nodo.getAttribute("d");
 					d = d.replaceAll(" ", ",");
-					Log.d("svg4mobile", " d:  " + d);
+					//Log.d("svg4mobile", " d:  " + d);
 					String d2[] = d.split(",");
 					int partes = 0;
 					for (int z=0; z< d2.length;z++){
@@ -154,7 +175,7 @@ public class Parser {
 					while (indice < d2.length-1){
 						
 						tipo = d2[indice];
-						Log.d("svg4mobile", " d2:  " + d2[indice] + " length " + indice +"/"+ d2.length);
+						//Log.d("svg4mobile", " d2:  " + d2[indice] + " length " + indice +"/"+ d2.length);
 						indice++;
 						
 						int indiceaux = indice;
@@ -163,14 +184,14 @@ public class Parser {
 							numelem++;
 							indiceaux++;
 						}
-						Log.d("svg4mobile", " creando d3");
+						
 						float[] d3 = new float[numelem];
 						
 						indiceaux = indice;
 						numelem =0;
 						while ((d2[indiceaux].equals("M")  || d2[indiceaux].equals("L")|| d2[indiceaux].equals("C") || d2[indiceaux].equals("Q") || d2[indiceaux].equals("m") || d2[indiceaux].equals("c") || d2[indiceaux].equals("z"))== false){
 							d3[numelem] = (float) Float.parseFloat(d2[indiceaux]);
-							Log.d("svg4mobile", " d2:  " + d2[indiceaux]);
+							//Log.d("svg4mobile", " d2:  " + d2[indiceaux]);
 							numelem++;
 							indiceaux++;
 						}
@@ -183,9 +204,18 @@ public class Parser {
 						
 					}
 					
-					Log.d("svg4mobile", " añadiendo Path..  ");
+					 Transformations t = new Transformations();
+				     
+	                 if (transform.length()>1){
+		                    if( transform.substring(0, transform.indexOf("(")).equals("matrix")){
+		                    	t.setTMatrix(this.parseMatrix(transform));
+		                    }else if( transform.substring(0, transform.indexOf("(")).equals("translate")){
+		                    	float [] ta = this.parseTranslate(transform);
+		                    	t.setTranslate(ta[0],ta[1]);
+		                    }
+	                 }
 					
-					BPath mPath = new BPath(mysubPath, true, rgb, "#000000", 2, new Transformations());
+					BPath mPath = new BPath(mysubPath, true, rgb, "#000000", 2, t);
 					elementos.add(mPath);
 					
 					Log.d("svg4mobile", "  Path agregado  ");
@@ -204,6 +234,7 @@ public class Parser {
                     style = style.substring(style.indexOf("fill:"));
                     String rgb = style.substring(style.indexOf(":")+1, style.indexOf(";"));
                     String text = "E";
+                    String transform = nodo.getAttribute("transform");
                     float x = Float.parseFloat(nodo.getAttribute("x"));
                     float y = Float.parseFloat(nodo.getAttribute("y"));
                     NodeList nLista = nodo.getChildNodes();
@@ -216,7 +247,19 @@ public class Parser {
                           //Log.d("svg4mobile", " text:  " + tLista.item(0).getNodeValue() );
                         }
                     }
-                    Text texto = new Text(x, y, size, text, rgb, new Transformations());
+                    
+                    Transformations t = new Transformations();
+                    
+                    if (transform.length()>1){
+	                    if( transform.substring(0, transform.indexOf("(")).equals("matrix")){
+	                    	t.setTMatrix(this.parseMatrix(transform));
+	                    }else if( transform.substring(0, transform.indexOf("(")).equals("translate")){
+	                    	float [] ta = this.parseTranslate(transform);
+	                    	t.setTranslate(ta[0],ta[1]);
+	                    }
+                    }
+                    
+                    Text texto = new Text(x, y, size, text, rgb, t);
                     elementos.add(texto);
                 }
 			}
