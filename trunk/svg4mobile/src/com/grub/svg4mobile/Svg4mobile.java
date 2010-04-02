@@ -5,7 +5,6 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,8 +18,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 
@@ -43,8 +40,21 @@ public class Svg4mobile extends Activity {
     private Boolean isPerspectiveOn = false;
     private Boolean setNorthRequest = false;
     private Boolean AutoSetNorth = false;
+    
+    private static final int PERSPECTIVE_ID = 1;
+    private static final int ZOOMIN_ID = 3;
+    private static final int ZOOMOUT_ID = 2;
+    private static final int SETNORTH_ID = 4;
+	private static final int AUTOSETNORTH_ID = 5;
 	private static final int OPENFILE_ID = 6;
+	private static final int EXTRAINFO_ID = 7;
 
+	private static final int ZOOMGROUP_ID = 1;
+	private static final int NORTHGROUP_ID = 2;
+	private static final int PERSPGROUP_ID = 4;
+	private static final int INFOGROUP_ID = 0;
+	private static final int LOADGROUP_ID = 3;
+	
 	
     /**
      * Se ejecuta al iniciar la aplicación.
@@ -80,21 +90,21 @@ public class Svg4mobile extends Activity {
        boolean result = super.onCreateOptionsMenu(menu);
        this.menu = menu;
        
-       MenuItem openFile = this.menu.add(3,OPENFILE_ID,0,R.string.load); //Abrir fichero
+       MenuItem openFile = this.menu.add(LOADGROUP_ID,OPENFILE_ID,0,R.string.load); //Abrir fichero
        openFile.setIcon(android.R.drawable.ic_menu_add);
               
-       MenuItem itemZoomOut = this.menu.add(1,2,0,R.string.zoom_out); //Zoom -
-       MenuItem itemZoomIn = this.menu.add(1,3,1,R.string.zoom_in); //Zoom +
+       MenuItem itemZoomOut = this.menu.add(ZOOMGROUP_ID,ZOOMOUT_ID,0,R.string.zoom_out); //Zoom -
+       MenuItem itemZoomIn = this.menu.add(ZOOMGROUP_ID,ZOOMIN_ID,1,R.string.zoom_in); //Zoom +
        itemZoomOut.setIcon(android.R.drawable.btn_minus);
        itemZoomIn.setIcon(android.R.drawable.btn_plus);
        
-       MenuItem itemChPersp = this.menu.add(0,1,0,R.string.perspective); //Cambiar Perspectiva
+       MenuItem itemChPersp = this.menu.add(PERSPGROUP_ID,PERSPECTIVE_ID,0,R.string.perspective); //Cambiar Perspectiva
        itemChPersp.setIcon(android.R.drawable.ic_menu_mapmode);
-       MenuItem itemExtraInfo = this.menu.add(0,7,0,R.string.extra_info); //Mostrar información extra
+       MenuItem itemExtraInfo = this.menu.add(INFOGROUP_ID,EXTRAINFO_ID,0,R.string.extra_info); //Mostrar información extra
        itemExtraInfo.setIcon(android.R.drawable.btn_star_big_on);
        
-       MenuItem compassSync = this.menu.add(2,4,0,R.string.set_north); //Nortear
-       MenuItem autoCompassSync = this.menu.add(2,5,1,R.string.auto_set_north); //Autonortear
+       MenuItem compassSync = this.menu.add(NORTHGROUP_ID,SETNORTH_ID,0,R.string.set_north); //Nortear
+       MenuItem autoCompassSync = this.menu.add(NORTHGROUP_ID,AUTOSETNORTH_ID,1,R.string.auto_set_north); //Autonortear
        compassSync.setIcon(android.R.drawable.ic_menu_rotate);
        autoCompassSync.setIcon(android.R.drawable.ic_menu_compass);
        
@@ -112,6 +122,7 @@ public class Svg4mobile extends Activity {
         case KeyEvent.KEYCODE_DPAD_CENTER: {
           // Resetea la posición de la cámara
         	this.view.camReset();
+        	
           break;
         }        
         case KeyEvent.KEYCODE_DPAD_LEFT: {
@@ -126,13 +137,11 @@ public class Svg4mobile extends Activity {
         }
         case KeyEvent.KEYCODE_DPAD_UP: {
           // Mueve la cámara hacia abajo
-          //this.renderer.zoomOut();
         	this.view.camDown();
           break;
         }
         case KeyEvent.KEYCODE_DPAD_DOWN: {
         	// Mueve la cámara hacia arriba
-        	//this.renderer.zoomIn();
         	this.view.camUp();
         	break;
         }
@@ -166,7 +175,7 @@ public class Svg4mobile extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
     	
     	switch ( item.getItemId() ) {
-    		case 1: { //Perspectiva
+    		case PERSPECTIVE_ID: { //Perspectiva
     			if (this.isPerspectiveOn) {
     				this.view.setPerspective(0f);
     			} else {
@@ -174,30 +183,31 @@ public class Svg4mobile extends Activity {
     				this.view.setPerspective(64f);
     			}
     			this.isPerspectiveOn = !this.isPerspectiveOn; 
-    			this.menu.setGroupEnabled(2, !this.isPerspectiveOn);
+    			this.menu.setGroupVisible(NORTHGROUP_ID, !this.isPerspectiveOn);
     			break;
     		}
-    		case 2: { //Zoom Out
+    		case ZOOMOUT_ID: { //Zoom Out
     			this.view.zoomOut();
     			break;    			
     		}
-    		case 3: { //Zoom In
+    		case ZOOMIN_ID: { //Zoom In
     			this.view.zoomIn();
     			break;    			
     		}
-    		case 4: { //Nortear
+    		case SETNORTH_ID: { //Nortear
     			this.setNorthRequest = true;
     			break;    			
     		}
-    		case 5: { //Autonortear
+    		case AUTOSETNORTH_ID: { //Autonortear
     			this.AutoSetNorth = !this.AutoSetNorth;
     			break;    			
     		}
     		case OPENFILE_ID: { // Cargar fichero
     			openFile();
+    			
     			break;    			
     		}
-    		case 7: { //ExtraInfo
+    		case EXTRAINFO_ID: { //ExtraInfo
     			showExtraInfo();
     			break;
     		}
@@ -206,22 +216,24 @@ public class Svg4mobile extends Activity {
     }
 
     /**
-     * 
+     * Llama a la activity FileExplorer
      */
     private void openFile() {
     	Intent i = new Intent(this, FileExplorer.class);
     	startActivityForResult(i, OPENFILE_ID);
 	}
     
+    /**
+     * Llama a la activity ExtraInfoList
+     */
     private void showExtraInfo() {
     	Intent i = new Intent(this, ExtraInfoList.class);
     	Log.v("svg4mobile", "show extra info");
     	startActivity(i);
-    	//startActivityForResult(i, 7);		
 	}
     
     /**
-     * 
+     * Captura las respuestas de las subactivity
      * @param requestCode
      * @param resultCode
      * @param data
@@ -237,6 +249,7 @@ public class Svg4mobile extends Activity {
 		    Log.d("svg4mobile", fname);
 		    this.view.setPath(fname);
 		    this.view.setInfoPath(fname);
+		    this.menu.setGroupVisible(INFOGROUP_ID, this.view.extraInfoExist());
 		    break;
 		}
 	}
