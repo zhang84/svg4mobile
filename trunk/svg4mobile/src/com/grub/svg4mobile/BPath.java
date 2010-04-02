@@ -76,26 +76,45 @@ public class BPath extends Figure {
 			case 'M':
 				path.moveTo(points[0], points[1]);
 				break;
+			case 'l':
+				for (int j=0; j<points.length; j+=2)
+					path.rLineTo(points[j], points[j+1]);
+				break;
 			case 'L':
 				for (int j=0; j<points.length; j+=2)
 					path.lineTo(points[j], points[j+1]);
-				break;
-			case 'C':
-				for(int j=0; j<points.length; j+=6)
-					path.cubicTo(points[j], points[j+1],points[j+2],points[j+3],points[j+4],points[j+5]);
 				break;
 			case 'c':
 				for(int j=0; j<points.length; j+=6)
 					path.rCubicTo(points[j], points[j+1],points[j+2],points[j+3],points[j+4],points[j+5]);
 				break;
+			case 'C':
+				for(int j=0; j<points.length; j+=6)
+					path.cubicTo(points[j], points[j+1],points[j+2],points[j+3],points[j+4],points[j+5]);
+				break;
+			case 'q':
+				for(int j=0; j<points.length; j+=4)
+					path.rQuadTo(points[j], points[j+1],points[j+2],points[j+3]);
+				break;
 			case 'Q':
 				for(int j=0; j<points.length; j+=4)
 					path.quadTo(points[j], points[j+1],points[j+2],points[j+3]);
 				break;
+			case 's':
+			case 'S':
+			case 't':
+			case 'T':
+			case 'a':
+			case 'A':
+			case 'h':
+			case 'H':
+			case 'v':
+			case 'V':
+				//TODO
+				break;
 			}
 				
 		}
-		
 		
 		if(Z){
 			points = subPath[0].getPoints();
