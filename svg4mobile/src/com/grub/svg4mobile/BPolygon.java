@@ -2,6 +2,9 @@ package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
 
+/**
+ * @see http://www.w3.org/TR/SVG/shapes.html#PolygonElement
+ */
 public class BPolygon extends Figure{
 	
 	private BPath p;

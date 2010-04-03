@@ -1,7 +1,9 @@
 package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
-
+/**
+ * @see http://www.w3.org/TR/SVG/shapes.html#PolylineElement
+ */
 public class BPolyline extends Figure{
 	
 	private BPath p;
