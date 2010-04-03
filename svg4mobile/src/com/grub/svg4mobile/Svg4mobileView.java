@@ -192,8 +192,8 @@ public class Svg4mobileView extends View {
 		
 		//BCircle c = new BCircle(600,200,100,"red","blue",10,new Transformations()); 
 		//c.draw(canvas);
-		BEllipse e = new BEllipse(250f,100f,"red","blue",10,new Transformations());
-		e.draw(canvas);
+		//BEllipse e = new BEllipse(250f,100f,"red","blue",10,new Transformations());
+		//e.draw(canvas);
 		camera.restore();
 	}
 
