@@ -113,12 +113,14 @@ public class Parser {
 		if (root.getAttribute("width") != null && root.getAttribute("height") != null){
 			this.width = Float.parseFloat(root.getAttribute("width"));
 			this.height = Float.parseFloat(root.getAttribute("height"));
-			//Log.d("svg4mobile", "width " + width);
-			//Log.d("svg4mobile", "height " + height);
+			Log.d("svg4mobile", "width " + width);
+			Log.d("svg4mobile", "height " + height);
 		}
+		
 		NodeList lista = root.getChildNodes();
 		int i = 0;
 		while (i++ < (lista.getLength()-1)){
+			Log.d("svg4mobile", " Parser: " + i);
             if(lista.item(i).getNodeType() == 1){
 				Element nodo = (Element) lista.item(i);
 				if (nodo.getTagName().compareToIgnoreCase("rect")==0){
@@ -261,7 +263,30 @@ public class Parser {
                     
                     Text texto = new Text(x, y, size, text, rgb, t);
                     elementos.add(texto);
-                }
+                }else if (nodo.getTagName().compareToIgnoreCase("circle")==0){
+					String x = nodo.getAttribute("cx");
+					String y = nodo.getAttribute("cy");
+					String r = nodo.getAttribute("r");
+					String style = nodo.getAttribute("style");
+					String rgb = style.substring(style.indexOf(":")+1);
+					rgb = rgb.substring(0,rgb.indexOf(";"));
+
+					String transform = nodo.getAttribute("transform");
+
+                    Transformations t = new Transformations();
+     
+                    if (transform.length()>1){
+	                    if( transform.substring(0, transform.indexOf("(")).equals("matrix")){
+	                    	t.setTMatrix(this.parseMatrix(transform));
+	                    }else if( transform.substring(0, transform.indexOf("(")).equals("translate")){
+	                    	float [] ta = this.parseTranslate(transform);
+	                    	t.setTranslate(ta[0],ta[1]);
+	                    }
+                    }
+                    
+					BCircle circulo = new BCircle(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(r),rgb,"#000000",1.5f, t);
+					elementos.add(circulo);
+                }//if
 			}
 		}
 		//Log.d("svg4mobile", "fin while  ");
