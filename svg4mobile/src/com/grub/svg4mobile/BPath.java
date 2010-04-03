@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.util.Log;
 
 /**
@@ -21,6 +22,11 @@ public class BPath extends Figure {
 	private SubPath[] subPath;
 	private Transformations tr;
 	
+	private float[] auxpoints;
+	private float antX;
+	private float antY;
+	private RectF oval;
+
 	/**
 	 * Crea un camino entre puntos
 	 * @param subPath
@@ -86,6 +92,9 @@ public class BPath extends Figure {
 						path.rLineTo(points[j], points[j+1]);
 					}
 				}
+				else
+					path.moveTo(points[0], points[1]);
+
 				break;
 			case 'M':
 				path.moveTo(points[0], points[1]);
@@ -103,6 +112,64 @@ public class BPath extends Figure {
 				for (int j=0; j<points.length; j+=2)
 					path.lineTo(points[j], points[j+1]);
 				break;
+			case 'h':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX = auxpoints[auxpoints.length - 2];
+				 antY = auxpoints[auxpoints.length - 1];
+				}
+				for (int j=0; j<points.length; j++)
+				{
+					path.rLineTo(points[j], antY);
+				}
+				break;
+			case 'H':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX = auxpoints[auxpoints.length - 2];
+				 antY = auxpoints[auxpoints.length - 1];
+				}
+				for (int j=0; j<points.length; j++)
+				{
+					path.lineTo(points[j], antY);
+				}
+				break;
+
+			case 'v':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX = auxpoints[auxpoints.length - 2];
+				 antY = auxpoints[auxpoints.length - 1];
+				}
+				for (int j=0; j<points.length; j++)
+				{
+					path.rLineTo(antX, points[j]);
+				}
+				break;
+
+			case 'V':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX = auxpoints[auxpoints.length - 2];
+				 antY = auxpoints[auxpoints.length - 1];
+				}
+				for (int j=0; j<points.length; j++)
+				{
+					path.lineTo(antX, points[j]);
+				}
+				break;
 			case 'c':
 				for(int j=0; j<points.length; j+=6)
 					path.rCubicTo(points[j], points[j+1],points[j+2],points[j+3],points[j+4],points[j+5]);
@@ -110,6 +177,38 @@ public class BPath extends Figure {
 			case 'C':
 				for(int j=0; j<points.length; j+=6)
 					path.cubicTo(points[j], points[j+1],points[j+2],points[j+3],points[j+4],points[j+5]);
+				break;
+			case 's':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0 && (String.valueOf(subPath[i-1].getType()).matches("[CcsS]"))){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX =  2 * auxpoints[auxpoints.length - 2] - auxpoints[auxpoints.length - 4];
+				 antY = 2 *  auxpoints[auxpoints.length - 1] - auxpoints[auxpoints.length - 3];
+				}
+				
+				for(int j=0; j<points.length; j+=4){
+					path.rCubicTo(antX, antY, points[j], points[j+1],points[j+2],points[j+3]);
+					antX = points[j+2];
+					antY= points[j+3];	
+				}
+				break;
+			case 'S':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0 && (String.valueOf(subPath[i-1].getType()).matches("[CcsS]"))){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX =  2 * auxpoints[auxpoints.length - 2] - auxpoints[auxpoints.length - 4];
+				 antY = 2 *  auxpoints[auxpoints.length - 1] - auxpoints[auxpoints.length - 3];
+				}
+				
+				for(int j=0; j<points.length; j+=4){
+					path.cubicTo(antX, antY, points[j], points[j+1],points[j+2],points[j+3]);
+					antX = points[j+2];
+					antY= points[j+3];	
+				}
 				break;
 			case 'q':
 				for(int j=0; j<points.length; j+=4)
@@ -119,20 +218,43 @@ public class BPath extends Figure {
 				for(int j=0; j<points.length; j+=4)
 					path.quadTo(points[j], points[j+1],points[j+2],points[j+3]);
 				break;
-			case 's':
-			case 'S':
 			case 't':
-			case 'T':
-			case 'a':
-			case 'A':
-			case 'h':
-			case 'H':
-			case 'v':
-			case 'V':
-				//TODO
-				break;
-			}
+				antX = 0;
+				antY = 0;
 				
+				if (i > 0 && (String.valueOf(subPath[i-1].getType()).matches("[QqTt]"))){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX =  2 * auxpoints[auxpoints.length - 2] - auxpoints[auxpoints.length - 4];
+				 antY = 2 *  auxpoints[auxpoints.length - 1] - auxpoints[auxpoints.length - 3];
+				}
+				
+				for(int j=0; j<points.length; j+=2){
+					path.rQuadTo(antX, antY, points[j], points[j+1]);
+					antX = points[j];
+					antY= points[j+1];	
+				}
+				break;
+			case 'T':
+				antX = 0;
+				antY = 0;
+				
+				if (i > 0 && (String.valueOf(subPath[i-1].getType()).matches("[QqTt]"))){
+				 auxpoints = subPath[i-1].getPoints();
+				 antX =  2 * auxpoints[auxpoints.length - 2] - auxpoints[auxpoints.length - 4];
+				 antY = 2 *  auxpoints[auxpoints.length - 1] - auxpoints[auxpoints.length - 3];
+				}
+				
+				for(int j=0; j<points.length; j+=2){
+					path.quadTo(antX, antY, points[j], points[j+1]);
+					antX = points[j];
+					antY= points[j+1];	
+				}
+				break;
+			case 'a':			
+			case 'A':
+				break;	
+				//TODO
+			}		
 		}
 		
 		if(Z){
