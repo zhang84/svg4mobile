@@ -73,14 +73,14 @@ public class BPath extends Figure {
 			case 'm':
 				if (points.length > 2)
 				{
-					path.rMoveTo(points[0], points[1]);
+					path.moveTo(points[0], points[1]);
 					for (int j=2; j<points.length; j+=2){
 						path.rLineTo(points[j], points[j+1]);
 						//Log.d("svg4mobile", " m: x " + points[j] +" y " +  points[j+1]);
 					}
 				}
 				else
-					path.rMoveTo(points[0], points[1]);
+					path.moveTo(points[0], points[1]);
 				break;
 			case 'M':
 				path.moveTo(points[0], points[1]);
