@@ -67,23 +67,33 @@ public class BPath extends Figure {
 			type = subPath[i].getType();
 			points = subPath[i].getPoints();
 			
-			//Log.d("svg4mobile", " Pintnado Path tipo: " + type );
-			
 			switch(type){
 			case 'm':
-				if (points.length > 2)
-				{
+				/**
+				 * If a relative moveto (m) appears as the first element of the path,
+				 * then it is treated as a pair of absolute coordinates.
+				 */
+				if (i==0) 
 					path.moveTo(points[0], points[1]);
+				else 
+					path.rMoveTo(points[0], points[1]);
+				/**
+				 *  If a moveto is followed by multiple pairs of coordinates, 
+				 *  the subsequent pairs are treated as implicit lineto commands.
+				 */
+				if (points.length > 2) {
 					for (int j=2; j<points.length; j+=2){
 						path.rLineTo(points[j], points[j+1]);
-						//Log.d("svg4mobile", " m: x " + points[j] +" y " +  points[j+1]);
 					}
 				}
-				else
-					path.moveTo(points[0], points[1]);
 				break;
 			case 'M':
 				path.moveTo(points[0], points[1]);
+				if (points.length > 2) {
+					for (int j=2; j<points.length; j+=2){
+						path.lineTo(points[j], points[j+1]);
+					}
+				}
 				break;
 			case 'l':
 				for (int j=0; j<points.length; j+=2)
