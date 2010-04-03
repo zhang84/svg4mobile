@@ -203,8 +203,11 @@ public class Svg4mobile extends Activity {
     			break;    			
     		}
     		case OPENFILE_ID: { // Cargar fichero
+    			try {
     			openFile();
-    			
+    			} catch (Exception e) {
+    				Log.v("svg4mobile", ""+e);
+    			}
     			break;    			
     		}
     		case EXTRAINFO_ID: { //ExtraInfo

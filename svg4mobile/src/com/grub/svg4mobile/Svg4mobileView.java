@@ -37,7 +37,11 @@ public class Svg4mobileView extends View {
 	 * @param path Ruta del SVG.
 	 */
 	public void setPath(String path) {
-		parser.parseXML( path );
+		try {
+			parser.parseXML( path );
+		} catch (Exception e) {
+			Log.e("svg4mobile", ""+e);
+		}
 		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 		this.camReset();
 	}
@@ -183,13 +187,16 @@ public class Svg4mobileView extends View {
 		BPath pruebaPath = new BPath(mysubPath, true, "#32cd32", "#000000", 2f, new Transformations());
 		
 		pruebaPath.draw(canvas);
-		Log.d("svg4mobile", " prueba " );
+		//Log.d("svg4mobile", " prueba " );
 		//prueba.draw(canvas);
 		
-				
+		//BCircle c = new BCircle(600,200,100,"red","blue",10,new Transformations()); 
+		//c.draw(canvas);
+		BEllipse e = new BEllipse(900f,200f,250f,100f,"red","blue",10,new Transformations());
+		e.draw(canvas);
 		camera.restore();
 	}
-	
+
 	public Boolean extraInfoExist() {
 		return (infoparser.getSize()>0);
 	}
