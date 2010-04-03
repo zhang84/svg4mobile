@@ -60,7 +60,7 @@ public class FileExplorer extends ListActivity {
         		elementos.add(archivo.getPath());
         	}
         }
-        Collections.sort(elementos);
+        //Collections.sort(elementos);
         ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elementos);
         setListAdapter(listaArchivos);
     }
