@@ -14,14 +14,14 @@ public class BEllipse extends Figure{
 	
 	/**
 	 * 
-	 * @param cx
-	 * @param cy
-	 * @param rx
-	 * @param ry
-	 * @param rgb
-	 * @param brgb
-	 * @param bwidth
-	 * @param tr
+	 * @param cx Coordenada del centro en el eje X, si se omite se asume 0
+	 * @param cy Coordenada del centro el en eje Y, si se omite se asume 0 
+	 * @param rx Radio en el eje X
+	 * @param ry Radio en el eje Y
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
 	public BEllipse (float cx, float cy, float rx, float ry, String rgb, String brgb, float bwidth, Transformations tr){
 		
@@ -40,13 +40,22 @@ public class BEllipse extends Figure{
 		this.paint.setColor(Color.parseColor(rgb));
 		this.paint.setAntiAlias(true);	
 	}
-	
-	/*public BEllipse (float rx, float ry, String rgb, String brgb, float bwidth, Transformations tr) {
-		//this.BEllipse(0f,0f,rx,ry,rgb,brgb,bwidth,tr);
-	}*/
-	
 	/**
 	 * 
+	 * @param rx Radio en el eje X
+	 * @param ry Radio en el eje Y
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
+	 */
+	public BEllipse (float rx, float ry, String rgb, String brgb, float bwidth, Transformations tr) {
+		this(0f,0f,rx,ry,rgb,brgb,bwidth,tr);
+	}
+	
+	/**
+	 * Pinta la figura
+	 * @param canvas
 	 */
 	public void draw (Canvas canvas){
 		canvas.save();

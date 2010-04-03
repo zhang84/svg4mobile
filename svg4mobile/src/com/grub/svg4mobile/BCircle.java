@@ -15,15 +15,14 @@ public class BCircle extends Figure{
 	private float r;
 	
 	/**
-	 * 
-	 * @param cx
-	 * @param cy
-	 * @param rx
-	 * @param ry
-	 * @param rgb
-	 * @param brgb
-	 * @param bwidth
-	 * @param tr
+	 * Crea un círculo con borde
+	 * @param cx Coordenada x del centro
+	 * @param cy Coordenada y del centro
+	 * @param r radio
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
 	public BCircle (float cx, float cy, float r, String rgb, String brgb, float bwidth, Transformations tr){
 		
@@ -46,7 +45,20 @@ public class BCircle extends Figure{
 	}
 	
 	/**
-	 * 
+	 * Crea un círculo con borde
+	 * @param r radio
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
+	 */
+	public BCircle (float r, String rgb, String brgb, float bwidth, Transformations tr){
+		this(0,0,r,rgb,brgb,bwidth,tr);
+	}
+	
+	/**
+	 * Pinta la figura
+	 * @param canvas
 	 */
 	public void draw (Canvas canvas){
 		canvas.save();
