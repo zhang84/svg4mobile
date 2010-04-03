@@ -43,7 +43,7 @@ public class BRect extends Figure {
 	}
 	/**
 	 * Pinta la figura
-	 * @param gl
+	 * @param canvas
 	 */
 	public void draw(Canvas canvas) {
 		//Se aplican las transformaciones a la figura
