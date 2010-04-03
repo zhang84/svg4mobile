@@ -167,7 +167,7 @@ public class Svg4mobileView extends View {
 		
 			
 		parser.First();
-		
+		//int i=1;
 		while(parser.hasNext()){
 			Figure f = (Figure)parser.next();
 		    f.draw(canvas);
@@ -181,12 +181,12 @@ public class Svg4mobileView extends View {
 	    }
 
 		
-/*		SubPath[] mysubPath = new SubPath[1];
-		float fvect[] = {443.74106f, 357.40061f, -99.78126f, 98.53125f, 95.4375f, 96.6875f, 0.21875f, -0.21875f, 0f, 166.90625f, 274.28126f, 0f, 0f, -265.71875f, -175.21875f, 0f, -94.9375f, -96.1875f};
-		mysubPath[0] = new SubPath('m',fvect);
-		BPath pruebaPath = new BPath(mysubPath, true, "#32cd32", "#000000", 2f, new Transformations());
+		//SubPath[] mysubPath = new SubPath[1];
+		//float fvect[] = {443.74106f, 357.40061f, -99.78126f, 98.53125f, 95.4375f, 96.6875f, 0.21875f, -0.21875f, 0f, 166.90625f, 274.28126f, 0f, 0f, -265.71875f, -175.21875f, 0f, -94.9375f, -96.1875f};
+		//mysubPath[0] = new SubPath('m',fvect);
+		//BPath pruebaPath = new BPath(mysubPath, true, "#32cd32", "#000000", 2f, new Transformations());
 		
-		pruebaPath.draw(canvas);*/
+		//pruebaPath.draw(canvas);
 		//Log.d("svg4mobile", " prueba " );
 		//prueba.draw(canvas);
 		

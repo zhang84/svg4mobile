@@ -164,7 +164,7 @@ public class Parser {
 					String d2[] = d.split(",");
 					int partes = 0;
 					for (int z=0; z< d2.length;z++){
-						if(  d2[z].equals("M")  || d2[z].equals("L")|| d2[z].equals("C") || d2[z].equals("Q") || d2[z].equals("m") || d2[z].equals("c")){
+						if( d2[z].matches("[MmLlCcQqsStTaAhHvV]") ){
 							partes ++;
 						}		
 					}
@@ -182,7 +182,7 @@ public class Parser {
 						
 						int indiceaux = indice;
 						int numelem =0;
-						while ((d2[indiceaux].equals("M")  || d2[indiceaux].equals("L")|| d2[indiceaux].equals("C") || d2[indiceaux].equals("Q") || d2[indiceaux].equals("m") || d2[indiceaux].equals("c") || d2[indiceaux].equals("z"))== false){
+						while (!d2[indiceaux].matches("[MmLlCcQqsStTaAhHvVZz]")){
 							numelem++;
 							indiceaux++;
 						}
@@ -191,7 +191,7 @@ public class Parser {
 						
 						indiceaux = indice;
 						numelem =0;
-						while ((d2[indiceaux].equals("M")  || d2[indiceaux].equals("L")|| d2[indiceaux].equals("C") || d2[indiceaux].equals("Q") || d2[indiceaux].equals("m") || d2[indiceaux].equals("c") || d2[indiceaux].equals("z"))== false){
+						while (!d2[indiceaux].matches("[MmLlCcQqsStTaAhHvVZz]")){
 							d3[numelem] = (float) Float.parseFloat(d2[indiceaux]);
 							//Log.d("svg4mobile", " d2:  " + d2[indiceaux]);
 							numelem++;
