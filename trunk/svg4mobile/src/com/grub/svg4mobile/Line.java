@@ -33,6 +33,10 @@ public class Line extends Figure {
 		
 	}
 	
+	/**
+	 * Pinta la figura
+	 * @param canvas
+	 */
 	public void draw (Canvas canvas){
 		canvas.drawLine(this.x1, this.y1, this.x2, this.y2, this.paint);
 	}
