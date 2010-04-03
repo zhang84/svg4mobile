@@ -2,6 +2,9 @@ package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
 
+/**
+ * @see http://www.w3.org/TR/SVG/shapes.html#LineElement
+ */
 public class BLine extends Figure {
 	private Line l;
 	private Transformations tr;

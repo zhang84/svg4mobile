@@ -4,7 +4,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-
+/**
+ * @see http://www.w3.org/TR/SVG/shapes.html#EllipseElement
+ */
 public class BEllipse extends Figure{
 	
 	private Paint paint;
