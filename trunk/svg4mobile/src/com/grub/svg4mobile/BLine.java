@@ -2,7 +2,7 @@ package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
 
-public class BLine {
+public class BLine extends Figure {
 	private Line l;
 	private Transformations tr;
 
