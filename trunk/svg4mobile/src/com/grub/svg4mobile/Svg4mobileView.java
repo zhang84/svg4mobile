@@ -3,6 +3,7 @@ package com.grub.svg4mobile;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Camera;
+import android.util.Log;
 import android.view.View;
 
 public class Svg4mobileView extends View {
@@ -175,17 +176,14 @@ public class Svg4mobileView extends View {
 		    info.draw(canvas);
 	    }
 
-		/*
-		mysubPath = new SubPath[3];
-		mysubPath[0] = new SubPath('M', iniPoints);
-		mysubPath[1] = new SubPath('C', pointsPathC);
-		mysubPath[2] = new SubPath('L', pointsPathL);
-		*/
 		
-		//pruebaPath = new myPath(mysubPath, true, "#32cd32", "#000000", 3, new Transformations());
-
-		//pruebatexto.draw(canvas);
-		//pruebaPath.draw(canvas);
+		SubPath[] mysubPath = new SubPath[1];
+		float fvect[] = {443.74106f, 357.40061f, -99.78126f, 98.53125f, 95.4375f, 96.6875f, 0.21875f, -0.21875f, 0f, 166.90625f, 274.28126f, 0f, 0f, -265.71875f, -175.21875f, 0f, -94.9375f, -96.1875f};
+		mysubPath[0] = new SubPath('m',fvect);
+		BPath pruebaPath = new BPath(mysubPath, true, "#32cd32", "#000000", 2f, new Transformations());
+		
+		pruebaPath.draw(canvas);
+		Log.d("svg4mobile", " prueba " );
 		//prueba.draw(canvas);
 		
 				
