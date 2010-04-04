@@ -43,7 +43,7 @@ public class Svg4mobileView extends View {
 			Log.e("svg4mobile", ""+e);
 		}
 		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFF9C", "#FFFFFF", 3f, new Transformations());
-		this.camReset();
+		//this.camReset();
 	}
 	
 	/**

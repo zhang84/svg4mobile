@@ -3,6 +3,7 @@ package com.grub.svg4mobile;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -10,6 +11,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -27,7 +30,7 @@ import android.view.WindowManager;
  * @author Luis Torrrico
  * @version 0.1
  */
-public class Svg4mobile extends Activity {
+public class Svg4mobile extends Activity implements Runnable {
 	
 	private Svg4mobileView view;
 	private Menu menu;
@@ -40,6 +43,8 @@ public class Svg4mobile extends Activity {
     private Boolean isPerspectiveOn = false;
     private Boolean setNorthRequest = false;
     private Boolean AutoSetNorth = false;
+	private ProgressDialog pg = null;
+	private String fname = "";
     
     private static final int PERSPECTIVE_ID = 1;
     private static final int ZOOMIN_ID = 3;
@@ -68,6 +73,7 @@ public class Svg4mobile extends Activity {
 		this.view = new Svg4mobileView(this);
 		this.view.setPath("/sdcard/test.svg");
 		this.view.setInfoPath("/sdcard/test.svg");
+		this.view.camReset();
 		setContentView(view);
 		
         // Establece Sensor y Manager 
@@ -249,14 +255,14 @@ public class Svg4mobile extends Activity {
 		case OPENFILE_ID:
 		    Bundle extras = data.getExtras();
 		    String fname = extras.getString("filename");
-		    Log.d("svg4mobile", fname);
-		    this.view.setPath(fname);
-		    this.view.setInfoPath(fname);
-		    this.menu.setGroupVisible(INFOGROUP_ID, this.view.extraInfoExist());
+		    Log.v("svg4mobile", "Cargando "+fname);
+		    this.fname  = fname;
+		    pg  = ProgressDialog.show(Svg4mobile.this, "Por favor espere...", "Parseando fichero...", true, false);
+            Thread thread = new Thread(this);
+            thread.start();
 		    break;
 		}
 	}
-
 
 	/**
      * Maneja los eventos táctiles.
@@ -308,6 +314,13 @@ public class Svg4mobile extends Activity {
      sm.unregisterListener(sl); 
      super.onStop();
     }
+    
+    public void run() {
+	    this.view.setPath(fname);
+	    this.view.setInfoPath(fname);
+		this.menu.setGroupVisible(INFOGROUP_ID, this.view.extraInfoExist());
+        handler.sendEmptyMessage(0);
+    }
 
     private final SensorEventListener sl = new SensorEventListener() {
     	/**
@@ -329,5 +342,13 @@ public class Svg4mobile extends Activity {
       
     	@Override
 		public void onAccuracyChanged(Sensor sensor, int accuracy) { }
+    };
+    
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+        	view.camReset();
+            pg.dismiss();
+        }
     };
 }

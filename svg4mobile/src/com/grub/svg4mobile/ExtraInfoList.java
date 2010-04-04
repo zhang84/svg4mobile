@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -38,7 +40,10 @@ public class ExtraInfoList extends ListActivity {
     @Override
     public void onCreate( Bundle savedInstanceState ) {
         super.onCreate(savedInstanceState);
-       
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         List< Map<String,Object> > drawables = buildListForSimpleAdapter();
 
         SimpleAdapter adapter = new SimpleAdapter(
