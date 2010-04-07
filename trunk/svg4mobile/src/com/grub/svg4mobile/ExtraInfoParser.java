@@ -114,12 +114,12 @@ public class ExtraInfoParser {
 					String image = nodo.getAttribute("image"); 
 					String notes = nodo.getAttribute("notes"); 
 					String rgb = nodo.getAttribute("rgb");
-					String tag = nodo.getAttribute("tags");
+					String tag = nodo.getAttribute("tags");	
 					String[] tags = tag.split(",");
-					
+
 					image = tempdir + image;
 					
-					Log.d("svg4mobile", " image:  " + image  + " x:  " + x+ " y: " + y+ " tag1  " + tags[1] +" h:  " + h);
+					//Log.d("svg4mobile", " image:  " + image  + " x:  " + x+ " y: " + y+ " tag1  " + tags[1] +" h:  " + h);
 
 					ExtraInfo info = new ExtraInfo(Float.parseFloat(x),Float.parseFloat(y),Float.parseFloat(w), Float.parseFloat(h), title, description, image, notes, rgb, tags);
 					elementos.add(info);
