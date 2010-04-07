@@ -360,7 +360,7 @@ public class Svg4mobile extends Activity implements Runnable {
     		}
     	}
       
-    	@Override
+    	
 		public void onAccuracyChanged(Sensor sensor, int accuracy) { }
     };
     

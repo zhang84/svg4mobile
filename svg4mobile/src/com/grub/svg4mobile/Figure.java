@@ -47,5 +47,12 @@ public abstract class Figure {
 	public void draw(Canvas canvas) {
 		
 	}
+	
+	public void add(Figure c){
+		
+	}
+	public void remove(int position){
+		
+	}
 
 }
