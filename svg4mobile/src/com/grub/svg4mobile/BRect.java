@@ -1,7 +1,6 @@
 package com.grub.svg4mobile;
 
 import android.graphics.Canvas;
-import android.util.Log;
 
 /**
  * Pinta figuras de tipo Rect
@@ -25,14 +24,16 @@ public class BRect extends Figure {
 	 * @param y Coordenada y
 	 * @param w Ancho
 	 * @param h Alto
+	 * @param rx En rectángulos redondeados el radio del eje x de la elipse usada para redondear las esquinas.
+	 * @param ry En rectángulos redondeados el radio del eje y  de la elipse usada para redondear las esquinas.
 	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
 	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
 	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
 	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
-	public BRect(float x, float y, float w, float h, String rgb, String brgb, float bwidth, Transformations tr) {
+	public BRect(float x, float y, float w, float h, float rx, float ry, String rgb, String brgb, float bwidth, Transformations tr) {
 		this.tr = tr;
-		this.shape = new Rect(x,y,(x+w),(y+h),rgb);
+		this.shape = new Rect(x,y,(x+w),(y+h),rx,ry,rgb);
 		this.hasWidth = ( bwidth > 0);
 		if (this.hasWidth) {
 			this.borderTop = new Line( x, y+h, x+w, y+h, brgb, bwidth );
@@ -41,6 +42,22 @@ public class BRect extends Figure {
 			this.borderRight = new Line( x+w, y, x+w, y+h, brgb, bwidth );
 		}
 	}
+	
+	/**
+	 * Crea un rectángulo con borde
+	 * @param x Coordenada x
+	 * @param y Coordenada y
+	 * @param w Ancho
+	 * @param h Alto
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
+	 */
+	public BRect(float x, float y, float w, float h, String rgb, String brgb, float bwidth, Transformations tr) {
+		this(x, y, w, h, 0, 0, rgb, brgb, bwidth, tr);
+	}
+	
 	/**
 	 * Pinta la figura
 	 * @param canvas

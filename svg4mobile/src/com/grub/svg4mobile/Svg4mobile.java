@@ -23,12 +23,32 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
+ * This project was created by GRUB, the Open Source Group in University
+ * of Alcala (Spain) to draw SVG files in Smartphones. The first step is
+ * getting an application for Android platform using a reduced portion of
+ * SVG 1.1 specification (paths, rects, etc.) to try to win the MobiGame 
+ * contest.
+ * 
+ * @license
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * 
  * @author Daniel Lahoz
  * @author Daniel Rivera
  * @author Álvaro Tanarro
  * @author Luis Torrrico
  * @version 0.1
+ * 
  */
 public class Svg4mobile extends Activity implements Runnable {
 	
@@ -36,7 +56,7 @@ public class Svg4mobile extends Activity implements Runnable {
 	private Menu menu;
 	private float xtemp, ytemp;
 	private float prevx, prevy;
-	private float x_mouse = 0, y_mouse =0;
+	private float x_mouse=0, y_mouse=0;
     private SensorManager sm; 
     private Sensor oriSensor; 
     private List<Sensor> sensors;
@@ -255,9 +275,9 @@ public class Svg4mobile extends Activity implements Runnable {
 		case OPENFILE_ID:
 		    Bundle extras = data.getExtras();
 		    String fname = extras.getString("filename");
-		    Log.v("svg4mobile", "Cargando "+fname);
+		    Log.v("svg4mobile", "Loading "+fname);
 		    this.fname  = fname;
-		    pg  = ProgressDialog.show(Svg4mobile.this, "Por favor espere...", "Parseando fichero...", true, false);
+		    pg  = ProgressDialog.show(Svg4mobile.this, getResources().getString(R.string.please_wait), getResources().getString(R.string.parsing), true, false);
             Thread thread = new Thread(this);
             thread.start();
 		    break;
