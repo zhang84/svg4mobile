@@ -9,9 +9,12 @@ public class Rect extends Figure{
 	
 	private Paint paint;
 	private RectF rectElement;
+	private float ry = 0;
+	private float rx = 0;
 	
-	public Rect (float x, float y, float w, float h, String rgb){
-				
+	public Rect (float x, float y, float w, float h, float rx, float ry, String rgb){
+		this.rx = rx;
+		this.ry = ry;
 		this.rectElement = new RectF(x, y, w, h);
 		
 		this.paint = new Paint();		
@@ -20,7 +23,8 @@ public class Rect extends Figure{
 	}
 	
 	public void draw (Canvas canvas){
-		canvas.drawRect(this.rectElement, this.paint);
+		//canvas.drawRect(this.rectElement, this.paint);
+		canvas.drawRoundRect(this.rectElement, this.rx, this.ry, this.paint);
 	}
 	
 }

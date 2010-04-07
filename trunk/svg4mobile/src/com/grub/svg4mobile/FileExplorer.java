@@ -18,8 +18,8 @@ import android.widget.ListView;
 public class FileExplorer extends ListActivity {
 	
     private static final String MEDIA_PATH = new String("/sdcard/");
-	private List<String>  elementos = null;
-	private File nivelActual = new File(MEDIA_PATH);
+	private List<String>  elements = null;
+	private File current_level = new File(MEDIA_PATH);
 	   
     /** Called when the activity is first created. */
     @Override
@@ -29,26 +29,26 @@ public class FileExplorer extends ListActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_file_explorer_list);
-        rellenar(new File(MEDIA_PATH).listFiles(new SvgFilter()));
+        refill(new File(MEDIA_PATH).listFiles(new SvgFilter()));
     }
 	
 	
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        File archivo = new File(elementos.get(position));
+        File file = new File(elements.get(position));
         if(position == 0){
             //No está en el raíz (hay padre)
-            if(nivelActual.getParent() != null){
-            	nivelActual = new File(nivelActual.getParent());
-                rellenar(nivelActual.listFiles(new SvgFilter()));
+            if(current_level.getParent() != null){
+            	current_level = new File(current_level.getParent());
+                refill(current_level.listFiles(new SvgFilter()));
             }
 		} else {
-            if (archivo.isDirectory()) {
-            	nivelActual = archivo;
-                rellenar(archivo.listFiles(new SvgFilter()));
+            if (file.isDirectory()) {
+            	current_level = file;
+                refill(file.listFiles(new SvgFilter()));
             } else {
             	 Bundle bundle = new Bundle(); // Coje la ruta y la pone en el Bundle
-	             bundle.putString("filename", archivo.getPath());  
+	             bundle.putString("filename", file.getPath());  
 	             
 	             Intent intent = new Intent();
 	             intent.putExtras(bundle);   	// Pone el Bundle en un Intent
@@ -56,19 +56,15 @@ public class FileExplorer extends ListActivity {
 	             finish();
              }
         }
-    }
-    
-    public void rellenarConElRaiz() {
-        rellenar(new File("/").listFiles(new SvgFilter()));
     } 
     
-    private void rellenar(File[] archivos) {
-        elementos = new ArrayList<String>();
-        elementos.add("..");
+    private void refill(File[] filelist) {
+        elements = new ArrayList<String>();
+        elements.add(getResources().getString(R.string.up));
         ArrayList<String> dirs = new ArrayList<String>();
         ArrayList<String> files = new ArrayList<String>();
         
-        for( File archivo: archivos){
+        for( File archivo: filelist){
         	
         	if (archivo.isDirectory())
         		dirs.add(archivo.getPath()+"/");
@@ -78,11 +74,10 @@ public class FileExplorer extends ListActivity {
         Collections.sort(dirs);
         Collections.sort(files);
         
-        elementos.addAll(dirs);
-        elementos.addAll(files);
+        elements.addAll(dirs);
+        elements.addAll(files);
 
-        ArrayAdapter<String> listaArchivos= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elementos);
-        setListAdapter(listaArchivos);
+        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, elements));
     }
     
     class SvgFilter implements FilenameFilter {
