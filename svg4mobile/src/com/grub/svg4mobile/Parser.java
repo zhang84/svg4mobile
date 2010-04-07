@@ -342,21 +342,24 @@ public class Parser {
 	}
 
 	private void readGroup(Element nodo, Vector<Figure> figuras) {
-		BGroup grupo = new BGroup();
+		
 		String transform = nodo.getAttribute("transform");
+		Transformations t = new Transformations();
 		if (transform.length() > 1) {
-			/*Transformations t = new Transformations();
+			
 			if (transform.substring(0, transform.indexOf("(")).equals("rotate")) {
 				String degrees = transform.substring(transform.indexOf("(") + 1);
 				degrees = degrees.substring(0, degrees.indexOf(" "));
 				t.setRotation(Float.parseFloat(degrees));
-			}*/
+			}
 			//Ahora mismo se utiliza un String en transform de BGroup.
 			
 		}
+		Vector<Figure> f = new Vector<Figure>();
+		BGroup grupo = new BGroup(f,t);
 		//Aqui añadimos el group a la lista.
-		//figuras.add(grupo);
-		parseElement(nodo,grupo.hijos);
+		figuras.add(grupo);
+		parseElement(nodo,grupo.f);
 		
 	}
 
