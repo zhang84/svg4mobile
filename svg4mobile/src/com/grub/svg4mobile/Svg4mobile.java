@@ -291,6 +291,8 @@ public class Svg4mobile extends Activity implements Runnable {
      */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+    	int diff_x = 0;
+    	int diff_y = 0;
     	int action = event.getAction();
     	switch (action) {
                
@@ -302,21 +304,27 @@ public class Svg4mobile extends Activity implements Runnable {
             return true;
 
         case MotionEvent.ACTION_MOVE:
+
+        	return true;
+        case MotionEvent.ACTION_UP:
         	prevx = x_mouse;
         	prevy = y_mouse;
         	
         	x_mouse = event.getX();
-        	if (xtemp < x_mouse && x_mouse > prevx)    	  
-      		  this.view.camRight();
-      	  	else
+        	if (xtemp < x_mouse && x_mouse > prevx) {
+        		diff_x = (int) x_mouse - (int) prevx;
+        		Log.v("svg4mobile", ""+diff_x);
+        		//for (int i=0; i<diff_x; i++)
+        			this.view.camRight();
+        	} else {
       		  this.view.camLeft();
+        	}
+        	
         	y_mouse = event.getY();
         	if (ytemp < y_mouse && y_mouse > prevy)    	  
         	  this.view.camDown();
         	else
         	  this.view.camUp();
-        	return true;
-        case MotionEvent.ACTION_UP:
         	return true;
         }
 
@@ -357,6 +365,7 @@ public class Svg4mobile extends Activity implements Runnable {
     			}
     			setNorthRequest = false;
     			Log.v("svg4mobile", "Display width: " + display.getWidth() );
+    			Log.v("svg4mobile", "Display height: " + display.getHeight() );
     		}
     	}
       
