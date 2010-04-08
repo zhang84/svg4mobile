@@ -2,7 +2,6 @@ package com.grub.svg4mobile;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.acl.Group;
 import java.util.Vector;
 
 import org.w3c.dom.*;
