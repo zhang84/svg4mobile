@@ -7,16 +7,18 @@ import android.util.Log;
 import android.view.View;
 
 public class Svg4mobileView extends View {
-	private static final double ZOOMFACTOR = 10;
+	private static final double ZOOMFACTOR = 100;
 	private Camera camera = new Camera();
 	private float zoom;
 	private float xposcam;
 	private float yposcam;
 	private float rotcam;
-	private static double SMOOTHNESS = 1.0;
+	private int display_width = 320;
+	private int display_heigth = 480;
+	private static float PROPZOOM = 600;
 	private Parser parser = Parser.getInstance();
 	private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
-	private BRect doc = new BRect( 0f,  0f, 100f, 100f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
+	private BRect doc = new BRect( 0f,  0f, 0f, 0f, "#FFFFFF", "#FFFFFF", 3f, new Transformations());
 	
 	private float perspective = 0;
 /*	
@@ -42,7 +44,7 @@ public class Svg4mobileView extends View {
 		} catch (Exception e) {
 			Log.e("svg4mobile", ""+e);
 		}
-		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFF9C", "#FFFFFF", 3f, new Transformations());
+		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFFFF", "#FFFFFF", 3f, new Transformations());
 		//this.camReset();
 	}
 	
@@ -75,7 +77,10 @@ public class Svg4mobileView extends View {
 	 * Resetea los valores de posición de la cámara.
 	 */
 	public void camReset() {
-		this.zoom=parser.getWidth();
+		this.zoom=0;
+		//Autoajuste al ancho
+		if (parser.getWidth()>display_width)
+			this.zoom=(parser.getWidth()/display_width-1)*PROPZOOM;
 		this.xposcam=0;
 		this.yposcam=0;
 		this.rotcam=0;
@@ -88,6 +93,7 @@ public class Svg4mobileView extends View {
 	*/
 	public void zoomIn() {
 		if (this.zoom > 10) this.zoom-=ZOOMFACTOR;
+		Log.v("svg4mobile", ""+this.zoom);
 		this.invalidate();
 	}
 	
@@ -96,6 +102,7 @@ public class Svg4mobileView extends View {
 	*/
 	public void zoomOut() {
 		this.zoom+=ZOOMFACTOR;
+		Log.v("svg4mobile", ""+this.zoom);
 		this.invalidate();
 	}
 	
@@ -117,7 +124,8 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara a la derecha
 	 */
 	public void camRight() {
-		this.xposcam+=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);
+		//this.xposcam+=(float) (SMOOTHNESS);
+		this.xposcam+=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
 	
@@ -125,7 +133,8 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara a la izquierda
 	 */
 	public void camLeft() {
-		this.xposcam-=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);
+		//this.xposcam-=(float) (SMOOTHNESS);
+		this.xposcam-=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
 	
@@ -133,7 +142,8 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara hacia arriba
 	 */
 	public void camUp() {
-		this.yposcam+=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);
+		//this.yposcam+=(float) (SMOOTHNESS);
+		this.yposcam+=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
 	
@@ -141,7 +151,8 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara hacia abajo
 	 */
 	public void camDown() {
-		this.yposcam-=(float) (SMOOTHNESS*this.zoom/ZOOMFACTOR);	
+		//this.yposcam-=(float) (SMOOTHNESS);
+		this.yposcam-=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
 	
