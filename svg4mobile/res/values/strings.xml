@@ -2,6 +2,7 @@
 <resources>
 	<!-- Main -->
     <string name="app_name">Svg4mobile</string>
+    <string name="initial_help">Carga un fichero desde el menu</string>
 	<string name="perspective">Perspectiva</string>
 	<string name="extra_info">Info.</string>
 	<string name="zoom_out">Zoom -</string>

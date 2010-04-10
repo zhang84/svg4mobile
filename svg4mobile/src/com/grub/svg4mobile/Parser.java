@@ -331,10 +331,17 @@ public class Parser {
 							.parseFloat(y), Float.parseFloat(r), rgb,
 							"#000000", 1.5f, t);
 					figuras.add(circulo);
+				} else if (nodo.getTagName().compareToIgnoreCase("ellipse") == 0) {
+					//TODO
+				} else if (nodo.getTagName().compareToIgnoreCase("line") == 0) {
+					//TODO
+				} else if (nodo.getTagName().compareToIgnoreCase("polyline") == 0) {
+					//TODO
+				} else if (nodo.getTagName().compareToIgnoreCase("polygon") == 0) {
+					//TODO
 				} else if (nodo.getTagName().compareToIgnoreCase("g") == 0) {
 					readGroup(nodo, figuras);
-				}
-				// if
+				} // endif
 			}
 		}
 
@@ -400,7 +407,7 @@ public class Parser {
 	 * Anchura del documento obtenida de parsear el SVG
 	 */
 	public float getWidth() {
-		float w = 735.03961f;
+		float w = 0;
 		// Se inicializa a cero y si se lee del fichero svg se cambia el valor.
 		if (width != 0)
 			w = width;
@@ -411,7 +418,7 @@ public class Parser {
 	 * Altura del documento obtenida de parsear el SVG
 	 */
 	public float getHeight() {
-		float h = 720.34869f;
+		float h = 0;
 		if (height != 0)
 			h = height;
 		return h;

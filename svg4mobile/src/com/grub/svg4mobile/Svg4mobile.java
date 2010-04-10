@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 /**
  * This project was created by GRUB, the Open Source Group in University
@@ -91,8 +92,8 @@ public class Svg4mobile extends Activity implements Runnable {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
         					 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		this.view = new Svg4mobileView(this);
-		this.view.setPath("/sdcard/test.svg");
-		this.view.setInfoPath("/sdcard/test.svg");
+		//this.view.setPath("/sdcard/test.svg");
+		//this.view.setInfoPath("/sdcard/test.svg");
 		this.view.camReset();
 		setContentView(view);
 		
@@ -101,7 +102,8 @@ public class Svg4mobile extends Activity implements Runnable {
         sensors = sm.getSensorList(Sensor.TYPE_ORIENTATION); 
         if(sensors.size() > 0) { 
           oriSensor = sensors.get(0); 
-        } 
+        }
+        Toast.makeText(getBaseContext(), R.string.initial_help, Toast.LENGTH_LONG).show();
 	}
 	
 	/**
@@ -313,18 +315,26 @@ public class Svg4mobile extends Activity implements Runnable {
         	x_mouse = event.getX();
         	if (xtemp < x_mouse && x_mouse > prevx) {
         		diff_x = (int) x_mouse - (int) prevx;
-        		Log.v("svg4mobile", ""+diff_x);
-        		//for (int i=0; i<diff_x; i++)
+        		//Log.v("svg4mobile", ""+diff_x);
+        		for (int i=0; i<diff_x; i++)
         			this.view.camRight();
         	} else {
-      		  this.view.camLeft();
+        		diff_x = (int) prevx - (int) x_mouse;
+        		for (int i=0; i<diff_x; i++)
+      		  		this.view.camLeft();
         	}
         	
         	y_mouse = event.getY();
-        	if (ytemp < y_mouse && y_mouse > prevy)    	  
-        	  this.view.camDown();
-        	else
-        	  this.view.camUp();
+        	if (ytemp < y_mouse && y_mouse > prevy) {
+        		diff_y = (int) y_mouse - (int) prevy;
+        		//Log.v("svg4mobile", ""+diff_y);
+        		for (int i=0; i<diff_y; i++)
+        			this.view.camDown();
+        	} else {
+        		diff_y = (int) prevy - (int) y_mouse;
+        		for (int i=0; i<diff_y; i++)
+      		  		this.view.camUp();
+        	}
         	return true;
         }
 
