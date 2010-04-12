@@ -94,6 +94,16 @@ public class Svg4mobile extends Activity implements Runnable {
 		this.view = new Svg4mobileView(this);
 		//this.view.setPath("/sdcard/test.svg");
 		//this.view.setInfoPath("/sdcard/test.svg");
+		
+		Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay(); 
+		if (display.getOrientation() == 0) { // Vertical
+			view.setDisplayWidth(display.getWidth());
+			view.setDisplayHeight(display.getHeight());
+		} else { // Apaisado
+			view.setDisplayWidth(display.getHeight());
+			view.setDisplayHeight(display.getWidth());
+		}
+		
 		this.view.camReset();
 		setContentView(view);
 		
@@ -152,31 +162,38 @@ public class Svg4mobile extends Activity implements Runnable {
         	this.view.camReset();
         	
           break;
-        }        
+        }
+        case KeyEvent.KEYCODE_A:
         case KeyEvent.KEYCODE_DPAD_LEFT: {
-          // Mueve la cámara hacia la derecha
-        	this.view.camRight();
+        	// Mueve la cámara hacia la derecha
+        	for (int i=0; i<10; i++)
+        		this.view.camRight();
           break;
         }
+        case KeyEvent.KEYCODE_D:
         case KeyEvent.KEYCODE_DPAD_RIGHT: {
-          // Mueve la cámara hacia la izquierda
-          this.view.camLeft();
+        	// Mueve la cámara hacia la izquierda
+        	for (int i=0; i<10; i++)
+        		this.view.camLeft();
           break;
         }
+        case KeyEvent.KEYCODE_W:
         case KeyEvent.KEYCODE_DPAD_UP: {
-          // Mueve la cámara hacia abajo
-        	this.view.camDown();
+        	// Mueve la cámara hacia abajo
+        	for (int i=0; i<10; i++)
+        		this.view.camDown();
           break;
         }
+        case KeyEvent.KEYCODE_S:
         case KeyEvent.KEYCODE_DPAD_DOWN: {
         	// Mueve la cámara hacia arriba
-        	this.view.camUp();
+        	for (int i=0; i<10; i++)
+        		this.view.camUp();
         	break;
         }
         case KeyEvent.KEYCODE_Z: {
         	// Aleja la cámara
             this.view.zoomOut();
-          	
             break;
           }
           case KeyEvent.KEYCODE_X: {
@@ -260,7 +277,11 @@ public class Svg4mobile extends Activity implements Runnable {
     private void showExtraInfo() {
     	Intent i = new Intent(this, ExtraInfoList.class);
     	Log.v("svg4mobile", "show extra info");
+    	try {
     	startActivity(i);
+    	} catch (Exception e) {
+    		Log.d("svg4mobile", ""+e);
+    	}
 	}
     
     /**
@@ -315,7 +336,6 @@ public class Svg4mobile extends Activity implements Runnable {
         	x_mouse = event.getX();
         	if (xtemp < x_mouse && x_mouse > prevx) {
         		diff_x = (int) x_mouse - (int) prevx;
-        		//Log.v("svg4mobile", ""+diff_x);
         		for (int i=0; i<diff_x; i++)
         			this.view.camRight();
         	} else {
@@ -327,7 +347,6 @@ public class Svg4mobile extends Activity implements Runnable {
         	y_mouse = event.getY();
         	if (ytemp < y_mouse && y_mouse > prevy) {
         		diff_y = (int) y_mouse - (int) prevy;
-        		//Log.v("svg4mobile", ""+diff_y);
         		for (int i=0; i<diff_y; i++)
         			this.view.camDown();
         	} else {
@@ -374,8 +393,8 @@ public class Svg4mobile extends Activity implements Runnable {
     				view.setNorth(event.values[0]+90);
     			}
     			setNorthRequest = false;
-    			Log.v("svg4mobile", "Display width: " + display.getWidth() );
-    			Log.v("svg4mobile", "Display height: " + display.getHeight() );
+    			//Log.v("svg4mobile", "Display width: " + display.getWidth() );
+    			//Log.v("svg4mobile", "Display height: " + display.getHeight() );
     		}
     	}
       

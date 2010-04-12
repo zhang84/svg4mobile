@@ -30,6 +30,9 @@ public class ExtraInfoList extends ListActivity {
     private static final String LABEL = "LABEL";
     /** Clave del atriburo con la ruta de la imagen. */
     private static final String ICON  = "ICON";
+    /** Clave del atriburo con el color del elemento. */
+    private static final String COLOR = "COLOR";
+    
     private String[] images;
     private ExtraInfoParser infoparser = ExtraInfoParser.getInstance();
     
@@ -102,6 +105,7 @@ public class ExtraInfoList extends ListActivity {
     		Map<String,Object> map = new HashMap<String,Object>();
     		map.put( LABEL, info.getTitle()+"\n"+info.getDesc()+"\n"+info.getNotes()+"\n"+implode(info.getTags(), ", ") );
     		map.put( ICON, info.getImagePath() );
+    		//map.put( COLOR, "#FFFFFF");
     		images[i++]=info.getImagePath();
     		list.add( map );
     	}     

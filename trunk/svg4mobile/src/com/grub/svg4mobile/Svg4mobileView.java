@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 public class Svg4mobileView extends View {
-	private static final double ZOOMFACTOR = 100;
+	private static final double ZOOMFACTOR = 2;
 	private Camera camera = new Camera();
 	private float zoom;
 	private float xposcam;
@@ -28,7 +28,7 @@ public class Svg4mobileView extends View {
 	 */
 	public Svg4mobileView(Context context){
 		super(context);
-		
+
         setFocusable(true);
         setFocusableInTouchMode(true);   
         camReset();
@@ -92,8 +92,7 @@ public class Svg4mobileView extends View {
 	 * Acerca la cámara
 	*/
 	public void zoomIn() {
-		if (this.zoom > 10) this.zoom-=ZOOMFACTOR;
-		Log.v("svg4mobile", ""+this.zoom);
+		if (this.zoom > 10) this.zoom/=ZOOMFACTOR;
 		this.invalidate();
 	}
 	
@@ -101,8 +100,7 @@ public class Svg4mobileView extends View {
 	 * Aleja la cámara
 	*/
 	public void zoomOut() {
-		this.zoom+=ZOOMFACTOR;
-		Log.v("svg4mobile", ""+this.zoom);
+		this.zoom*=ZOOMFACTOR;
 		this.invalidate();
 	}
 	
@@ -124,7 +122,6 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara a la derecha
 	 */
 	public void camRight() {
-		//this.xposcam+=(float) (SMOOTHNESS);
 		this.xposcam+=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
@@ -133,7 +130,6 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara a la izquierda
 	 */
 	public void camLeft() {
-		//this.xposcam-=(float) (SMOOTHNESS);
 		this.xposcam-=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
@@ -142,7 +138,6 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara hacia arriba
 	 */
 	public void camUp() {
-		//this.yposcam+=(float) (SMOOTHNESS);
 		this.yposcam+=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
@@ -151,7 +146,6 @@ public class Svg4mobileView extends View {
 	 * Mueve la cámara hacia abajo
 	 */
 	public void camDown() {
-		//this.yposcam-=(float) (SMOOTHNESS);
 		this.yposcam-=(float) this.zoom/PROPZOOM+1;
 		this.invalidate();
 	}
@@ -197,5 +191,13 @@ public class Svg4mobileView extends View {
 
 	public Boolean extraInfoExist() {
 		return (infoparser.getSize()>0);
+	}
+
+	public void setDisplayWidth(int width) {
+		this.display_width = width;		
+	}
+
+	public void setDisplayHeight(int height) {
+		this.display_heigth = height;
 	}
 }
