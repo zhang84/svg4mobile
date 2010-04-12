@@ -116,4 +116,8 @@ public class ExtraInfo {
 	public String getImagePath() {
 		return this.image;
 	}
+	
+	public String getColor() {
+		return "#FF0000";
+	}
 }
