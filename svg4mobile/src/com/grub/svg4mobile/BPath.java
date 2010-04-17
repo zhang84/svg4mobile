@@ -61,6 +61,29 @@ public class BPath extends Figure {
 		this.path = new Path();
 	}
 	
+	public BPath (SubPath[] subPath, String rgb, String brgb, float bwidth, Transformations tr)
+	{
+		this.tr = tr;
+		this.subPath = new SubPath[subPath.length];
+		
+		for(int i=0; i<subPath.length;i++)
+			this.subPath[i] = new SubPath(subPath[i].getType(), subPath[i].getPoints());
+			
+		this.paintBorder = new Paint();
+		if (bwidth>0) {
+			this.paintBorder.setStyle(Paint.Style.STROKE);
+			this.paintBorder.setStrokeWidth(bwidth);
+			this.paintBorder.setColor(Color.parseColor(brgb));
+			this.paintBorder.setAntiAlias(true);
+		}
+		
+		this.paint = new Paint();
+		this.paint.setColor(Color.parseColor(rgb));
+		this.paint.setAntiAlias(true);
+		
+		this.path = new Path();
+	}
+	
 	/**
 	 * Dibuja la figura
 	 * @param canvas
@@ -250,11 +273,34 @@ public class BPath extends Figure {
 					antY= points[j+1];	
 				}
 				break;
-			case 'a':			
+			case 'a':
+				antX = 0;
+				antY = 0;
+				if(i>0){
+					auxpoints = subPath[i-1].getPoints();
+					antX = auxpoints[auxpoints.length - 2];
+					antY = auxpoints[auxpoints.length - 1];
+				}
+				for(int j=0; j<points.length; j+=6){
+					oval = new RectF(points[j] + antX, points[j+1] + antY, points[j+2] + antX, points[j+3] + antY); 
+					path.addArc(oval, points[j+4], points[j+5]);
+				}
+				break;
 			case 'A':
+				for(int j=0; j<points.length; j+=6){
+					oval = new RectF(points[j], points[j+1], points[j+2], points[j+3]); 
+					path.addArc(oval, points[j+4], points[j+5]);
+				}
 				break;	
+			case 'Z':
+			case 'z':
+				points = subPath[0].getPoints();
+				path.lineTo(points[0], points[1]);
+				path.moveTo(points[0], points[1]);
+				break;
 				//TODO
-			}		
+			}
+			
 		}
 		
 		if(Z){
