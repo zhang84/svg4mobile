@@ -307,8 +307,9 @@ public class BPath extends Figure {
 			points = subPath[0].getPoints();
 			path.lineTo(points[0], points[1]);
 		}
-		canvas.drawPath(path, paint);
 		canvas.drawPath(path, paintBorder);
+		canvas.drawPath(path, paint);
+		
 		canvas.restore();
 	}
 	
