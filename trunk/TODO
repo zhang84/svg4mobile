@@ -1,6 +1,5 @@
---> Bordes (Grosor y color) : El parser aun no lo recoge.
 --> Transformaciones. Están hechas translate y matrix pero faltan el resto. ==> Parser. 
---> El path esta incompleto: Falta ArcTo y no estamos teniendo en cuenta que pueden aparecer Zs en cualquier punto de la ruta. BPath 
+--> El path esta incompleto: Falta ArcTo. BPath 
 y Parser.
 --> La cámara debería rotar pivotando en el centro del mapa en vez de en el punto 0,0
 --> Los Rect deberían contemplar la posibilidad de bordes redondeados. ==> Parser.
