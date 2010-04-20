@@ -2,6 +2,7 @@ package com.grub.svg4mobile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Vector;
 
 import org.w3c.dom.*;
@@ -253,57 +254,32 @@ public class Parser {
 						// + y+ " w:  " + w+ " h:  " + h);
 						String transform = nodo.getAttribute("transform");
 						String d = nodo.getAttribute("d");
+						Log.d("svg4mobile", d);
+						//d = d+" e 0 0";
 						d = d.replaceAll(" ", ",");
-						// Log.d("svg4mobile", " d:  " + d);
-						String d2[] = d.split(",");
-						int partes = 0;
-						for (int z = 0; z < d2.length; z++) {
-							if (d2[z].matches("[MmLlCcQqsStTaAhHvV]")) {
-								partes++;
+						
+						String d2[] = d.split("[MmLlCcQqsStTaAhHvVzZ]");
+						Log.d("svg4mobile", "d2: "+Arrays.toString(d2));
+						String letras[] = d.split("[0-9,. ]+");
+						Log.d("svg4mobile", "letras: "+Arrays.toString(letras));
+						SubPath sp[] = new SubPath[d2.length];
+						int j2 =0;
+						for (int j=1; j<letras.length-3; j++) {
+							Log.d("svg4mobile","Antes de split " + letras[j]);
+							char tipo = letras[j].charAt(0);
+							Log.d("svg4mobile", "despues del split");
+							float[] puntos = new float[0];
+							if (tipo!='z' && tipo != 'Z') {
+								j2++;
+								String d3[] = d2[j2].split(",");
+								Log.d("svg4mobile", "d3: " + Arrays.toString(d3));
+								puntos = new float[d3.length-1]; //!
+								for (int k=1; k<d3.length-2; k++)
+									puntos[k]=Float.parseFloat(d3[k]);
 							}
+							sp[j] = new SubPath(tipo, puntos);
 						}
-
-						SubPath[] mysubPath = new SubPath[partes];
-						String tipo = "";
-						int indice = 0;
-						int iteracion = 0;
-
-						while (indice < d2.length - 1) {
-
-							tipo = d2[indice];
-							// Log.d("svg4mobile", " d2:  " + d2[indice] +
-							// " length " + indice +"/"+ d2.length);
-							indice++;
-
-							int indiceaux = indice;
-							int numelem = 0;
-							while (!d2[indiceaux]
-									.matches("[MmLlCcQqsStTaAhHvVZz]")) {
-								numelem++;
-								indiceaux++;
-							}
-
-							float[] d3 = new float[numelem];
-
-							indiceaux = indice;
-							numelem = 0;
-							while (!d2[indiceaux]
-									.matches("[MmLlCcQqsStTaAhHvVZz]")) {
-								d3[numelem] = (float) Float
-										.parseFloat(d2[indiceaux]);
-								// Log.d("svg4mobile", " d2:  " +
-								// d2[indiceaux]);
-								numelem++;
-								indiceaux++;
-							}
-
-							char tip[] = tipo.toCharArray();
-							mysubPath[iteracion] = new SubPath(tip[0], d3);
-
-							iteracion++;
-							indice = indiceaux;
-
-						}
+						Log.d("svg4mobile","For Terminado");
 
 						Transformations t = new Transformations();
 
@@ -317,9 +293,8 @@ public class Parser {
 								t.setTranslate(ta[0], ta[1]);
 							}
 						}
-						// Log.d("svg4mobile",
-						// ""+borderwidth+"   "+border+"   "+rgb.toString());
-						BPath mPath = new BPath(mysubPath, rgb, border,
+
+						BPath mPath = new BPath(sp, rgb, border,
 								Float.parseFloat(borderwidth), t);
 						figuras.add(mPath);
 
