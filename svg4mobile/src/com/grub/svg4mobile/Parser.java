@@ -218,7 +218,6 @@ public class Parser {
 				} else if (nodo.getTagName().compareToIgnoreCase("path") == 0) {
 
 					try {
-						Log.d("svg4mobile", "   4");
 						String style = nodo.getAttribute("style");
 						String borderwidth = "0";
 						String rgb = "";
@@ -258,25 +257,26 @@ public class Parser {
 						//d = d+" e 0 0";
 						d = d.replaceAll(" ", ",");
 						
-						String d2[] = d.split("[MmLlCcQqsStTaAhHvVzZ]");
-						Log.d("svg4mobile", "d2: "+Arrays.toString(d2));
-						String letras[] = d.split("[0-9,. ]+");
-						Log.d("svg4mobile", "letras: "+Arrays.toString(letras));
-						SubPath sp[] = new SubPath[d2.length];
+						String pts[] = d.split("[MmLlCcQqsStTaAhHvVzZ]");
+						//Log.d("svg4mobile", "d2: "+Arrays.toString(d2));
+						String letras[] = d.split("[-0-9,. ]+");
+						//Log.d("svg4mobile", "letras: "+Arrays.toString(letras));
+						SubPath sp[] = new SubPath[letras.length-1];
 						int j2 =0;
-						for (int j=1; j<letras.length-3; j++) {
-							Log.d("svg4mobile","Antes de split " + letras[j]);
+						for (int j=0; j<letras.length-1; j++) {
+							//Log.d("svg4mobile","Antes de split " + letras[j]);
 							char tipo = letras[j].charAt(0);
-							Log.d("svg4mobile", "despues del split");
+							//Log.d("svg4mobile", "despues del split");
 							float[] puntos = new float[0];
 							if (tipo!='z' && tipo != 'Z') {
 								j2++;
-								String d3[] = d2[j2].split(",");
-								Log.d("svg4mobile", "d3: " + Arrays.toString(d3));
-								puntos = new float[d3.length-1]; //!
-								for (int k=1; k<d3.length-2; k++)
-									puntos[k]=Float.parseFloat(d3[k]);
+								String pts_arr[] = pts[j2].split(",");
+								Log.d("svg4mobile", "d3: " + Arrays.toString(pts_arr));
+								puntos = new float[pts_arr.length-1]; //!
+								for (int k=1; k<pts_arr.length; k++)
+									puntos[k-1]=Float.parseFloat(pts_arr[k]);
 							}
+							Log.d("svg4mobile", "tipo: "+ tipo + ", puntos: " + Arrays.toString(puntos));
 							sp[j] = new SubPath(tipo, puntos);
 						}
 						Log.d("svg4mobile","For Terminado");
@@ -294,6 +294,8 @@ public class Parser {
 							}
 						}
 
+						Log.d("svg4mobile", "añadiendo sp a path");
+						
 						BPath mPath = new BPath(sp, rgb, border,
 								Float.parseFloat(borderwidth), t);
 						figuras.add(mPath);
