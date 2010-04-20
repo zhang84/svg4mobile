@@ -271,12 +271,12 @@ public class Parser {
 							if (tipo!='z' && tipo != 'Z') {
 								j2++;
 								while (pts[j2].compareTo(",")==0) {
-									Log.v("svg4mobile", "-"+pts[j2]+"-");
+									// Avanza el puntero de puntos hasta encontrar puntos.
 									j2++;
 								}
 								
 								String pts_arr[] = pts[j2].split(",");
-								Log.d("svg4mobile", "pts: " + Arrays.toString(pts_arr));
+								//Log.d("svg4mobile", "pts: " + Arrays.toString(pts_arr));
 								puntos = new float[pts_arr.length-1]; //!
 								for (int k=1; k<pts_arr.length; k++)
 									puntos[k-1]=Float.parseFloat(pts_arr[k]);
