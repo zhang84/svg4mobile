@@ -258,20 +258,25 @@ public class Parser {
 						d = d.replaceAll(" ", ",");
 						
 						String pts[] = d.split("[MmLlCcQqsStTaAhHvVzZ]");
-						//Log.d("svg4mobile", "d2: "+Arrays.toString(d2));
+						//Log.d("svg4mobile", "pts: "+Arrays.toString(pts));
 						String letras[] = d.split("[-0-9,. ]+");
 						//Log.d("svg4mobile", "letras: "+Arrays.toString(letras));
-						SubPath sp[] = new SubPath[letras.length-1];
+						SubPath sp[] = new SubPath[letras.length];
 						int j2 =0;
-						for (int j=0; j<letras.length-1; j++) {
+						for (int j=0; j<letras.length; j++) {
 							//Log.d("svg4mobile","Antes de split " + letras[j]);
 							char tipo = letras[j].charAt(0);
 							//Log.d("svg4mobile", "despues del split");
 							float[] puntos = new float[0];
 							if (tipo!='z' && tipo != 'Z') {
 								j2++;
+								while (pts[j2].compareTo(",")==0) {
+									Log.v("svg4mobile", "-"+pts[j2]+"-");
+									j2++;
+								}
+								
 								String pts_arr[] = pts[j2].split(",");
-								Log.d("svg4mobile", "d3: " + Arrays.toString(pts_arr));
+								Log.d("svg4mobile", "pts: " + Arrays.toString(pts_arr));
 								puntos = new float[pts_arr.length-1]; //!
 								for (int k=1; k<pts_arr.length; k++)
 									puntos[k-1]=Float.parseFloat(pts_arr[k]);
