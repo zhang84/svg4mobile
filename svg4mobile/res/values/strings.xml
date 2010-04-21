@@ -15,5 +15,5 @@
     <string name="up">..</string>
     <!-- Progress Dialog -->
     <string name="please_wait">Por favor espere...</string>
-    <string name="parsing">Parseando fichero...</string>
+    <string name="parsing">Cargando fichero...</string>
 </resources>
