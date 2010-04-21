@@ -299,32 +299,11 @@ public class BPath extends Figure {
 				break;	
 			case 'Z':
 			case 'z':
-				
-				if (last_z == 0 || subPath[last_z].getType() == 'M'){
-					points = subPath[last_z].getPoints();
-					path.lineTo(points[0], points[1]);
-					last_z = i+1;
-				}else{
-					if((i<subPath.length - 1 && subPath[i+1].getType() != 'm') || i==subPath.length-1){
-						points = subPath[last_z].getPoints();
-						path.rMoveTo(points[0], points[1]);
-						path.lineTo(points[0], points[1]);
-						last_z = i+1;
-					}
-						
-				}
-				
-				
-				
+				path.close();
 				break;
 				//TODO
 			}
 			
-		}
-		
-		if(Z){
-			points = subPath[0].getPoints();
-			path.lineTo(points[0], points[1]);
 		}
 		canvas.drawPath(path, paintBorder);
 		canvas.drawPath(path, paint);
