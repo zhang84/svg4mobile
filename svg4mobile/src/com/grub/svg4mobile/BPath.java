@@ -77,6 +77,8 @@ public class BPath extends Figure {
 			this.paintBorder.setAntiAlias(true);
 		}
 		
+		this.Z = false;
+		
 		this.paint = new Paint();
 		this.paint.setColor(Color.parseColor(rgb));
 		this.paint.setAntiAlias(true);
@@ -90,6 +92,9 @@ public class BPath extends Figure {
 	 */
 	public void draw (Canvas canvas){
 		canvas.save();
+		
+		int last_z = 0;
+		
 		this.tr.applyTransformations(canvas);
 		for(int i=0; i<subPath.length; i++)
 		{
@@ -102,8 +107,10 @@ public class BPath extends Figure {
 				 * If a relative moveto (m) appears as the first element of the path,
 				 * then it is treated as a pair of absolute coordinates.
 				 */
-				if (i==0) 
+				if (i==0) {
 					path.moveTo(points[0], points[1]);
+				}
+					
 				else 
 					path.rMoveTo(points[0], points[1]);
 				/**
@@ -115,9 +122,7 @@ public class BPath extends Figure {
 						path.rLineTo(points[j], points[j+1]);
 					}
 				}
-				else
-					path.moveTo(points[0], points[1]);
-
+				
 				break;
 			case 'M':
 				path.moveTo(points[0], points[1]);
@@ -294,9 +299,23 @@ public class BPath extends Figure {
 				break;	
 			case 'Z':
 			case 'z':
-				points = subPath[0].getPoints();
-				path.lineTo(points[0], points[1]);
-				path.moveTo(points[0], points[1]);
+				
+				if (last_z == 0 || subPath[last_z].getType() == 'M'){
+					points = subPath[last_z].getPoints();
+					path.lineTo(points[0], points[1]);
+					last_z = i+1;
+				}else{
+					if((i<subPath.length - 1 && subPath[i+1].getType() != 'm') || i==subPath.length-1){
+						points = subPath[last_z].getPoints();
+						path.rMoveTo(points[0], points[1]);
+						path.lineTo(points[0], points[1]);
+						last_z = i+1;
+					}
+						
+				}
+				
+				
+				
 				break;
 				//TODO
 			}
