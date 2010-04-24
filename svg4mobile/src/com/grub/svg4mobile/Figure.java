@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import java.util.Enumeration;
+
 import android.graphics.Canvas;
 
 public abstract class Figure {
@@ -48,11 +50,24 @@ public abstract class Figure {
 		
 	}
 	
-	public void add(Figure c){
-		
-	}
-	public void remove(int position){
-		
-	}
-
+	// Funciones del patrón Composite
+	
+	/**
+	 * Añade una figura a una figura 
+	 * @param f Figura a añadir
+	 */
+	public abstract void addFigure(Figure f); 
+	
+	/**
+	 * Elimina una figura de una figura 
+	 * @param f Figura a eliminar
+	 */
+	public abstract void removeFigure(Figure f);
+	
+	/**
+	 * Obtiene la lista de figuras de una figura.
+	 * @return Lista de figuras de una figura
+	 */
+	public abstract Enumeration<Figure> getFigures();
+	
 }

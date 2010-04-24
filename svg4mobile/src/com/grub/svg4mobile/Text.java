@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import java.util.Enumeration;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -57,4 +59,16 @@ public class Text extends Figure {
 		canvas.drawText(text, this.x, this.y, paint);
 		canvas.restore();
   }
+@Override
+public void addFigure(Figure f) {
+	// TODO Auto-generated method stub
+	
+}
+@Override
+public Enumeration<Figure> getFigures() {
+	return null;
+}
+@Override
+public void removeFigure(Figure f) {
+}
 }

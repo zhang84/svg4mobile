@@ -139,12 +139,14 @@ public class Svg4mobile extends Activity implements Runnable {
        MenuItem itemChPersp = this.menu.add(PERSPGROUP_ID,PERSPECTIVE_ID,0,R.string.perspective); //Cambiar Perspectiva
        itemChPersp.setIcon(android.R.drawable.ic_menu_mapmode);
        MenuItem itemExtraInfo = this.menu.add(INFOGROUP_ID,EXTRAINFO_ID,0,R.string.extra_info); //Mostrar información extra
-       itemExtraInfo.setIcon(android.R.drawable.btn_star_big_on);
+       itemExtraInfo.setIcon(android.R.drawable.ic_menu_info_details);
        
        MenuItem compassSync = this.menu.add(NORTHGROUP_ID,SETNORTH_ID,0,R.string.set_north); //Nortear
        MenuItem autoCompassSync = this.menu.add(NORTHGROUP_ID,AUTOSETNORTH_ID,1,R.string.auto_set_north); //Autonortear
        compassSync.setIcon(android.R.drawable.ic_menu_rotate);
        autoCompassSync.setIcon(android.R.drawable.ic_menu_compass);
+       
+       this.menu.setGroupVisible(INFOGROUP_ID, this.view.extraInfoExist());
        
        return result;
     }

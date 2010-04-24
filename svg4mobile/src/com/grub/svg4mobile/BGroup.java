@@ -1,5 +1,6 @@
 package com.grub.svg4mobile;
 
+import java.util.Enumeration;
 import java.util.Vector;
 import android.graphics.Canvas;
 /**
@@ -24,6 +25,14 @@ public class BGroup extends Figure {
 	}
 	
 	/**
+	 * Constructor de la clase con todos los parámetros
+	 * @param tr
+	 */
+	public BGroup(Transformations tr) {
+		this.tr=tr;
+	}
+	
+	/**
 	 * Función que pinta la figura
 	 * @param canvas 
 	 */
@@ -34,15 +43,32 @@ public class BGroup extends Figure {
 			this.f.elementAt(i).draw(canvas);
 		canvas.restore();
 	}
-	
-	@Override
-	public void add(Figure figura){
-		f.add(figura);
+
+	/** Añade una figura a una figura. Implementación del patrón Composite. 
+	 * @param f Figura a añadir
+	 */
+
+	public void addFigure(Figure f) 
+	{
+		this.f.addElement(f);
+	}
+
+	/**
+	 * Elimina una figura de una figura. Implementación del patrón Composite. 
+	 * @param f Figura a eliminar
+	 */
+	public void removeFigure(Figure f) 
+	{
+		this.f.removeElement(f);
 	}
 	
-	@Override
-	public void remove(int position){
-		f.remove(position);
+	/**
+	 * Obtiene la lista de figuras de una figura. Implementación del patrón Composite.
+	 * @return Lista de figuras de una figura
+	 */
+	public Enumeration<Figure> getFigures() 
+	{
+		return this.f.elements();
 	}
 	
 }

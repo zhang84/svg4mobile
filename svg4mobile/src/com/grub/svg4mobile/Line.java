@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import java.util.Enumeration;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -39,6 +41,24 @@ public class Line extends Figure {
 	 */
 	public void draw (Canvas canvas){
 		canvas.drawLine(this.x1, this.y1, this.x2, this.y2, this.paint);
+	}
+
+	@Override
+	public void addFigure(Figure f) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Enumeration<Figure> getFigures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removeFigure(Figure f) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
