@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import java.util.Enumeration;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,6 +27,24 @@ public class Rect extends Figure{
 	public void draw (Canvas canvas){
 		//canvas.drawRect(this.rectElement, this.paint);
 		canvas.drawRoundRect(this.rectElement, this.rx, this.ry, this.paint);
+	}
+
+	@Override
+	public void addFigure(Figure f) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Enumeration<Figure> getFigures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removeFigure(Figure f) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

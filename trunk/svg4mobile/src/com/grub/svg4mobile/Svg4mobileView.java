@@ -45,7 +45,6 @@ public class Svg4mobileView extends View {
 			Log.e("svg4mobile", ""+e);
 		}
 		doc = new BRect( 0f,  0f, parser.getWidth(), parser.getHeight(), "#FFFFFF", "#FFFFFF", 3f, new Transformations());
-		//this.camReset();
 	}
 	
 	/**
@@ -84,7 +83,6 @@ public class Svg4mobileView extends View {
 		this.xposcam=0;
 		this.yposcam=0;
 		this.rotcam=0;
-		//this.perspective = 0;
 		this.invalidate();
 	}
 	
@@ -182,8 +180,6 @@ public class Svg4mobileView extends View {
 		    info.draw(canvas);
 	    }
 		
-		//BCircle c = new BCircle(600,200,100,"red","blue",10,new Transformations()); 
-		//c.draw(canvas);
 		//BEllipse e = new BEllipse(250f,100f,"red","blue",10,new Transformations());
 		//e.draw(canvas);
 		camera.restore();

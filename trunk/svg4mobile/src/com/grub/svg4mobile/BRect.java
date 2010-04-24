@@ -1,5 +1,7 @@
 package com.grub.svg4mobile;
 
+import java.util.Enumeration;
+
 import android.graphics.Canvas;
 
 /**
@@ -74,6 +76,24 @@ public class BRect extends Figure {
 			this.borderRight.draw(canvas);
 		}
 		canvas.restore();
+	}
+
+	@Override
+	public void addFigure(Figure f) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Enumeration<Figure> getFigures() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void removeFigure(Figure f) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -126,11 +126,9 @@ public class ExtraInfoParser {
 
 				}
 			}
-		}
-		//Log.d("svg4mobile", "fin while  ");
-		
+		}		
 	 } else {
-		 // if no existe s4m
+		 // no existe s4m
 	 }
 	}
 
@@ -148,10 +146,10 @@ public class ExtraInfoParser {
 
 	
 	/**
-	 * MÃ©todo que devuelve el puntero al primer elemento.
+	 * Método que devuelve el puntero al primer elemento.
 	 */
 	public void First() {
-			contador = 0;
+		contador = 0;
 	}
 
 	/**
@@ -173,7 +171,6 @@ public class ExtraInfoParser {
 	public ExtraInfo next() {
 		//Log.d("svg4mobile", "next  " + String.valueOf(contador) + " " + String.valueOf(elementos.size()));
 		return elementos.get(contador++);
-		//return new BRect( 0f,  0f, 735.03961f, 720.34869f, "#FFFF9C", "#FFFFFF", 3f, new Transformations());
 	}
 	
 	/**

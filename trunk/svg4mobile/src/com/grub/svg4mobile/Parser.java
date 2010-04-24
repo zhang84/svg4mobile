@@ -22,6 +22,9 @@ public class Parser {
 	private Document dom;
 	private Vector<Figure> elementos;
 
+	/**
+	 * 
+	 */
 	private synchronized static void createInstance() {
 		if (instance == null) {
 			instance = new Parser();
@@ -454,10 +457,10 @@ public class Parser {
 	}
 
 	/**
-	 * MÃ©todo que indica al usuario si hay mÃ¡s elementos en la lista.
-	 * ImplementaciÃ³n del patrÃ³n Iterator.
+	 * Método que indica al usuario si hay más elementos en la lista.
+	 * Implementación del patrón Iterator.
 	 * 
-	 * @return Devuelve true si quedan mÃ¡s elementos en el iterador.
+	 * @return Devuelve true si quedan más elementos en el iterador.
 	 */
 	public Boolean hasNext() {
 		if ((contador + 1) <= elementos.size())
@@ -467,7 +470,7 @@ public class Parser {
 	}
 
 	/**
-	 * MÃ©todo que usarÃ¡ el usuario para obtener el siguiente elemento de la
+	 * Método que usará el usuario para obtener el siguiente elemento de la
 	 * lista e incrementar el contador.
 	 * 
 	 * @return Devuelve el siguiente elemento.
