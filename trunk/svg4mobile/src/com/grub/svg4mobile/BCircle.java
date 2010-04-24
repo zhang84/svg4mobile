@@ -5,7 +5,6 @@ import java.util.Enumeration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 /**
  * @see http://www.w3.org/TR/SVG/shapes.html#CircleElement
  */
