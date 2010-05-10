@@ -20,23 +20,30 @@ import org.xml.sax.SAXException;
 
 import android.util.Log;
 
+/**
+ * Clase que parsea el XMLcon la información extra.
+ */
 public class ExtraInfoParser {
 	
-
 	public static ExtraInfoParser instance = null;
 
 	private int contador=0;
-	private float width = 0;
-	private float height = 0;
 	private Document dom;
 	private Vector<ExtraInfo> elementos;
 
+	/**
+	 * Crea una instancia del ExtraInfoParser.
+	 */
 	private synchronized static void createInstance() {
 		if (instance == null) {
 			instance = new ExtraInfoParser();
 	    }
 	}
 
+	/**
+	 * Obtiene la instancia del ExtraInfoParser.
+	 * @return Devuelve la instancia del ExtraInfoPArser.  
+	 */
 	public static ExtraInfoParser getInstance() {
 		if (instance == null)
 			createInstance();
@@ -44,14 +51,14 @@ public class ExtraInfoParser {
 	}
 
 	/**
-	 * Constructor de la clase genÃ©rico
+	 * Constructor de la clase genérico
 	 */
 	public ExtraInfoParser() {
 		elementos = new Vector<ExtraInfo>();
 	}
 	
 	/**
-	 * MÃ©todo privado encargado de ir parseando el archivo SVG e insertando
+	 * Método privado encargado de ir parseando el archivo SVG e insertando
 	 * los elementos en la correspondiente lista.
 	 */
 	public void parseXML (String path){
@@ -132,6 +139,12 @@ public class ExtraInfoParser {
 	 }
 	}
 
+	/**
+	 * Método0 que lee el contenido de un fichero ZIP y lo guarda en un buffer
+	 * @param in Fichero ZIP de origen.
+	 * @param out Buffer de salida
+	 * @throws IOException Errores de E/S durante el proceso.
+	 */
 	 private static final void copyInputStream(InputStream in, OutputStream out) throws IOException
 	  {
 	    byte[] buffer = new byte[1024];
@@ -153,9 +166,9 @@ public class ExtraInfoParser {
 	}
 
 	/**
-	 * MÃ©todo que indica al usuario si hay mÃ¡s elementos en la lista.
-	 * ImplementaciÃ³n del patrÃ³n Iterator.
-	 * @return Devuelve true si quedan mÃ¡s elementos en el iterador.
+	 * Método que indica al usuario si hay más elementos en la lista.
+	 * Implementación del patrón Iterator.
+	 * @return Devuelve true si quedan más elementos en el iterador.
 	 */
 	public Boolean hasNext() {
 		if ((contador +1) <=elementos.size())
@@ -164,7 +177,7 @@ public class ExtraInfoParser {
 	}
 
 	/**
-	 * MÃ©todo que usarÃ¡ el usuario para obtener el siguiente elemento
+	 * Método que usará el usuario para obtener el siguiente elemento
 	 * de la lista e incrementar el contador.
 	 * @return Devuelve el siguiente elemento.
 	 */
@@ -180,6 +193,4 @@ public class ExtraInfoParser {
 	public int getSize() {
 		return elementos.size();
 	}
-	
-
 }

@@ -2,7 +2,6 @@ package com.grub.svg4mobile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Vector;
 
 import org.w3c.dom.*;
@@ -12,6 +11,10 @@ import android.util.Log;
 
 import javax.xml.parsers.*;
 
+/**
+ * 
+ *
+ */
 public class Parser {
 
 	public static Parser instance = null;
