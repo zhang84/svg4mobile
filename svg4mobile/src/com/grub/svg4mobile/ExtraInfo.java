@@ -8,6 +8,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.Log;
 
+/**
+ * Figura de tipo información extra.
+ */
 public class ExtraInfo {
 
 	private String title;
@@ -81,42 +84,82 @@ public class ExtraInfo {
 		canvas.restore();	
 	}
 	
+	/**
+	 * Obtiene la coordenada x de la posición.
+	 * @return Devuelve la coordenada x de la posición.
+	 */
 	public float getX() {
 		return this.x;
 	}
 	
+	/**
+	 * Obtiene la coordenada y de la posición.
+	 * @return Devuelve la coordenada y de la posición.
+	 */
 	public float getY() {
 		return this.y;
 	}
 	
+	/**
+	 * Obtiene el ancho del elemento.
+	 * @return Devuelve el ancho del elemento.
+	 */
 	public float getWidht() {
 		return this.w;
 	}
 	
+	/**
+	 * Obtiene el alto del elemento.
+	 * @return Devuelve el alto del elemento.
+	 */
 	public float getHeight() {
 		return this.h;
 	}
 	
+	/**
+	 * Obtiene el título del elemento.
+	 * @return Devuelve el título del elemento.
+	 */
 	public String getTitle() {
 		return this.title;
 	}
 	
+	/**
+	 * Obtiene la descripión del elemento.
+	 * @return Devuelve la descripción del elemento.
+	 */
 	public String getDesc() {
 		return this.description;
 	}
 	
+	/**
+	 * Obtiene las anotaciones del elemento.
+	 * @return Devuelve las anotaciones del elemento.
+	 */
 	public String getNotes() {
 		return this.notes;
 	}
 	
+	/**
+	 * Obtiene las etiquetas del elemento.
+	 * @return Devuelve las etiquetas del elemento.
+	 */
 	public String[] getTags() {
 		return this.tags;
 	}
 	
+	/**
+	 * Obtiene la ruta del elemento.
+	 * @return Devuelve la ruta del elemento.
+	 */
 	public String getImagePath() {
 		return this.image;
 	}
 	
+	/**
+	 * Obtiene el color del elemento.
+	 * @return Devuelve el color del elemento.
+	 */
 	public String getColor() {
 		return "#FF0000";
 	}

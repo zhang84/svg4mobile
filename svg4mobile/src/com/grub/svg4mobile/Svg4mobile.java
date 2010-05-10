@@ -374,6 +374,9 @@ public class Svg4mobile extends Activity implements Runnable {
      super.onStop();
     }
     
+    /**
+     * Ejecuta el hilo
+     */
     public void run() {
 	    this.view.setPath(fname);
 	    this.view.setInfoPath(fname);
@@ -400,7 +403,6 @@ public class Svg4mobile extends Activity implements Runnable {
     		}
     	}
       
-    	
 		public void onAccuracyChanged(Sensor sensor, int accuracy) { }
     };
     

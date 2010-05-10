@@ -28,17 +28,17 @@ public class BPath extends Figure {
 	private float antX;
 	private float antY;
 	private RectF oval;
-
+	
 	/**
 	 * Crea un camino entre puntos
-	 * @param subPath
-	 * @param isZ
+	 * @param subPath Array de sub paths
+	 * @param isZ True para cerrar el path
 	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
 	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
 	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
 	 * @param tr Transformaciones que se aplicarán a la figura
 	 */
-	public BPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr)
+	private void IniBPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr)
 	{
 		this.tr = tr;
 		this.subPath = new SubPath[subPath.length];
@@ -63,29 +63,30 @@ public class BPath extends Figure {
 		this.path = new Path();
 	}
 	
-	public BPath (SubPath[] subPath, String rgb, String brgb, float bwidth, Transformations tr)
+	/**
+	 * Crea un camino entre puntos
+	 * @param subPath Array de sub paths
+	 * @param isZ True para cerrar el path
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
+	 */	
+	public BPath (SubPath[] subPath, boolean isZ, String rgb, String brgb, float bwidth, Transformations tr) {
+		IniBPath(subPath, isZ, rgb, brgb, bwidth, tr);
+	}
+	
+	/**
+	 * Crea un camino entre puntos
+	 * @param subPath Array de sub paths
+	 * @param rgb Código de color hexadecimal de la forma #FFFFFF
+	 * @param brgb Código de color hexadecimal de la forma #FFFFFF para el borde
+	 * @param bwidth Grosor del borde del rectángulo. Debe ser 0 para omitir el borde.
+	 * @param tr Transformaciones que se aplicarán a la figura
+	 */
+	public BPath(SubPath[] subPath, String rgb, String brgb, float bwidth, Transformations tr)
 	{
-		this.tr = tr;
-		this.subPath = new SubPath[subPath.length];
-		
-		for(int i=0; i<subPath.length;i++)
-			this.subPath[i] = new SubPath(subPath[i].getType(), subPath[i].getPoints());
-			
-		this.paintBorder = new Paint();
-		if (bwidth>0) {
-			this.paintBorder.setStyle(Paint.Style.STROKE);
-			this.paintBorder.setStrokeWidth(bwidth);
-			this.paintBorder.setColor(Color.parseColor(brgb));
-			this.paintBorder.setAntiAlias(true);
-		}
-		
-		this.Z = false;
-		
-		this.paint = new Paint();
-		this.paint.setColor(Color.parseColor(rgb));
-		this.paint.setAntiAlias(true);
-		
-		this.path = new Path();
+		IniBPath(subPath, false, rgb, brgb, bwidth, tr);
 	}
 	
 	/**
@@ -94,8 +95,6 @@ public class BPath extends Figure {
 	 */
 	public void draw (Canvas canvas){
 		canvas.save();
-		
-		int last_z = 0;
 		
 		this.tr.applyTransformations(canvas);
 		for(int i=0; i<subPath.length; i++)
@@ -303,7 +302,6 @@ public class BPath extends Figure {
 			case 'z':
 				path.close();
 				break;
-				//TODO
 			}
 			
 		}

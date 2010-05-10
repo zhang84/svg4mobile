@@ -116,7 +116,7 @@ public class ExtraInfoList extends ListActivity {
      * Método que une elementos de un array con un string
      * @param arr Array a unir
      * @param st String que unirá los elementos
-     * @return
+     * @return String resultante
      */
     private static String implode(String[] arr, String st) {
         String out = "";
