@@ -6,6 +6,9 @@ import android.graphics.Camera;
 import android.util.Log;
 import android.view.View;
 
+/**
+ * Clase que se encarga de parsear el SVG.
+ */
 public class Svg4mobileView extends View {
 	private static final double ZOOMFACTOR = 2;
 	private Camera camera = new Camera();
@@ -25,6 +28,7 @@ public class Svg4mobileView extends View {
 */   
 	/**
 	 * Constructor
+	 * @param context Contexto de la aplicación
 	 */
 	public Svg4mobileView(Context context){
 		super(context);
@@ -166,7 +170,6 @@ public class Svg4mobileView extends View {
 				
 		doc.draw(canvas);
 		
-			
 		parser.First();
 		while(parser.hasNext()){
 			Figure f = (Figure)parser.next();
@@ -185,14 +188,26 @@ public class Svg4mobileView extends View {
 		camera.restore();
 	}
 
+	/**
+	 * Función que indica si existe información extra.
+	 * @return Si existe información extra.
+	 */
 	public Boolean extraInfoExist() {
 		return (infoparser.getSize()>0);
 	}
 
+	/**
+	 * Establece un ancho de la pantalla.
+	 * @param width Ancho en pixeles de la pantalla.
+	 */
 	public void setDisplayWidth(int width) {
 		this.display_width = width;		
 	}
 
+	/**
+	 * Establece un alto de la pantalla.
+	 * @param height Alto en pixels de la pantalla.
+	 */
 	public void setDisplayHeight(int height) {
 		this.display_heigth = height;
 	}

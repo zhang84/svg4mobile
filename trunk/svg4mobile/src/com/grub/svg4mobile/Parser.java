@@ -45,67 +45,6 @@ public class Parser {
 	}
 
 	/**
-	 * Método privado que se encarga de parsear la cadena obtenida del atributo
-	 * transform de un elemento del fichero svg para obtener la matriz de
-	 * transformación a aplicarle.
-	 * 
-	 * @param transform
-	 *            Cadena que contiene la transformación a aplicar a un elemento
-	 *            del SVG
-	 * @return Matriz de transformación
-	 */
-	private float[] parseMatrix(String transform) {
-		float valores_m[] = { 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f };
-		if (transform.length() > 1) {
-			transform = transform.substring(transform.indexOf("(") + 1,
-					transform.indexOf(")"));
-
-			String a = transform.substring(0, transform.indexOf(","));
-			transform = transform.substring(transform.indexOf(",") + 1,
-					transform.length());
-			valores_m[0] = Float.parseFloat(a);
-			String b = transform.substring(0, transform.indexOf(","));
-			transform = transform.substring(transform.indexOf(",") + 1,
-					transform.length());
-			valores_m[1] = Float.parseFloat(b);
-			String c = transform.substring(0, transform.indexOf(","));
-			transform = transform.substring(transform.indexOf(",") + 1,
-					transform.length());
-			valores_m[2] = Float.parseFloat(c);
-			String d = transform.substring(0, transform.indexOf(","));
-			transform = transform.substring(transform.indexOf(",") + 1,
-					transform.length());
-			valores_m[3] = Float.parseFloat(d);
-			String e = transform.substring(0, transform.indexOf(","));
-			transform = transform.substring(transform.indexOf(",") + 1,
-					transform.length());
-			valores_m[4] = Float.parseFloat(e);
-			String f = transform.substring(0, transform.length());
-			valores_m[5] = Float.parseFloat(f);
-			// Log.d("svg4mobile", " trans:  " + " a: " +a + " b: " +b + " c: "
-			// +c + " d: " +d + " e: " +e + " f: " +f);
-		}
-
-		return valores_m;
-	}
-
-	private float[] parseTranslate(String transform) {
-		float valores_m[] = { 0.0f, 0.0f };
-
-		transform = transform.substring(transform.indexOf("(") + 1, transform
-				.indexOf(")"));
-
-		String a = transform.substring(0, transform.indexOf(","));
-		transform = transform.substring(transform.indexOf(",") + 1, transform
-				.length());
-		valores_m[0] = Float.parseFloat(a);
-		String b = transform.substring(0, transform.length());
-		valores_m[1] = Float.parseFloat(b);
-
-		return valores_m;
-	}
-
-	/**
 	 * MÃ©todo privado encargado de ir parseando el archivo SVG e insertando los
 	 * elementos en la correspondiente lista.
 	 */
@@ -152,6 +91,11 @@ public class Parser {
 	private void parseElement(Element root, Vector<Figure> figuras) {
 		NodeList lista = root.getChildNodes();
 		int i = 0;
+		ParseStrategy est = null;
+		//El contexto
+		ParseContext context;
+
+		
 		while (i++ < (lista.getLength() - 1)) {
 			Log.d("svg4mobile", " Parser: " + i);
 			if (lista.item(i).getNodeType() == 1) {
@@ -159,268 +103,33 @@ public class Parser {
 				Log.d("svg4mobile", " Nodo: " + nodo.getNodeName());
 
 				if (nodo.getTagName().compareToIgnoreCase("rect") == 0) {
-					String x = nodo.getAttribute("x");
-					String y = nodo.getAttribute("y");
-					String w = nodo.getAttribute("width");
-					String h = nodo.getAttribute("height");
-					String style = nodo.getAttribute("style");
-					String borderwidth = "0";
-					String rgb = "";
-					String border = "";
-					try {
-						borderwidth = style.substring(style
-								.indexOf("stroke-width:") + 13);
-						borderwidth = borderwidth.substring(0, borderwidth
-								.indexOf(";"));
-					} catch (Exception e) {
-						//
-					}
-					try {
-						rgb = style.substring(style.indexOf("fill:") + 5);
-						rgb = rgb.substring(0, rgb.indexOf(";"));
-					} catch (Exception e) {
-						//
-					}
-					try {
-						border = style
-								.substring(style.indexOf("stroke:") + 7);
-						border = border.substring(0, border.indexOf(";"));
-					} catch (Exception e) {
-						//
-					}
-
-					if (border.compareToIgnoreCase("none") == 0
-							|| border.compareTo("") == 0
-							|| borderwidth.compareTo("") == 0) {
-						borderwidth = "0.0";
-					}
-
-					// Log.d("svg4mobile", " rgb:  " + rgb + " x:  " + x+ " y: "
-					// + y+ " w:  " + w+ " h:  " + h);
-					String transform = nodo.getAttribute("transform");
-
-					Transformations t = new Transformations();
-
-					if (transform.length() > 1) {
-						if (transform.substring(0, transform.indexOf("("))
-								.equals("matrix")) {
-							t.setTMatrix(this.parseMatrix(transform));
-						} else if (transform.substring(0,
-								transform.indexOf("(")).equals("translate")) {
-							float[] ta = this.parseTranslate(transform);
-							t.setTranslate(ta[0], ta[1]);
-						}
-					}
-					Log.d("svg4mobile", "rect");
-					BRect rectangulo = new BRect(Float.parseFloat(x), Float
-							.parseFloat(y), Float.parseFloat(w), Float
-							.parseFloat(h), rgb, border, Float
-							.parseFloat(borderwidth), t);
-					figuras.add(rectangulo);
-
+					est = new RectStrategy();
 				} else if (nodo.getTagName().compareToIgnoreCase("path") == 0) {
-
-					try {
-						String style = nodo.getAttribute("style");
-						String borderwidth = "0";
-						String rgb = "";
-						String border = "";
-						try {
-							borderwidth = style.substring(style
-									.indexOf("stroke-width:") + 13);
-							borderwidth = borderwidth.substring(0, borderwidth
-									.indexOf(";"));
-						} catch (Exception e) {
-							//
-						}
-						try {
-							rgb = style.substring(style.indexOf("fill:") + 5);
-							rgb = rgb.substring(0, rgb.indexOf(";"));
-						} catch (Exception e) {
-							//
-						}
-						try {
-							border = style
-									.substring(style.indexOf("stroke:") + 7);
-							border = border.substring(0, border.indexOf(";"));
-						} catch (Exception e) {
-							//
-						}
-						if (border.compareToIgnoreCase("none") == 0
-								|| border.compareTo("") == 0
-								|| borderwidth.compareTo("") == 0) {
-							borderwidth = "0.0";
-						}
-						// Log.d("svg4mobile", " rgb:  " + rgb + " x:  " + x+
-						// " y: "
-						// + y+ " w:  " + w+ " h:  " + h);
-						String transform = nodo.getAttribute("transform");
-						String d = nodo.getAttribute("d");
-						Log.d("svg4mobile", d);
-						//d = d+" e 0 0";
-						d = d.replaceAll(" ", ",");
-						
-						String pts[] = d.split("[MmLlCcQqsStTaAhHvVzZ]");
-						//Log.d("svg4mobile", "pts: "+Arrays.toString(pts));
-						String letras[] = d.split("[-0-9,. ]+");
-						//Log.d("svg4mobile", "letras: "+Arrays.toString(letras));
-						SubPath sp[] = new SubPath[letras.length];
-						int j2 =0;
-						for (int j=0; j<letras.length; j++) {
-							//Log.d("svg4mobile","Antes de split " + letras[j]);
-							char tipo = letras[j].charAt(0);
-							//Log.d("svg4mobile", "despues del split");
-							float[] puntos = new float[0];
-							if (tipo!='z' && tipo != 'Z') {
-								j2++;
-								while (pts[j2].compareTo(",")==0) {
-									// Avanza el puntero de puntos hasta encontrar puntos.
-									j2++;
-								}
-								
-								String pts_arr[] = pts[j2].split(",");
-								//Log.d("svg4mobile", "pts: " + Arrays.toString(pts_arr));
-								puntos = new float[pts_arr.length-1]; //!
-								for (int k=1; k<pts_arr.length; k++)
-									puntos[k-1]=Float.parseFloat(pts_arr[k]);
-							}
-							Log.d("svg4mobile", "tipo: "+ tipo + ", puntos: " + Arrays.toString(puntos));
-							sp[j] = new SubPath(tipo, puntos);
-						}
-						Log.d("svg4mobile","For Terminado");
-
-						Transformations t = new Transformations();
-
-						if (transform.length() > 1) {
-							if (transform.substring(0, transform.indexOf("("))
-									.equals("matrix")) {
-								t.setTMatrix(this.parseMatrix(transform));
-							} else if (transform.substring(0,
-									transform.indexOf("(")).equals("translate")) {
-								float[] ta = this.parseTranslate(transform);
-								t.setTranslate(ta[0], ta[1]);
-							}
-						}
-
-						Log.d("svg4mobile", "añadiendo sp a path");
-						
-						BPath mPath = new BPath(sp, rgb, border,
-								Float.parseFloat(borderwidth), t);
-						figuras.add(mPath);
-
-						Log.d("svg4mobile", "  Path agregado  ");
-
-					} catch (Exception e) {
-
-						Log.d("svg4mobile", "  Error en Path:  " + e);
-					}
-
+					est = new PathStrategy();
 				} else if (nodo.getTagName().compareToIgnoreCase("text") == 0) {
-					String style = nodo.getAttribute("style");
-					// tiene la siguiente forma:
-					// font-size:28px;font-style:normal;font-weight:normal;...
-					int size = Integer.parseInt(style.substring(style
-							.indexOf(":") + 1, style.indexOf("px")));
-					style = style.substring(style.indexOf("fill:"));
-					String rgb = style.substring(style.indexOf(":") + 1, style
-							.indexOf(";"));
-					String text = "E";
-					String transform = nodo.getAttribute("transform");
-					float x = Float.parseFloat(nodo.getAttribute("x"));
-					float y = Float.parseFloat(nodo.getAttribute("y"));
-					NodeList nLista = nodo.getChildNodes();
-					for (int c = 0; c < nLista.getLength(); c++) {
-						if (nLista.item(c).getNodeType() == 1) {
-							Element tspan = (Element) nLista.item(c);
-							NodeList tLista = tspan.getChildNodes();
-							text = tLista.item(0).getNodeValue(); // suponeos
-							// que hay
-							// solo un
-							// texto,
-							// sino hay
-							// que ahcer
-							// un for
-
-							// Log.d("svg4mobile", " text:  " +
-							// tLista.item(0).getNodeValue() );
-						}
-					}
-
-					Transformations t = new Transformations();
-
-					if (transform.length() > 1) {
-						if (transform.substring(0, transform.indexOf("("))
-								.equals("matrix")) {
-							t.setTMatrix(this.parseMatrix(transform));
-						} else if (transform.substring(0,
-								transform.indexOf("(")).equals("translate")) {
-							float[] ta = this.parseTranslate(transform);
-							t.setTranslate(ta[0], ta[1]);
-						}
-					}
-
-					Text texto = new Text(x, y, size, text, rgb, t);
-					figuras.add(texto);
+					est = new TextStrategy();
 				} else if (nodo.getTagName().compareToIgnoreCase("circle") == 0) {
-					String x = nodo.getAttribute("cx");
-					String y = nodo.getAttribute("cy");
-					String r = nodo.getAttribute("r");
-					String style = nodo.getAttribute("style");
-					String borderwidth = "0";
-					String rgb = "";
-					String border = "";
-					try {
-						borderwidth = style.substring(style
-								.indexOf("stroke-width:") + 13);
-						borderwidth = borderwidth.substring(0, borderwidth
-								.indexOf(";"));
-					} catch (Exception e) {
-						//
-					}
-					try {
-						rgb = style.substring(style.indexOf("fill:") + 5);
-						rgb = rgb.substring(0, rgb.indexOf(";"));
-					} catch (Exception e) {
-						//
-					}
-					try {
-						border = style
-								.substring(style.indexOf("stroke:") + 7);
-						border = border.substring(0, border.indexOf(";"));
-					} catch (Exception e) {
-						//
-					}
-
-					String transform = nodo.getAttribute("transform");
-
-					Transformations t = new Transformations();
-
-					if (transform.length() > 1) {
-						if (transform.substring(0, transform.indexOf("("))
-								.equals("matrix")) {
-							t.setTMatrix(this.parseMatrix(transform));
-						} else if (transform.substring(0,
-								transform.indexOf("(")).equals("translate")) {
-							float[] ta = this.parseTranslate(transform);
-							t.setTranslate(ta[0], ta[1]);
-						}
-					}
-
-					BCircle circulo = new BCircle(Float.parseFloat(x), Float
-							.parseFloat(y), Float.parseFloat(r), rgb,
-							"#000000", 1.5f, t);
-					figuras.add(circulo);
+					est = new CircleStrategy();
 				} else if (nodo.getTagName().compareToIgnoreCase("ellipse") == 0) {
-					// TODO
+					est = null; // TODO
 				} else if (nodo.getTagName().compareToIgnoreCase("line") == 0) {
-					// TODO
+					est = null; // TODO
 				} else if (nodo.getTagName().compareToIgnoreCase("polyline") == 0) {
-					// TODO
+					est = null; // TODO
 				} else if (nodo.getTagName().compareToIgnoreCase("polygon") == 0) {
-					// TODO
+					est = null; // TODO
 				} else if (nodo.getTagName().compareToIgnoreCase("g") == 0) {
+					est = null; // TODO
 					readGroup(nodo, figuras);
 				} // endif
+				
+				context = new ParseContext(est, nodo);
+				context.setStrategy(est);
+				try {
+					Figure fg = (Figure) context.runStrategy();
+					figuras.add(fg);
+				} catch (Exception e) {}
+				
 			}
 		}
 
