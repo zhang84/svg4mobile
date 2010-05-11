@@ -75,7 +75,7 @@ public class ExtraInfoParser {
 		
 			try{
 				ZipFile zipFile = new ZipFile(path2);
-				Enumeration entries = zipFile.entries();
+				Enumeration<? extends ZipEntry> entries = zipFile.entries();
 				while(entries.hasMoreElements()) {
 			        ZipEntry entry = (ZipEntry)entries.nextElement();
 			        copyInputStream(zipFile.getInputStream(entry), new BufferedOutputStream(new FileOutputStream(tempdir + entry.getName())));
