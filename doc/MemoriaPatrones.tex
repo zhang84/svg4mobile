@@ -118,13 +118,13 @@ JDK 6
 \subsection{Paso 2. Descargar el SDK Starter Package}
 El primer paso para desarrollar en Android es descargar el SDK Starter Package (\url{http://developer.android.com/sdk/index.html}). Asegurándose de que el paquete descargado es el correspondiente a tu entorno de desarrollo.
 
-Después de descargar y descomprimir el SDK habrá que guardarlo en un lugar seguro en la maquina, recordando donde se encuentra ya que habrá hacer referencia al mismo al instalar el plugin ADT en Eclipse.
+Después de descargar y descomprimir el SDK habrá que guardarlo en un lugar seguro en la máquina, recordando donde se encuentra ya que habrá hacer referencia al mismo al instalar el plugin ADT en Eclipse.
 
 Opcionalmente se puede agregar al PATH del sistema las aplicaciones en la carpeta tools, localizada dentro del SDK.
 
 \subsection{Paso 3. Instalar el plugin ADT para Eclipse}
 
-En Eclipse, seleccionar Help > Install New Software
+En Eclipse, seleccionar Help $>$ Install New Software
 
 En Available Software, click en Add...
 
@@ -210,7 +210,7 @@ private synchronized static void createInstance() {
 }
 \end{verbatim} 
 
-A continuación se muestra los diagramas de clases correspondientes a este patrón.
+A continuación se muestran los diagramas de clases correspondientes a este patrón.
 
 \begin{center}
  \includegraphics[width=12cm]{texres/singleton.png}
@@ -246,9 +246,9 @@ A continuación se muestra el diagrama de clases correspondiente a este patrón.
 
 \subsection{Patrón Estructural: Adapter}
 
-Las matrices de transformación permiten realizar cualquier transformación algebraica sobre un plano. El estandar SVG contempla varios tipos de transformación para cada elemento que se recogen en el atributo transform. Una de ellas, que de hecho engloba al resto, es la multiplicación de la matriz en uso de un elemento por una matriz de transformación. En SVG se obtienen estas matrices en forma de un array de la forma matrix(a,b,c,d,e,f. Por otro aldo, disponíamos de una clase capaz de moltiplicar matrices de la forma NxM dados dos arrays bidimensionales.
+Las matrices de transformación permiten realizar cualquier transformación algebraica sobre un plano. El estandar SVG contempla varios tipos de transformación para cada elemento que se recogen en el atributo transform. Una de ellas, que de hecho engloba al resto, es la multiplicación de la matriz en uso de un elemento por una matriz de transformación. En SVG se obtienen estas matrices en forma de un array de la forma $matrix(a,b,c,d,e,f)$. Por otro lado, disponíamos de una clase capaz de multiplicar matrices de la forma NxM dados dos arrays bidimensionales.
 
-El patrón adapter nos permite adaptar las matrices tal como las obtenemos del SVG en arrays 3x3 que nuestra clase para multiplicación de matrices puede manejar.
+El patrón Adapter nos permite adaptar las matrices tal como las obtenemos del SVG en arrays 3x3 que nuestra clase para multiplicación de matrices puede manejar.
 
 Para la implementación de este patrón se han utilizado las siguientes clases:
 
@@ -271,7 +271,7 @@ De nuevo, tanto para el Parser (Parser.java) como para el ExtraInfoParser (Extra
 
 Como el iterador recorre elementos de tipo Figure --una interfaz común para todos los elementos que se vayan parseando--, las clases que utilicen el iterador no tienen por que conocer el tipo de elementos que contiene la colección.
 
-A continuación se muestra los diagramas de clases correspondientes a este patrón.
+A continuación se muestran los diagramas de clases correspondientes a este patrón.
 
 \begin{center}
  \includegraphics[width=12cm]{texres/iterator.png}
