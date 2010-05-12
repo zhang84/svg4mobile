@@ -4,7 +4,3 @@
 --> Los Rect deberían contemplar la posibilidad de bordes redondeados. ==> Parser.
 --> Añadir al parser soporte para el resto de formas básicas: BPolyline, BPolygon, BLine y BEllipse
 --> Terminar en el parser el soporte de groups.
---> Meter patrones que faltan:
-	1 de Creación
-	0 Estructurales
-	1 de Comportamiento
