@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- Main -->
+    <string name="app_name">Svg4mobile</string>
+    <string name="initial_help">Carga un fichero desde el menu</string>
+	<string name="perspective">Perspectiva</string>
+	<string name="extra_info">Info.</string>
+	<string name="zoom_out">Zoom -</string>
+	<string name="zoom_in">Zoom +</string>
+	<string name="load">Cargar</string>
+	<string name="set_north">Nortear</string>
+	<string name="auto_set_north">Autonortear</string>
+	<!-- FileExplorer -->
+	<string name="no_files">Este directorio está vacío</string>
+    <string name="up">..</string>
+    <!-- Progress Dialog -->
+    <string name="please_wait">Por favor espere...</string>
+    <string name="parsing">Cargando fichero...</string>
+</resources>
